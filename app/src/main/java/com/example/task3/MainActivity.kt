@@ -9,13 +9,6 @@ import java.io.Serializable
 
 class MainActivity : Activity() {
 
-
-    private var habits = mutableListOf<Habit>(
-            Habit("Спать", "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"),
-            Habit("Есть", "fdgreytrthgbv"),
-            Habit("Пить воду :)", "gfdbttreter")
-    )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -27,20 +20,20 @@ class MainActivity : Activity() {
     private fun onViewCreated() {
         habit_list.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = HabitAdapter(habits) { position, habit ->
+            adapter = HabitAdapter(HabitData.getHabits()) { position, habit ->
                 changeHabit(habit, position)
             }
         }
-
     }
 
     private fun checkUpdate(){
         var habit: Serializable? = intent.getSerializableExtra(HabitRedactorActivity.HABIT) ?: return
         habit = habit as Habit
         var position = intent.getIntExtra(HabitRedactorActivity.POSITION,0)
-        if (position >= habits.size)
-            habits.add(habit)
-        else habits[position] = habit
+        if (position >= HabitData.getDataSize())
+            HabitData.addHabit(habit)
+        else HabitData.updateHabit(habit, position)
+        updateData()
     }
 
     private fun updateData() {
@@ -56,7 +49,7 @@ class MainActivity : Activity() {
 
     private fun addHabit() {
         val newIntent = Intent(this, HabitRedactorActivity::class.java)
-        newIntent.putExtra(HabitRedactorActivity.POSITION, habits.size)
+        newIntent.putExtra(HabitRedactorActivity.POSITION, HabitData.getDataSize())
         startActivity(newIntent)
     }
 }
