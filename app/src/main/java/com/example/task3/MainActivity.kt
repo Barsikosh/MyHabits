@@ -3,41 +3,61 @@ package com.example.task3
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.Serializable
 
 class MainActivity : Activity() {
 
-    private val habits = listOf(
-        Habit("Чпокать Арину"),
-        Habit("Курить Шмаль"),
-        Habit("написать арине что она классная"),
-        Habit("написать арине что она классная")
+
+    private var habits = mutableListOf<Habit>(
+            Habit("Спать", "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"),
+            Habit("Есть", "fdgreytrthgbv"),
+            Habit("Пить воду :)", "gfdbttreter")
     )
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        checkUpdate()
         onViewCreated()
-        add_habit_button.setOnClickListener{addHabit()}
+        add_habit_button.setOnClickListener { addHabit() }
     }
 
     private fun onViewCreated() {
         habit_list.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = HabitAdapter(habits)
+            adapter = HabitAdapter(habits) { position, habit ->
+                changeHabit(habit, position)
+            }
         }
 
     }
 
-    private fun addHabit(){
+    private fun checkUpdate(){
+        var habit: Serializable? = intent.getSerializableExtra(HabitRedactorActivity.HABIT) ?: return
+        habit = habit as Habit
+        var position = intent.getIntExtra(HabitRedactorActivity.POSITION,0)
+        if (position >= habits.size)
+            habits.add(habit)
+        else habits[position] = habit
+    }
+
+    private fun updateData() {
+        habit_list.adapter?.notifyDataSetChanged()
+    }
+
+    private fun changeHabit(habit: Habit, position: Int) {
         val newIntent = Intent(this, HabitRedactorActivity::class.java)
+        newIntent.putExtra(HabitRedactorActivity.HABIT, habit)
+        newIntent.putExtra(HabitRedactorActivity.POSITION, position)
         startActivity(newIntent)
     }
 
+    private fun addHabit() {
+        val newIntent = Intent(this, HabitRedactorActivity::class.java)
+        newIntent.putExtra(HabitRedactorActivity.POSITION, habits.size)
+        startActivity(newIntent)
+    }
 }
+
