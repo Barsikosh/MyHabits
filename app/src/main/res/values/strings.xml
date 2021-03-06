@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Task3</string>
+    <string name="hint_habit_name">Название</string>
+    <string name="habit_name">Название</string>
+    <string name="descrip">Описание</string>
+    <string name="first_option">Полезная</string>
+    <string name="second_option">Бесполезная</string>
+    <string name="priority_text">Приоритет</string>
+    <string name="type_text">Тип</string>
+    <string name="often_text">Как часто?</string>
+    <string name="delete_button">Удалить</string>
+    <string name="error_text">Заполните все поля</string>
+    <string-array name="priorities">
+        <item>Хуёвый</item>
+        <item>Плохой</item>
+        <item>Хороший</item>
+    </string-array >
 </resources>

@@ -15,6 +15,7 @@ class MainActivity : Activity() {
         checkUpdate()
         onViewCreated()
         add_habit_button.setOnClickListener { addHabit() }
+        updateData()
     }
 
     private fun onViewCreated() {
@@ -36,6 +37,25 @@ class MainActivity : Activity() {
         updateData()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        if (requestCode == RESULT_OK){
+            val position = data?.getIntExtra(HabitRedactorActivity.POSITION, 0) ?: 0
+            val habit = data?.getSerializableExtra(HabitRedactorActivity.HABIT) as Habit
+            if (position >= HabitData.getDataSize()){
+                HabitData.addHabit(habit)
+            }
+
+            else{
+                HabitData.updateHabit(habit, position)
+            }
+            updateData()
+        }
+
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+
     private fun updateData() {
         habit_list.adapter?.notifyDataSetChanged()
     }
@@ -44,7 +64,7 @@ class MainActivity : Activity() {
         val newIntent = Intent(this, HabitRedactorActivity::class.java)
         newIntent.putExtra(HabitRedactorActivity.HABIT, habit)
         newIntent.putExtra(HabitRedactorActivity.POSITION, position)
-        startActivity(newIntent)
+        startActivityForResult(newIntent, RESULT_OK)
     }
 
     private fun addHabit() {

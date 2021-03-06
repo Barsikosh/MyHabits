@@ -47,6 +47,8 @@ class HabitRedactorActivity : Activity() {
         val newIntent = Intent(this, MainActivity::class.java)
         newIntent.putExtra(HABIT, newHabit)
         newIntent.putExtra(POSITION, position)
-        startActivity(newIntent)
+        setResult(RESULT_OK, newIntent)
+        finish()
+
     }
 }
