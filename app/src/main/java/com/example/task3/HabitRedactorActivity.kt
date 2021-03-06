@@ -22,7 +22,16 @@ class HabitRedactorActivity : Activity() {
         save_button.setOnClickListener {
             saveData(habit as Habit, position)
         }
+        cancel_button.setOnClickListener{
+            cancelRedactor()
+        }
         updateText(habit as Habit)
+    }
+
+
+    private fun cancelRedactor(){
+        val newIntent = Intent(this, MainActivity::class.java)
+        startActivity(newIntent)
     }
 
     private fun updateText(habit: Habit){
@@ -40,6 +49,4 @@ class HabitRedactorActivity : Activity() {
         newIntent.putExtra(POSITION, position)
         startActivity(newIntent)
     }
-
-
 }
