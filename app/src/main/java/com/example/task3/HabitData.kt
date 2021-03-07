@@ -2,11 +2,7 @@ package com.example.task3
 
 object HabitData{
 
-    private var habits = mutableListOf<Habit>(
-            Habit("Спать", "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"),
-            Habit("Есть", "fdgreytrthgbv"),
-            Habit("Пить воду :)", "gfdbttreter")
-    )
+    private var habits = mutableListOf<Habit>()
 
     fun addHabit(habit: Habit){
         habits.add(habit)

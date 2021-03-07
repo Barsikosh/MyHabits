@@ -18,7 +18,7 @@
             android:layout_marginRight="@dimen/large_margin">
 
             <EditText
-                android:id="@+id/editHabitName"
+                android:id="@+id/edit_habit_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
@@ -30,7 +30,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/editDescription"
+                android:id="@+id/edit_description"
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_marginTop="@dimen/normal_margin"
@@ -42,7 +42,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editHabitName" />
+                app:layout_constraintTop_toBottomOf="@+id/edit_habit_name" />
 
             <RadioGroup
                 android:id="@+id/radioGroup"
@@ -54,18 +54,18 @@
                 app:layout_constraintTop_toBottomOf="@+id/textType">
 
                 <RadioButton
-                    android:id="@+id/firstRadio"
+                    android:id="@+id/first_radio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/normal_margin"
-                    android:text="@string/first_option" />
+                    android:text="Полезная" />
 
                 <RadioButton
-                    android:id="@+id/secondRadio"
+                    android:id="@+id/second_radio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/normal_margin"
-                    android:text="@string/second_option" />
+                    android:text="Вредная" />
 
             </RadioGroup>
 
@@ -77,17 +77,17 @@
                 android:entries="@array/priorities"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/radioGroup"
-                app:layout_constraintTop_toBottomOf="@+id/textPriority" />
+                app:layout_constraintTop_toBottomOf="@+id/text_priority" />
 
             <TextView
-                android:id="@+id/textPriority"
+                android:id="@+id/text_priority"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/large_margin"
                 android:text="@string/priority_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/radioGroup"
-                app:layout_constraintTop_toBottomOf="@+id/editDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/edit_description" />
 
             <TextView
                 android:id="@+id/textType"
@@ -98,9 +98,9 @@
                 android:layout_marginRight="@dimen/normal_margin"
                 android:gravity="start"
                 android:text="@string/type_text"
-                app:layout_constraintEnd_toStartOf="@+id/textPriority"
+                app:layout_constraintEnd_toStartOf="@+id/text_priority"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/edit_description" />
 
             <TextView
                 android:id="@+id/textFrequency"
@@ -110,17 +110,18 @@
                 android:layout_marginLeft="@dimen/normal_margin"
                 android:layout_marginBottom="@dimen/normal_margin"
                 android:text="@string/often_text"
-                app:layout_constraintBottom_toTopOf="@+id/editTimes"
+                app:layout_constraintBottom_toTopOf="@+id/edit_times"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <EditText
-                android:id="@+id/editTimes"
 
-                android:layout_width="88dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginBottom="@dimen/large_margin"
+            <EditText
+                android:id="@+id/edit_times"
+
+                android:layout_width="21dp"
+                android:layout_height="39dp"
+                android:layout_marginStart="108dp"
+                android:layout_marginLeft="108dp"
+                android:layout_marginBottom="28dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
@@ -128,17 +129,18 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <EditText
-                android:id="@+id/editFrequency"
-                android:layout_width="180dp"
+                android:id="@+id/edit_frequency"
+                android:layout_width="18dp"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
-                app:layout_constraintBottom_toBottomOf="@+id/editTimes"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_times"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/editTimes"
-                app:layout_constraintTop_toTopOf="@+id/editTimes" />
-
+                app:layout_constraintHorizontal_bias="0.379"
+                app:layout_constraintStart_toEndOf="@+id/edit_times"
+                app:layout_constraintTop_toTopOf="@+id/edit_times"
+                app:layout_constraintVertical_bias="1.0" />
 
             <Button
                 android:id="@+id/deleteButton"
@@ -147,7 +149,7 @@
                 android:text="@string/delete_button"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toTopOf="@+id/errorText"
-                app:layout_constraintEnd_toStartOf="@+id/editFrequency"
+                app:layout_constraintEnd_toStartOf="@+id/edit_frequency"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
@@ -164,13 +166,24 @@
                 app:layout_constraintHorizontal_bias="0.527"
                 app:layout_constraintStart_toStartOf="parent" />
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="28dp"
+                android:layout_marginRight="28dp"
+                android:text="Повторять"
+                app:layout_constraintEnd_toStartOf="@+id/edit_times"
+                app:layout_constraintTop_toBottomOf="@+id/textFrequency" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/readyFab"
+        android:id="@+id/save_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"

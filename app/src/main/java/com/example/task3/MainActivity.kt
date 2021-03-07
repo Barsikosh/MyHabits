@@ -9,10 +9,14 @@ import java.io.Serializable
 
 class MainActivity : Activity() {
 
+    companion object {
+        const val RESULT_NEW_HABIT = 1
+        const val RESULT_CHANGED_HABIT = 0
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        checkUpdate()
         onViewCreated()
         add_habit_button.setOnClickListener { addHabit() }
         updateData()
@@ -27,34 +31,17 @@ class MainActivity : Activity() {
         }
     }
 
-    private fun checkUpdate(){
-        var habit: Serializable? = intent.getSerializableExtra(HabitRedactorActivity.HABIT) ?: return
-        habit = habit as Habit
-        var position = intent.getIntExtra(HabitRedactorActivity.POSITION,0)
-        if (position >= HabitData.getDataSize())
-            HabitData.addHabit(habit)
-        else HabitData.updateHabit(habit, position)
-        updateData()
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        if (requestCode == RESULT_OK){
-            val position = data?.getIntExtra(HabitRedactorActivity.POSITION, 0) ?: 0
-            val habit = data?.getSerializableExtra(HabitRedactorActivity.HABIT) as Habit
-            if (position >= HabitData.getDataSize()){
-                HabitData.addHabit(habit)
-            }
-
-            else{
-                HabitData.updateHabit(habit, position)
-            }
-            updateData()
+        val position = data?.getIntExtra(HabitRedactorActivity.POSITION, 0) ?: 0
+        val habit = data?.getSerializableExtra(HabitRedactorActivity.HABIT) as Habit
+        when (resultCode) {
+            RESULT_NEW_HABIT -> HabitData.addHabit(habit)
+            RESULT_CHANGED_HABIT -> HabitData.updateHabit(habit, position)
         }
-
-        super.onActivityResult(requestCode, resultCode, data)
+        updateData()
     }
-
 
     private fun updateData() {
         habit_list.adapter?.notifyDataSetChanged()
@@ -64,13 +51,13 @@ class MainActivity : Activity() {
         val newIntent = Intent(this, HabitRedactorActivity::class.java)
         newIntent.putExtra(HabitRedactorActivity.HABIT, habit)
         newIntent.putExtra(HabitRedactorActivity.POSITION, position)
-        startActivityForResult(newIntent, RESULT_OK)
+        startActivityForResult(newIntent, RESULT_CHANGED_HABIT)
     }
 
     private fun addHabit() {
         val newIntent = Intent(this, HabitRedactorActivity::class.java)
         newIntent.putExtra(HabitRedactorActivity.POSITION, HabitData.getDataSize())
-        startActivity(newIntent)
+        startActivityForResult(newIntent, RESULT_NEW_HABIT)
     }
 }
 

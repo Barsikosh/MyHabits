@@ -7,12 +7,12 @@
     <string name="second_option">Бесполезная</string>
     <string name="priority_text">Приоритет</string>
     <string name="type_text">Тип</string>
-    <string name="often_text">Как часто?</string>
+    <string name="often_text">Периодичность</string>
     <string name="delete_button">Удалить</string>
     <string name="error_text">Заполните все поля</string>
     <string-array name="priorities">
-        <item>Хуёвый</item>
-        <item>Плохой</item>
-        <item>Хороший</item>
+        <item>Высокий</item>
+        <item>Низкий</item>
+        <item>Средний</item>
     </string-array >
 </resources>
