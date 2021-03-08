@@ -6,6 +6,7 @@
     android:layout_height="match_parent" layout_height="">
 
     <ScrollView
+        style="@style/Base.CardView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
@@ -116,31 +117,26 @@
 
             <EditText
                 android:id="@+id/edit_times"
-
-                android:layout_width="21dp"
+                android:layout_width="30dp"
                 android:layout_height="39dp"
-                android:layout_marginStart="108dp"
-                android:layout_marginLeft="108dp"
                 android:layout_marginBottom="28dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
                 app:layout_constraintBottom_toTopOf="@+id/deleteButton"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toEndOf="@+id/textView2" />
 
             <EditText
                 android:id="@+id/edit_frequency"
-                android:layout_width="18dp"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="39dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
                 app:layout_constraintBottom_toBottomOf="@+id/edit_times"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.379"
-                app:layout_constraintStart_toEndOf="@+id/edit_times"
+                app:layout_constraintStart_toEndOf="@+id/textView9"
                 app:layout_constraintTop_toTopOf="@+id/edit_times"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="0.0" />
 
             <Button
                 android:id="@+id/deleteButton"
@@ -170,12 +166,37 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="28dp"
-                android:layout_marginRight="28dp"
                 android:text="Повторять"
-                app:layout_constraintEnd_toStartOf="@+id/edit_times"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textFrequency" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="раз в "
+                app:layout_constraintStart_toEndOf="@+id/edit_times"
+                app:layout_constraintTop_toBottomOf="@+id/textFrequency" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="180dp"
+                android:layout_marginRight="168dp"
+                android:text="дней."
+                app:layout_constraintBottom_toBottomOf="@+id/textView9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/edit_frequency"
+                app:layout_constraintTop_toTopOf="@+id/edit_times"
+                app:layout_constraintVertical_bias="1.0" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -186,14 +207,16 @@
         android:id="@+id/save_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        app:borderWidth="5dp"
-        android:elevation="10dp"
         android:layout_gravity="bottom|end"
+        android:layout_margin="20dp"
         android:clickable="true"
+        android:elevation="10dp"
         android:focusable="true"
+        app:backgroundTint="#76ED7B"
+        app:borderWidth="5dp"
         app:layout_constraintBottom_toTopOf="@+id/errorText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/checkbox_on_background" tools:targetApi="lollipop"/>
+        app:srcCompat="@android:drawable/checkbox_on_background"
+        tools:targetApi="lollipop" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

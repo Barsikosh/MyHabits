@@ -1,5 +1,6 @@
 package com.example.task3
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +24,7 @@ class HabitAdapter(private val habits: List<Habit>,
     override fun onBindViewHolder(holder: HabitViewHolder, position: Int) {
         holder.bind(habits[position])
         holder.itemView.setOnClickListener {
-            onItemClick?.invoke(position,habits[position])
+            onItemClick?.invoke(position, habits[position])
         }
     }
 
@@ -33,6 +34,9 @@ class HabitAdapter(private val habits: List<Habit>,
         fun bind(habit: Habit) {
             habit_name.text = habit.name
             habit_description.text = habit.description
+            habit_period.text = habit.time.toString() + " раз в " + habit.period.toString() + " дней"
+            habit_priority.text = habit.priority.toString()
+            habit_type.text = habit.type.toString()
         }
     }
 }

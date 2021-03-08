@@ -13,16 +13,30 @@ data class Habit(val name: String, val description: String, val type: HabitType,
         BAD(1);
 
         companion object {
-            fun fromInt(value: Int) = HabitType.values().first { it.value == value }
+            fun fromInt(value: Int) = values().first { it.value == value }
+        }
+
+        override fun toString(): String {
+            return if (this == BAD)
+                "Вредная"
+            else "Полезная"
         }
     }
 
     enum class HabitPriority(val value: Int){
         HIGH(0),
-        MEDIUM(1),
-        LOW(2);
+        MEDIUM(2),
+        LOW(1);
         companion object {
-            fun fromInt(value: Int) = HabitPriority.values().first { it.value == value }
+            fun fromInt(value: Int) = values().first { it.value == value }
+        }
+
+        override fun toString(): String {
+            return when(this){
+                HIGH -> "Приоритет: Высокий"
+                MEDIUM -> "Приоритет: Средний"
+                LOW -> "Приоритет: Низкий"
+            }
         }
     }
 
