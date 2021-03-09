@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.list_item.*
 
-class HabitAdapter(private val habits: List<Habit>,
-                   private val onItemClick: ((Int, Habit) -> Unit))
+class HabitAdapter(private val habits: MutableList<Habit>,
+                   private val onItemClick: ((Int) -> Unit))
     : RecyclerView.Adapter<HabitAdapter.HabitViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitViewHolder {
@@ -23,13 +23,28 @@ class HabitAdapter(private val habits: List<Habit>,
 
     override fun onBindViewHolder(holder: HabitViewHolder, position: Int) {
         holder.bind(habits[position])
-        holder.itemView.setOnClickListener {
-            onItemClick?.invoke(position, habits[position])
-        }
     }
 
-    class HabitViewHolder(override val containerView: View) :
+    fun moveItem(oldPosition: Int, newPosition: Int){
+        val habit = habits[oldPosition]
+        habits[oldPosition] = habits[newPosition]
+        habits[newPosition] = habit
+        notifyItemMoved(oldPosition,newPosition)
+    }
+
+    fun deleteItem(position: Int){
+        habits.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    inner class HabitViewHolder(override val containerView: View) :
             RecyclerView.ViewHolder(containerView), LayoutContainer {
+
+        init {
+            itemView.setOnClickListener {
+                onItemClick?.invoke(adapterPosition)
+            }
+        }
 
         fun bind(habit: Habit) {
             habit_name.text = habit.name

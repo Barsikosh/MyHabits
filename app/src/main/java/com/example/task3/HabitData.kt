@@ -9,12 +9,17 @@ object HabitData{
     }
 
     fun updateHabit(habit: Habit, position: Int){
-        if (position < getDataSize())
+        if (position < getSize())
             habits[position] = habit
     }
 
-    fun getDataSize() = habits.size
+    fun remove(position: Int){
+        habits.removeAt(position)
+    }
+
+    fun getSize() = habits.size
+
+    fun getHabit(position: Int) = habits[position]
 
     fun getHabits() = habits
-
 }
