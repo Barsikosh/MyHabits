@@ -80,6 +80,7 @@
                 app:layout_constraintStart_toEndOf="@+id/radioGroup"
                 app:layout_constraintTop_toBottomOf="@+id/text_priority" />
 
+
             <TextView
                 android:id="@+id/text_priority"
                 android:layout_width="0dp"
@@ -198,6 +199,17 @@
                 app:layout_constraintTop_toTopOf="@+id/edit_times"
                 app:layout_constraintVertical_bias="1.0" />
 
+            <Button
+                android:id="@+id/color_button"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="104dp"
+                android:layout_marginLeft="104dp"
+                android:layout_marginTop="76dp"
+                android:background="@drawable/roundedbutton"
+                app:layout_constraintStart_toEndOf="@+id/textFrequency"
+                app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -216,7 +228,6 @@
         app:borderWidth="5dp"
         app:layout_constraintBottom_toTopOf="@+id/errorText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/checkbox_on_background"
         tools:targetApi="lollipop" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

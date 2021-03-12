@@ -1,33 +1,51 @@
 package com.example.task3
 
-import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
-import android.widget.RadioButton
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.second_activity.*
 import com.example.task3.Habit.HabitType
 import com.example.task3.Habit.HabitPriority
 
 
-class HabitRedactorActivity : Activity() {
+class HabitRedactorActivity : AppCompatActivity(), ColorPickerDialog.OnInputListener {
 
     companion object {
         const val HABIT = "habit"
         const val POSITION = "position"
     }
 
+    lateinit var colorDialog: DialogFragment;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.second_activity)
+        onViewCreated()
+    }
+
+    private fun onViewCreated() {
         var habit = intent.getSerializableExtra(HABIT) ?: null
         var position = intent.getIntExtra(POSITION, 0)
-
         save_fab.setOnClickListener {
             if (habit != null) saveChangedData(habit as Habit, position)
             else saveNewData(position)
         }
         if (habit != null)
             updateText(habit as Habit)
+        color_button.setOnClickListener {
+            colorDialog.show(supportFragmentManager, "Color Picker") }
+        colorDialog = ColorPickerDialog()
+    }
+
+    override fun onBackPressed() {
+        finish()
     }
 
     private fun updateText(habit: Habit) {
@@ -75,10 +93,22 @@ class HabitRedactorActivity : Activity() {
     }
 
     private fun collectHabit(): Habit {
-        return Habit(edit_habit_name.text.toString(), edit_description.text.toString(),
+        val habit = Habit(
+                edit_habit_name.text.toString(), edit_description.text.toString(),
                 HabitType.fromInt(radioGroup.indexOfChild(findViewById(radioGroup.checkedRadioButtonId))),
                 HabitPriority.fromInt(spinner.selectedItemPosition),
                 Integer.valueOf(edit_times.text.toString()),
-                Integer.valueOf(edit_frequency.text.toString()))
+                Integer.valueOf(edit_frequency.text.toString())
+        )
+        var da =  color_button.background
+        if (da is ColorDrawable){
+            habit.color = da.color
+        }
+        return habit
+    }
+
+    override fun sendColor(color: Int) {
+        color_button.setBackgroundColor(color)
+        colorDialog.dismiss()
     }
 }

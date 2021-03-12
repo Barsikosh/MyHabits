@@ -1,15 +1,15 @@
 package com.example.task3
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.task3.Adapter.HabitAdapter
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.Serializable
-import javax.security.auth.callback.Callback
 
-class MainActivity : Activity() {
+
+class MainActivity : AppCompatActivity() {
 
     companion object {
         const val RESULT_NEW_HABIT = 5
@@ -25,9 +25,10 @@ class MainActivity : Activity() {
     private fun onViewCreated() {
         habit_list.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = HabitAdapter(HabitData.getHabits()) { position ->
-                changeHabit(position)
-            }
+            adapter =
+                HabitAdapter(HabitData.getHabits()) { position ->
+                    changeHabit(position)
+                }
         }
         val habitAdapter = habit_list.adapter as HabitAdapter
         val callback : ItemTouchHelper.Callback = MyItemTouchHelper(habitAdapter)
@@ -48,7 +49,9 @@ class MainActivity : Activity() {
                 HabitData.updateHabit(habit as Habit, position)
                 habit_list.adapter?.notifyItemChanged(position)
             }
+            else -> super.onActivityResult(requestCode, resultCode, data)
         }
+
     }
 
     private fun changeHabit(position: Int) {

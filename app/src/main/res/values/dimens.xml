@@ -2,4 +2,7 @@
 <resources>
     <dimen name="large_margin">16dp</dimen>
     <dimen name="normal_margin">8dp</dimen>
+    <dimen name="color_button_width">18dp</dimen>
+    <dimen name="color_button_height">8dp</dimen>
+
 </resources>

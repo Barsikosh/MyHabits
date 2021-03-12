@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.DOWN
 import androidx.recyclerview.widget.ItemTouchHelper.UP
 import androidx.recyclerview.widget.RecyclerView
+import com.example.task3.Adapter.HabitAdapter
 
 class MyItemTouchHelper(private val adapter: HabitAdapter) : ItemTouchHelper.Callback() {
 
@@ -21,7 +22,8 @@ class MyItemTouchHelper(private val adapter: HabitAdapter) : ItemTouchHelper.Cal
     override fun isItemViewSwipeEnabled(): Boolean {
         return true
     }
-    override fun onMove(recyclerView: RecyclerView, dragged: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+    override fun onMove(recyclerView: RecyclerView, dragged: RecyclerView.ViewHolder,
+                        target: RecyclerView.ViewHolder): Boolean {
         val oldPosition = dragged.adapterPosition
         val newPosition = target.adapterPosition
         adapter.moveItem(oldPosition, newPosition)
