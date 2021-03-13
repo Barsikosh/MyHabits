@@ -32,24 +32,23 @@
             android:background="@drawable/gradient"
             android:orientation="horizontal">
 
-
             <Button
                 android:id="@+id/color_button1"
                 android:layout_width="@dimen/color_button_width"
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
-                android:background="@drawable/color_button"
                 android:textColorHint="#ff00"
-                android:onClick="onClick1"/>
+                android:background="@drawable/color_button"
+                />
 
             <Button
                 android:id="@+id/color_button2"
                 android:layout_width="@dimen/color_button_width"
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
-                android:background="@drawable/color_button"
                 android:textColorHint="#cf55"
-                android:onClick="onClick2"/>
+                android:background="@drawable/color_button"
+                />
 
             <Button
                 android:id="@+id/color_button3"
@@ -57,17 +56,14 @@
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
                 android:background="@drawable/color_button"
-                android:textColorHint="#c16b"
-                android:onClick="onClick3"/>
+                android:textColorHint="#c16b" />
 
             <Button
                 android:id="@+id/color_button4"
                 android:layout_width="@dimen/color_button_width"
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
-                android:background="@drawable/color_button"
-                android:textColorHint="#ff9100"
-                android:onClick="onClick4"/>
+                android:background="@drawable/color_button" />
 
 
             <Button
@@ -76,8 +72,7 @@
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
                 android:background="@drawable/color_button"
-                android:textColorHint="#ffc400"
-                android:onClick="onClick5"/>
+                android:textColorHint="#ffc400" />
 
             <Button
                 android:id="@+id/color_button6"
@@ -85,8 +80,7 @@
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
                 android:background="@drawable/color_button"
-                android:textColorHint="#ffea00"
-                android:onClick="onClick6"/>
+                android:textColorHint="#ffea00" />
 
             <Button
                 android:id="@+id/color_button7"
@@ -94,8 +88,7 @@
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
                 android:background="@drawable/color_button"
-                android:textColorHint="#c6ff00"
-                android:onClick="onClick7"/>
+                android:textColorHint="#c6ff00" />
 
             <Button
                 android:id="@+id/color_button8"
@@ -103,8 +96,7 @@
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
                 android:background="@drawable/color_button"
-                android:textColorHint="#76ff03"
-                android:onClick="onClick8"/>
+                android:textColorHint="#76ff03" />
 
             <Button
                 android:id="@+id/color_button9"
@@ -112,8 +104,7 @@
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
                 android:background="@drawable/color_button"
-                android:textColorHint="#00e676"
-                android:onClick="onClick9"/>
+                android:textColorHint="#00e676"/>
 
             <Button
                 android:id="@+id/color_button10"
@@ -122,8 +113,7 @@
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
                 android:background="@drawable/color_button"
-                android:textColorHint="#1de9b6"
-                android:onClick="onClick10"/>
+                android:textColorHint="#1de9b6" />
 
             <Button
                 android:id="@+id/color_button11"
@@ -131,8 +121,7 @@
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
                 android:background="@drawable/color_button"
-                android:textColorHint="#00e5ff"
-                android:onClick="onClick11"/>
+                android:textColorHint="#00e5ff" />
 
             <Button
                 android:id="@+id/color_button12"
@@ -140,8 +129,7 @@
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
                 android:background="@drawable/color_button"
-                android:textColorHint="#00b0ff"
-                android:onClick="onClick12"/>
+                android:textColorHint="#00b0ff" />
 
             <Button
                 android:id="@+id/color_button13"
@@ -149,8 +137,7 @@
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
                 android:background="@drawable/color_button"
-                android:textColorHint="#2979ff"
-                android:onClick="onClick13"/>
+                android:textColorHint="#2979ff" />
 
             <Button
                 android:id="@+id/color_button14"
@@ -158,8 +145,7 @@
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
                 android:background="@drawable/color_button"
-                android:textColorHint="#3d5afe"
-                android:onClick="onClick14"/>
+                android:textColorHint="#3d5afe" />
 
             <Button
                 android:id="@+id/color_button15"
@@ -167,8 +153,7 @@
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
                 android:background="@drawable/color_button"
-                android:textColorHint="#651fff"
-                android:onClick="onClick15"/>
+                android:textColorHint="#651fff" />
 
             <Button
                 android:id="@+id/color_button16"
@@ -176,17 +161,7 @@
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
                 android:background="@drawable/color_button"
-                android:textColorHint="#d500f9"
-                android:onClick="onClick16"/>
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-
-                android:layout_margin="@dimen/normal_margin">
-
-            </Button>
-
+                android:textColorHint="#d500f9" />
 
         </LinearLayout>
     </HorizontalScrollView>

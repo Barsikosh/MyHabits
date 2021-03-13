@@ -38,7 +38,7 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:gravity="start|top"
-                android:hint="@string/descrip"
+                android:hint="string/descrip"
                 android:inputType="textMultiLine"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
