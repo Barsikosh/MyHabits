@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="large_margin">16dp</dimen>
-    <dimen name="normal_margin">8dp</dimen>
-    <dimen name="color_button_width">18dp</dimen>
-    <dimen name="color_button_height">8dp</dimen>
+    <dimen name="large_margin">22dp</dimen>
+    <dimen name="normal_margin">10dp</dimen>
+    <dimen name="small_margin">3dp</dimen>
+
+    <dimen name="color_button_width">24dp</dimen>
+    <dimen name="color_button_height">11dp</dimen>
 
 </resources>

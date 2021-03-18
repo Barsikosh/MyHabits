@@ -1,11 +1,17 @@
 <resources>
-    <string name="app_name">Task3</string>
+    <string name="app_name">My Habits</string>
     <string name="hint_habit_name">Название</string>
     <string name="habit_name">Название</string>
     <string name="description">Описание</string>
     <string name="first_option">Полезная</string>
     <string name="second_option">Бесполезная</string>
     <string name="priority_text">Приоритет</string>
+    <string name="text_period">Повторять</string>
+    <string name="text_frequency">раза в</string>
+    <string name="text_days">дней</string>
+    <string name="bad_habit">Вредная</string>
+    <string name="good_habit">Полезная</string>
+    <string name="normal_habit">Нормальная</string>
     <string name="type_text">Тип</string>
     <string name="often_text">Периодичность</string>
     <string name="delete_button">Удалить</string>

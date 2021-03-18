@@ -6,9 +6,12 @@
     android:layout_height="match_parent" layout_height="">
 
     <ScrollView
+        android:id="@+id/scrollView2"
         style="@style/Base.CardView"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_anchor="@+id/scrollView2"
+        app:layout_anchorGravity="center">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -38,7 +41,8 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:gravity="start|top"
-                android:hint="string/descrip"
+                android:hint="Описание"
+
                 android:inputType="textMultiLine"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -50,36 +54,37 @@
                 android:layout_width="184dp"
                 android:layout_height="122dp"
                 android:layout_marginBottom="@dimen/large_margin"
-                app:layout_constraintBottom_toTopOf="@+id/textFrequency"
+                app:layout_constraintBottom_toTopOf="@+id/habit_frequency"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textType">
+                app:layout_constraintTop_toBottomOf="@+id/habit_current_type">
 
                 <RadioButton
                     android:id="@+id/first_radio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/normal_margin"
-                    android:text="Полезная" />
+                    android:text="@string/good_habit" />
 
                 <RadioButton
                     android:id="@+id/second_radio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/normal_margin"
-                    android:text="Вредная" />
+                    android:text="@string/bad_habit" />
 
             </RadioGroup>
+
 
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="187dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/normal_margin"
+                android:layout_marginTop="8dp"
                 android:entries="@array/priorities"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/radioGroup"
                 app:layout_constraintTop_toBottomOf="@+id/text_priority" />
-
 
             <TextView
                 android:id="@+id/text_priority"
@@ -92,7 +97,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/edit_description" />
 
             <TextView
-                android:id="@+id/textType"
+                android:id="@+id/habit_current_type"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/normal_margin"
@@ -105,7 +110,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/edit_description" />
 
             <TextView
-                android:id="@+id/textFrequency"
+                android:id="@+id/habit_frequency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/normal_margin"
@@ -123,9 +128,12 @@
                 android:layout_marginBottom="28dp"
                 android:autofillHints=""
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
+                android:maxLength="3"
                 app:layout_constraintBottom_toTopOf="@+id/deleteButton"
-                app:layout_constraintStart_toEndOf="@+id/textView2" />
+                app:layout_constraintStart_toEndOf="@+id/textView2"
+                android:layout_marginStart="@dimen/small_margin"
+                android:layout_marginLeft="@dimen/small_margin" />
 
             <EditText
                 android:id="@+id/edit_frequency"
@@ -133,11 +141,14 @@
                 android:layout_height="39dp"
                 android:autofillHints=""
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
+                android:maxLength="3"
+                android:layout_marginLeft="@dimen/small_margin"
                 app:layout_constraintBottom_toBottomOf="@+id/edit_times"
                 app:layout_constraintStart_toEndOf="@+id/textView9"
                 app:layout_constraintTop_toTopOf="@+id/edit_times"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                android:layout_marginStart="@dimen/small_margin" />
 
             <Button
                 android:id="@+id/deleteButton"
@@ -145,45 +156,31 @@
                 android:layout_height="wrap_content"
                 android:text="@string/delete_button"
                 android:visibility="invisible"
-                app:layout_constraintBottom_toTopOf="@+id/errorText"
-                app:layout_constraintEnd_toStartOf="@+id/edit_frequency"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/errorText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/normal_margin"
-                android:text="@string/error_text"
-                android:textColor="@color/design_default_color_error"
-                android:textSize="14sp"
-                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.527"
+                app:layout_constraintEnd_toStartOf="@+id/edit_frequency"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="20dp"
-                android:text="Повторять"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textFrequency" />
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="36dp"
+                android:text="@string/text_period"
+                app:layout_constraintBottom_toTopOf="@+id/deleteButton"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:text="раз в "
+                android:layout_marginLeft="@dimen/small_margin"
+                android:layout_marginTop="@dimen/large_margin"
+                android:text="@string/text_frequency"
                 app:layout_constraintStart_toEndOf="@+id/edit_times"
-                app:layout_constraintTop_toBottomOf="@+id/textFrequency" />
+                app:layout_constraintTop_toBottomOf="@+id/habit_frequency"
+                android:layout_marginStart="@dimen/small_margin" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -191,23 +188,39 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="180dp"
                 android:layout_marginRight="168dp"
-                android:text="дней."
+                android:layout_marginStart="@dimen/small_margin"
+                android:text="@string/text_days"
                 app:layout_constraintBottom_toBottomOf="@+id/textView9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/edit_frequency"
                 app:layout_constraintTop_toTopOf="@+id/edit_times"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="1.0"
+                android:layout_marginLeft="@dimen/small_margin" />
 
-            <Button
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/color_button"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginStart="@dimen/normal_margin"
+                android:layout_marginLeft="@dimen/large_margin"
+                android:layout_marginTop="88dp"
+                android:layout_marginRight="@dimen/large_margin"
+                android:background="@drawable/roundedbutton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textView3"
+                app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="104dp"
                 android:layout_marginLeft="104dp"
-                android:layout_marginTop="76dp"
-                android:background="@drawable/roundedbutton"
-                app:layout_constraintStart_toEndOf="@+id/textFrequency"
+                android:layout_marginTop="88dp"
+                android:text="Выбрать цвет"
+                app:layout_constraintStart_toEndOf="@+id/habit_frequency"
                 app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
 

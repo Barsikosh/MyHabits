@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
                     changeHabit(position)
                 }
         }
+        habit_list.adapter!!.notifyDataSetChanged()
         val habitAdapter = habit_list.adapter as HabitAdapter
         val callback : ItemTouchHelper.Callback = MyItemTouchHelper(habitAdapter)
         val myItemTouchHelper = ItemTouchHelper(callback)
@@ -39,15 +40,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        val position = data?.getIntExtra(HabitRedactorActivity.POSITION, 0) ?: 0
+        val position = data?.getIntExtra(HabitRedactorActivity.POSITION, HabitData.getSize())
         val habit = data?.getSerializableExtra(HabitRedactorActivity.HABIT) ?: null
         when (resultCode) {
-            RESULT_NEW_HABIT -> {
+           RESULT_NEW_HABIT -> {
                 HabitData.addHabit(habit as Habit)
-                habit_list.adapter?.notifyItemInserted(position)}
+                habit_list.adapter?.notifyItemInserted(position!!)}
             RESULT_CHANGED_HABIT -> {
-                HabitData.updateHabit(habit as Habit, position)
-                habit_list.adapter?.notifyItemChanged(position)
+                HabitData.updateHabit(habit as Habit, position!!)
+                habit_list.adapter?.notifyItemChanged(position!!)
             }
             else -> super.onActivityResult(requestCode, resultCode, data)
         }
@@ -58,12 +59,13 @@ class MainActivity : AppCompatActivity() {
         val newIntent = Intent(this, HabitRedactorActivity::class.java)
         newIntent.putExtra(HabitRedactorActivity.HABIT, HabitData.getHabit(position))
         newIntent.putExtra(HabitRedactorActivity.POSITION, position)
+        newIntent.putExtra(HabitRedactorActivity.COMMAND, HabitRedactorActivity.CHANGE_HABIT)
         startActivityForResult(newIntent, RESULT_CHANGED_HABIT)
     }
 
     private fun addHabit() {
         val newIntent = Intent(this, HabitRedactorActivity::class.java)
-        newIntent.putExtra(HabitRedactorActivity.POSITION, HabitData.getSize())
+        newIntent.putExtra(HabitRedactorActivity.COMMAND, HabitRedactorActivity.ADD_HABIT)
         startActivityForResult(newIntent, RESULT_NEW_HABIT)
     }
 }

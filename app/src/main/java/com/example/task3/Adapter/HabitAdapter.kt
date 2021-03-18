@@ -1,14 +1,11 @@
 package com.example.task3.Adapter
 
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.ColorFilter
+import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.Shape
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +15,7 @@ import com.example.task3.Habit
 import com.example.task3.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.list_item.*
-import kotlinx.android.synthetic.main.list_item.view.*
+import kotlinx.android.synthetic.main.second_activity.*
 
 class HabitAdapter(private val habits: MutableList<Habit>,
                    private val onItemClick: ((Int) -> Unit))
@@ -58,12 +55,12 @@ class HabitAdapter(private val habits: MutableList<Habit>,
         }
 
         fun bind(habit: Habit) {
-            habit_name.text = habit.name
-            habit_description.text = habit.description
-            habit_period.text = habit.time.toString() + " раз в " + habit.period.toString() + " дней"
-            habit_priority.text = habit.priority.toString()
+            habit_name.text = "Название: ${habit.name}"
+            habit_description.text = "Описание: ${habit.description}"
+            habit_period.text = "Повторять ${habit.time} раз в ${habit.period} дней"
+            habit_priority.text =  habit.priority.toString()
             habit_type.text = habit.type.toString()
-            var shape = itemView.findViewById<View>(R.id.my_da).background as Drawable
+            val shape = itemView.findViewById<View>(R.id.my_shape).background
             shape.setColorFilter(habit.color,PorterDuff.Mode.SRC_ATOP)
         }
     }

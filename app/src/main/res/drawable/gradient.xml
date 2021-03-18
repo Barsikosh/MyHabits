@@ -10,7 +10,6 @@
                 android:centerColor="#0000FF"
                 android:type="linear"
                 />
-
         </shape>
     </item>
 </selector>

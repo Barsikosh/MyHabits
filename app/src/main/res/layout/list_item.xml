@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <LinearLayout
-    android:id="@+id/my_da"
+    android:id="@+id/my_shape"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:paddingLeft="16dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/habit_description"
@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:paddingLeft="16dp"
+        android:maxLength="100"
         android:textStyle="bold"/>
 
     <TextView

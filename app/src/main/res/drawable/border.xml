@@ -10,7 +10,7 @@
        />
     <stroke
         android:width="3dp"
-        android:color="@color/design_default_color_primary_variant" />
+        android:color="@color/design_default_color_primary" />
     <corners
         android:bottomLeftRadius="27dp"
         android:bottomRightRadius="27dp"

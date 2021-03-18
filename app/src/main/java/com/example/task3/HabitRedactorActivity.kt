@@ -1,13 +1,13 @@
 package com.example.task3
 
-import android.app.Dialog
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
+
 import android.os.Bundle
-import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
+
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.second_activity.*
@@ -20,27 +20,39 @@ class HabitRedactorActivity : AppCompatActivity(), ColorPickerDialog.OnInputList
     companion object {
         const val HABIT = "habit"
         const val POSITION = "position"
+        const val CHANGE_HABIT = 5
+        const val ADD_HABIT = 4
+        const val COMMAND = "command"
     }
 
     lateinit var colorDialog: DialogFragment;
+    var color: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.second_activity)
+        color = resources.getColor(R.color.design_default_color_primary)
         onViewCreated()
     }
 
     private fun onViewCreated() {
-        var habit = intent.getSerializableExtra(HABIT) ?: null
-        var position = intent.getIntExtra(POSITION, 0)
-        save_fab.setOnClickListener {
-            if (habit != null) saveChangedData(habit as Habit, position)
-            else saveNewData(position)
+        when (intent.getIntExtra(COMMAND, 0)) {
+
+            ADD_HABIT -> save_fab.setOnClickListener { saveNewData() }
+            CHANGE_HABIT -> {
+                val habit = intent.getSerializableExtra(HABIT)
+                val position = intent.getIntExtra(POSITION, 0)
+                save_fab.setOnClickListener {
+                    saveChangedData(position)
+                    saveNewData()
+                }
+                updateText(habit as Habit)
+            }
         }
-        if (habit != null)
-            updateText(habit as Habit)
+
         color_button.setOnClickListener {
-            colorDialog.show(supportFragmentManager, "Color Picker") }
+            colorDialog.show(supportFragmentManager, "Color Picker")
+        }
         colorDialog = ColorPickerDialog()
     }
 
@@ -58,29 +70,41 @@ class HabitRedactorActivity : AppCompatActivity(), ColorPickerDialog.OnInputList
             HabitType.GOOD -> radioGroup.check(R.id.first_radio)
             HabitType.BAD -> radioGroup.check(R.id.second_radio)
         }
+        color = habit.color
+        val state = ColorStateList.valueOf(habit.color)
+        color_button.backgroundTintList = state
     }
 
     private fun checkAllProperties(): Boolean {
+        var result = true
 
-        return radioGroup.checkedRadioButtonId != -1 &&
-                edit_description.text.isNotEmpty() &&
-                edit_times.text.isNotEmpty() &&
-                edit_frequency.text.isNotEmpty() &&
-                edit_habit_name.text.isNotEmpty()
+        if (radioGroup.checkedRadioButtonId == -1){
+            result = false
+            habit_current_type.setTextColor(Color.RED)
+        }
+
+        if (edit_frequency.text.isEmpty() || edit_times.text.isEmpty()){
+            result = false
+            habit_frequency.setTextColor(Color.RED)
+        }
+        if (edit_habit_name.text.isEmpty()){
+            result = false
+            edit_habit_name.setHintTextColor(Color.RED)
+        }
+        return result
     }
 
-    private fun saveNewData(position: Int) {
+    private fun saveNewData() {
         if (checkAllProperties()) {
             val habit = collectHabit()
             val newIntent = Intent(this, MainActivity::class.java)
             newIntent.putExtra(HABIT, habit)
-            newIntent.putExtra(POSITION, position)
             setResult(MainActivity.RESULT_NEW_HABIT, newIntent)
             finish()
         }
     }
 
-    private fun saveChangedData(habit: Habit, position: Int) {
+    private fun saveChangedData(position: Int) {
 
         if (checkAllProperties()) {
             val newHabit = collectHabit()
@@ -100,15 +124,15 @@ class HabitRedactorActivity : AppCompatActivity(), ColorPickerDialog.OnInputList
                 Integer.valueOf(edit_times.text.toString()),
                 Integer.valueOf(edit_frequency.text.toString())
         )
-        var da =  color_button.background
-        if (da is ColorDrawable){
-            habit.color = da.color
-        }
+
+        habit.color = color!!
         return habit
     }
 
     override fun sendColor(color: Int) {
-        color_button.setBackgroundColor(color)
+        val state = ColorStateList.valueOf(color)
+        color_button.backgroundTintList = state
+        this.color = color
         colorDialog.dismiss()
     }
 }

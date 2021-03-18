@@ -37,18 +37,16 @@
                 android:layout_width="@dimen/color_button_width"
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
-                android:textColorHint="#ff00"
                 android:background="@drawable/color_button"
-                />
+                android:textColorHint="#38EA10" />
 
             <Button
                 android:id="@+id/color_button2"
                 android:layout_width="@dimen/color_button_width"
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
-                android:textColorHint="#cf55"
                 android:background="@drawable/color_button"
-                />
+                android:textColorHint="#DD17C83E" />
 
             <Button
                 android:id="@+id/color_button3"
@@ -56,14 +54,15 @@
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
                 android:background="@drawable/color_button"
-                android:textColorHint="#c16b" />
+                android:textColorHint="#CC48AE6D" />
 
             <Button
                 android:id="@+id/color_button4"
                 android:layout_width="@dimen/color_button_width"
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
-                android:background="@drawable/color_button" />
+                android:background="@drawable/color_button"
+                android:textColorHint="#8B3BCC92" />
 
 
             <Button
@@ -72,7 +71,7 @@
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
                 android:background="@drawable/color_button"
-                android:textColorHint="#ffc400" />
+                android:textColorHint="#770B99F6" />
 
             <Button
                 android:id="@+id/color_button6"
@@ -80,7 +79,7 @@
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
                 android:background="@drawable/color_button"
-                android:textColorHint="#ffea00" />
+                android:textColorHint="#D21775FF" />
 
             <Button
                 android:id="@+id/color_button7"
@@ -88,7 +87,7 @@
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
                 android:background="@drawable/color_button"
-                android:textColorHint="#c6ff00" />
+                android:textColorHint="#E81B3CDF" />
 
             <Button
                 android:id="@+id/color_button8"
@@ -96,7 +95,7 @@
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
                 android:background="@drawable/color_button"
-                android:textColorHint="#76ff03" />
+                android:textColorHint="#031CFF" />
 
             <Button
                 android:id="@+id/color_button9"
@@ -104,7 +103,7 @@
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
                 android:background="@drawable/color_button"
-                android:textColorHint="#00e676"/>
+                android:textColorHint="#673AB7" />
 
             <Button
                 android:id="@+id/color_button10"
