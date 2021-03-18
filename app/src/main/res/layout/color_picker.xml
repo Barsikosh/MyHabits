@@ -152,15 +152,8 @@
                 android:layout_height="@dimen/color_button_width"
                 android:layout_margin="@dimen/large_margin"
                 android:background="@drawable/color_button"
-                android:textColorHint="#B51D2F" />
+                android:textColorHint="#C3152A" />
 
-            <Button
-                android:id="@+id/color_button16"
-                android:layout_width="@dimen/color_button_width"
-                android:layout_height="@dimen/color_button_width"
-                android:layout_margin="@dimen/large_margin"
-                android:background="@drawable/color_button"
-                android:textColorHint="#FF0000" />
 
         </LinearLayout>
     </HorizontalScrollView>
