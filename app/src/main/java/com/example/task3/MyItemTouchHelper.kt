@@ -31,7 +31,7 @@ class MyItemTouchHelper(private val adapter: HabitAdapter) : ItemTouchHelper.Cal
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        var pos = viewHolder.adapterPosition
+        val pos = viewHolder.adapterPosition
         adapter.deleteItem(pos)
     }
 

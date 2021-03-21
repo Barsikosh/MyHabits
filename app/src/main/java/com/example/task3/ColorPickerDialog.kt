@@ -26,6 +26,7 @@ class ColorPickerDialog: DialogFragment() {
     private fun returnColorCode(colorButton: Button){
         val background = colorButton.currentHintTextColor
         onInputListener!!.sendColor(background)
+        dismiss()
     }
 
     interface OnInputListener {

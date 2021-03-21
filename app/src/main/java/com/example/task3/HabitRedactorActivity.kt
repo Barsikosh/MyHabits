@@ -3,11 +3,7 @@ package com.example.task3
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.PorterDuff
-import android.graphics.drawable.ColorDrawable
-
 import android.os.Bundle
-
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.second_activity.*
@@ -25,7 +21,7 @@ class HabitRedactorActivity : AppCompatActivity(), ColorPickerDialog.OnInputList
         const val COMMAND = "command"
     }
 
-    lateinit var colorDialog: DialogFragment;
+    private lateinit var colorDialog: DialogFragment;
     var color: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -41,14 +41,14 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         val position = data?.getIntExtra(HabitRedactorActivity.POSITION, HabitData.getSize())
-        val habit = data?.getSerializableExtra(HabitRedactorActivity.HABIT) ?: null
+        val habit = data?.getSerializableExtra(HabitRedactorActivity.HABIT)
         when (resultCode) {
            RESULT_NEW_HABIT -> {
                 HabitData.addHabit(habit as Habit)
                 habit_list.adapter?.notifyItemInserted(position!!)}
             RESULT_CHANGED_HABIT -> {
                 HabitData.updateHabit(habit as Habit, position!!)
-                habit_list.adapter?.notifyItemChanged(position!!)
+                habit_list.adapter?.notifyItemChanged(position)
             }
             else -> super.onActivityResult(requestCode, resultCode, data)
         }

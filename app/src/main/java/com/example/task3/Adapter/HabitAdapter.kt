@@ -1,21 +1,16 @@
 package com.example.task3.Adapter
 
 
-import android.content.Context
-import android.graphics.Color
 import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task3.Habit
 import com.example.task3.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.list_item.*
-import kotlinx.android.synthetic.main.second_activity.*
 
 class HabitAdapter(private val habits: MutableList<Habit>,
                    private val onItemClick: ((Int) -> Unit))
@@ -33,11 +28,11 @@ class HabitAdapter(private val habits: MutableList<Habit>,
         holder.bind(habits[position])
     }
 
-    override fun moveItem(oldPosition: Int, newPosition: Int){
-        val habit = habits[oldPosition]
-        habits[oldPosition] = habits[newPosition]
-        habits[newPosition] = habit
-        notifyItemMoved(oldPosition,newPosition)
+    override fun moveItem(startPosition: Int, nextPosition: Int){
+        val habit = habits[startPosition]
+        habits[startPosition] = habits[nextPosition]
+        habits[nextPosition] = habit
+        notifyItemMoved(startPosition,nextPosition)
     }
 
     override fun deleteItem(position: Int){
@@ -50,7 +45,7 @@ class HabitAdapter(private val habits: MutableList<Habit>,
 
         init {
             itemView.setOnClickListener {
-                onItemClick?.invoke(adapterPosition)
+                onItemClick.invoke(adapterPosition)
             }
         }
 
