@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/android_navigation"
+    app:startDestination="@id/habits">
+    <fragment
+        android:id = "@+id/habits"
+        android:name = "com.example.task3.Fragments.HabitListFragment"
+        tools:layout = "@layout/habits_fragment">
+        <action
+            android:id = "@+id/action_gotoRedactor"
+            app:destination = "@id/redactor">
+        </action>
+    </fragment>
+
+
+
+    <fragment
+        android:id = "@+id/redactor"
+        android:name = "com.example.task3.Fragments.HabitRedactorFragment"
+        tools:layout = "@layout/redactor_fragment"
+        >
+        <action
+            android:id = "@+id/action_go_home"
+            app:destination = "@+id/last_page_fragment" />
+    </fragment>
+
+
+
+</navigation>

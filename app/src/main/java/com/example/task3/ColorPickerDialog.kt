@@ -36,7 +36,7 @@ class ColorPickerDialog: DialogFragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
-            onInputListener = activity as OnInputListener?
+            onInputListener = parentFragment as OnInputListener?
         }
 
         catch (e: ClassCastException) {

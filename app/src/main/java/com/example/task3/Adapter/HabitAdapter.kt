@@ -8,12 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task3.Habit
+import com.example.task3.HabitData
 import com.example.task3.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.list_item.*
 
 class HabitAdapter(private val habits: MutableList<Habit>,
-                   private val onItemClick: ((Int) -> Unit))
+                   private val onItemClick: ((Habit) -> Unit))
     : RecyclerView.Adapter<HabitAdapter.HabitViewHolder>(),
     ITouchHelperAdapter {
 
@@ -45,7 +46,7 @@ class HabitAdapter(private val habits: MutableList<Habit>,
 
         init {
             itemView.setOnClickListener {
-                onItemClick.invoke(adapterPosition)
+                onItemClick.invoke(habits[adapterPosition])
             }
         }
 

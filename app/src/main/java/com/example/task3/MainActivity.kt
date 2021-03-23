@@ -1,13 +1,20 @@
 package com.example.task3
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.task3.Adapter.HabitAdapter
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.core.view.get
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.RecyclerView
+import com.example.task3.Fragments.HabitRedactorFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.habits_fragment.view.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,56 +24,19 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         setContentView(R.layout.activity_main)
-        onViewCreated()
-        add_habit_button.setOnClickListener { addHabit() }
-    }
-
-    private fun onViewCreated() {
-        habit_list.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter =
-                HabitAdapter(HabitData.getHabits()) { position ->
-                    changeHabit(position)
-                }
-        }
-        habit_list.adapter!!.notifyDataSetChanged()
-        val habitAdapter = habit_list.adapter as HabitAdapter
-        val callback : ItemTouchHelper.Callback = MyItemTouchHelper(habitAdapter)
-        val myItemTouchHelper = ItemTouchHelper(callback)
-        myItemTouchHelper.attachToRecyclerView(habit_list)
-    }
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-        val position = data?.getIntExtra(HabitRedactorActivity.POSITION, HabitData.getSize())
-        val habit = data?.getSerializableExtra(HabitRedactorActivity.HABIT)
-        when (resultCode) {
-           RESULT_NEW_HABIT -> {
-                HabitData.addHabit(habit as Habit)
-                habit_list.adapter?.notifyItemInserted(position!!)}
-            RESULT_CHANGED_HABIT -> {
-                HabitData.updateHabit(habit as Habit, position!!)
-                habit_list.adapter?.notifyItemChanged(position)
-            }
-            else -> super.onActivityResult(requestCode, resultCode, data)
-        }
+        pager.adapter = HabitPagerAdapter(this)
+        TabLayoutMediator(tabs, pager) { tab, position ->
+            tab.text = "tab ${position}"
+            pager.setCurrentItem(tab.position, true)
+        }.attach()
 
     }
 
-    private fun changeHabit(position: Int) {
-        val newIntent = Intent(this, HabitRedactorActivity::class.java)
-        newIntent.putExtra(HabitRedactorActivity.HABIT, HabitData.getHabit(position))
-        newIntent.putExtra(HabitRedactorActivity.POSITION, position)
-        newIntent.putExtra(HabitRedactorActivity.COMMAND, HabitRedactorActivity.CHANGE_HABIT)
-        startActivityForResult(newIntent, RESULT_CHANGED_HABIT)
-    }
-
-    private fun addHabit() {
-        val newIntent = Intent(this, HabitRedactorActivity::class.java)
-        newIntent.putExtra(HabitRedactorActivity.COMMAND, HabitRedactorActivity.ADD_HABIT)
-        startActivityForResult(newIntent, RESULT_NEW_HABIT)
-    }
+    override fun onSupportNavigateUp()
+            = findNavController(R.id.my_nav_host_fragment).navigateUp()
 }
+
 
