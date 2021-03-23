@@ -9,15 +9,13 @@
     android:id="@+id/main_activity">
 
 
-
-
-    <FrameLayout
+  <!--  <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent">-->
 
         <fragment
             android:layout_width="match_parent"
@@ -26,7 +24,8 @@
             android:name="androidx.navigation.fragment.NavHostFragment"
             app:navGraph="@navigation/android_navigation"
             app:defaultNavHost="true"
-            />
+            app:layout_constraintBottom_toBottomOf="parent">
+        </fragment>
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -57,6 +56,6 @@
             android:layout_height="match_parent">
 
         </androidx.viewpager2.widget.ViewPager2>
-    </FrameLayout>
+   <!-- </FrameLayout>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

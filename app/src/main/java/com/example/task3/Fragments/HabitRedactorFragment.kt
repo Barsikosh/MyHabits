@@ -44,11 +44,11 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        when (arguments!!.getInt(COMMAND)) {
+        when (requireArguments().getInt(COMMAND)) {
 
             ADD_HABIT -> save_fab.setOnClickListener { saveNewData() }
             CHANGE_HABIT -> {
-                val habit = arguments!!.getSerializable(ARGS_HABIT)
+                val habit = requireArguments().getSerializable(ARGS_HABIT)
                 save_fab.setOnClickListener {
                     saveChangedData(habit as Habit)
                     saveNewData()
@@ -56,7 +56,6 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
                 updateText(habit as Habit)
             }
         }
-
         color_button.setOnClickListener {
             colorDialog.show(childFragmentManager, "Color Picker")
         }
@@ -117,13 +116,13 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
     private fun collectHabit(): Habit {
         val habit = Habit(
             edit_habit_name.text.toString(), edit_description.text.toString(),
-            Habit.HabitType.fromInt(radioGroup.indexOfChild(view!!.findViewById(radioGroup.checkedRadioButtonId))),
+            Habit.HabitType.fromInt(radioGroup.indexOfChild(requireView().findViewById(radioGroup.checkedRadioButtonId))),
             Habit.HabitPriority.fromInt(spinner.selectedItemPosition),
             Integer.valueOf(edit_times.text.toString()),
             Integer.valueOf(edit_frequency.text.toString())
         )
 
-        habit.color = color!!
+        habit.color = color
         return habit
     }
 

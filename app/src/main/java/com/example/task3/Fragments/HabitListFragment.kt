@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.navigation.Navigation.createNavigateOnClickListener
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,7 +46,7 @@ class HabitListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        add_habit_button.setOnClickListener { addHabit() }
+        add_habit_button.setOnClickListener {addHabit()}
 
         val habitList = when (this@HabitListFragment.arguments?.getSerializable(HABIT_TYPE)) {
             Habit.HabitType.GOOD -> HabitData.goodHabits
@@ -54,7 +56,10 @@ class HabitListFragment : Fragment() {
     }
 
     private fun addHabit() {
-        Navigation.createNavigateOnClickListener(R.id.action_gotoRedactor)
+        val navController = activity?.findNavController(R.id.my_nav_host_fragment)
+        val bundle = Bundle()
+        bundle.putInt(HabitRedactorFragment.COMMAND, HabitRedactorFragment.ADD_HABIT)
+        navController!!.navigate(R.id.action_gotoRedactor, bundle)
     }
 
     private fun updateAdapter() {
