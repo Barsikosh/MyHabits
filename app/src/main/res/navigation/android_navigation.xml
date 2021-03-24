@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/android_navigation"
-    app:startDestination="@id/habits">
+    app:startDestination="@id/viewPagerFragment">
     <fragment
         android:id = "@+id/habits"
         android:name = "com.example.task3.Fragments.HabitListFragment"
@@ -13,7 +13,6 @@
             app:destination = "@id/redactor">
         </action>
     </fragment>
-
 
 
     <fragment
@@ -27,5 +26,17 @@
     </fragment>
 
 
+    <fragment
+        android:id = "@+id/viewPagerFragment"
+        android:name = "com.example.task3.ViewPagerFragment"
+        tools:layout = "@layout/view_pager"
+        >
 
+        <action
+            android:id = "@+id/action_go_home"
+            app:destination="@id/habits" />
+        <action
+            android:id="@+id/action_goto_redactor"
+            app:destination="@id/redactor" />
+    </fragment>
 </navigation>

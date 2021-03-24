@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.Navigation.createNavigateOnClickListener
@@ -13,14 +14,13 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.task3.*
 import com.example.task3.Adapter.HabitAdapter
-import com.example.task3.Habit
-import com.example.task3.HabitData
-import com.example.task3.MyItemTouchHelper
-import com.example.task3.R
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.habits_fragment.*
 import kotlinx.android.synthetic.main.redactor_fragment.*
+import kotlinx.android.synthetic.main.view_pager.*
 
 class HabitListFragment : Fragment() {
 
@@ -46,8 +46,8 @@ class HabitListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        add_habit_button.setOnClickListener {addHabit()}
 
+        add_habit_button.setOnClickListener {addHabit()}
         val habitList = when (this@HabitListFragment.arguments?.getSerializable(HABIT_TYPE)) {
             Habit.HabitType.GOOD -> HabitData.goodHabits
             else -> HabitData.badHabits
@@ -59,11 +59,7 @@ class HabitListFragment : Fragment() {
         val navController = activity?.findNavController(R.id.my_nav_host_fragment)
         val bundle = Bundle()
         bundle.putInt(HabitRedactorFragment.COMMAND, HabitRedactorFragment.ADD_HABIT)
-        navController!!.navigate(R.id.action_gotoRedactor, bundle)
-    }
-
-    private fun updateAdapter() {
-
+        navController!!.navigate(R.id.action_goto_redactor, bundle)
     }
 
     private fun addAdapter(habitList: MutableList<Habit>) {
@@ -83,8 +79,6 @@ class HabitListFragment : Fragment() {
 
     private fun changeHabit(habit: Habit) {
         val redactorFragment = HabitRedactorFragment.newInstance(habit)
-        val transaction = childFragmentManager.beginTransaction()
-        transaction.addToBackStack(null)
-        transaction.add(R.id.fragment_container, redactorFragment).commit()
+
     }
 }

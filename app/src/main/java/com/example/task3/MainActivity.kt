@@ -1,11 +1,14 @@
 package com.example.task3
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task3.Fragments.HabitRedactorFragment
@@ -25,13 +28,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         setContentView(R.layout.activity_main)
-        pager.adapter = HabitPagerAdapter(this)
-        TabLayoutMediator(tabs, pager) { tab, position ->
-            tab.text = "tab ${position}"
-            pager.setCurrentItem(tab.position, true)
-        }.attach()
+
 
     }
 
