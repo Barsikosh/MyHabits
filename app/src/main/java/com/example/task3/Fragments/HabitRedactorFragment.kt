@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.example.task3.*
 import kotlinx.android.synthetic.main.redactor_fragment.*
 
@@ -19,7 +20,7 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
         const val CHANGE_HABIT = 2
         const val COMMAND = "command"
 
-        fun newInstance(habit: Habit?) : HabitRedactorFragment{
+        /*fun newInstance(habit: Habit?) : HabitRedactorFragment{
             val fragment = HabitRedactorFragment()
             val bundle = Bundle()
             return if (habit != null){
@@ -32,7 +33,7 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
                 fragment.arguments = bundle
                 fragment
             }
-        }
+        }*/
     }
 
     private lateinit var colorDialog: ColorPickerDialog;
@@ -44,17 +45,17 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        when (requireArguments().getInt(COMMAND)) {
+        when (arguments?.getInt(COMMAND)) {
 
             ADD_HABIT -> save_fab.setOnClickListener { saveNewData() }
             CHANGE_HABIT -> {
                 val habit = requireArguments().getSerializable(ARGS_HABIT)
                 save_fab.setOnClickListener {
                     saveChangedData(habit as Habit)
-                    saveNewData()
                 }
                 updateText(habit as Habit)
             }
+            else -> throw IllegalArgumentException("Name required")
         }
         color_button.setOnClickListener {
             colorDialog.show(childFragmentManager, "Color Picker")
@@ -101,7 +102,11 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
         if (checkAllProperties()) {
             val habit = collectHabit()
             HabitData.addHabit(habit)
-            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+            val navController = activity?.findNavController(R.id.my_nav_host_fragment)
+            val bundle = Bundle()
+            bundle.putInt(HabitListFragment.RESULT, HabitListFragment.RESULT_NEW_HABIT)
+            bundle.putSerializable(ARGS_HABIT, habit)
+            navController!!.navigate(R.id.action_redactor_to_viewPagerFragment, bundle)
         }
     }
 
@@ -109,12 +114,17 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
 
         if (checkAllProperties()) {
             val newHabit = collectHabit()
-
+            HabitData.updateHabit(newHabit, habit.id)
+            val navController = activity?.findNavController(R.id.my_nav_host_fragment)
+            val bundle = Bundle()
+            bundle.putInt(HabitListFragment.RESULT, HabitListFragment.RESULT_CHANGED_HABIT)
+            navController!!.navigate(R.id.action_redactor_to_viewPagerFragment, bundle)
         }
     }
 
     private fun collectHabit(): Habit {
         val habit = Habit(
+            0,
             edit_habit_name.text.toString(), edit_description.text.toString(),
             Habit.HabitType.fromInt(radioGroup.indexOfChild(requireView().findViewById(radioGroup.checkedRadioButtonId))),
             Habit.HabitPriority.fromInt(spinner.selectedItemPosition),

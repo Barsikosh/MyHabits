@@ -21,10 +21,7 @@ import kotlinx.android.synthetic.main.habits_fragment.view.*
 
 class MainActivity : AppCompatActivity() {
 
-    companion object {
-        const val RESULT_NEW_HABIT = 5
-        const val RESULT_CHANGED_HABIT = 4
-    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

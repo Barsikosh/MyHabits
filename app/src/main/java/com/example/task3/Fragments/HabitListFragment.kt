@@ -27,7 +27,9 @@ class HabitListFragment : Fragment() {
     companion object {
 
         const val HABIT_TYPE = "habit_type"
-
+        const val RESULT_NEW_HABIT = 5
+        const val RESULT_CHANGED_HABIT = 4
+        const val RESULT = "result"
         fun newInstance(habitType: Habit.HabitType): HabitListFragment {
             val fragment = HabitListFragment()
             val bundle = Bundle()
@@ -78,7 +80,11 @@ class HabitListFragment : Fragment() {
     }
 
     private fun changeHabit(habit: Habit) {
-        val redactorFragment = HabitRedactorFragment.newInstance(habit)
+        val navController = activity?.findNavController(R.id.my_nav_host_fragment)
+        val bundle = Bundle()
+        bundle.putInt(HabitRedactorFragment.COMMAND, HabitRedactorFragment.CHANGE_HABIT)
+        bundle.putSerializable(HabitRedactorFragment.ARGS_HABIT, habit)
+        navController!!.navigate(R.id.action_goto_redactor, bundle)
 
     }
 }

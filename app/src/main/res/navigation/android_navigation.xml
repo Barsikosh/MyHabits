@@ -8,10 +8,6 @@
         android:id = "@+id/habits"
         android:name = "com.example.task3.Fragments.HabitListFragment"
         tools:layout = "@layout/habits_fragment">
-        <action
-            android:id = "@+id/action_gotoRedactor"
-            app:destination = "@id/redactor">
-        </action>
     </fragment>
 
 
@@ -23,20 +19,25 @@
         <action
             android:id = "@+id/action_go_home"
             app:destination = "@+id/last_page_fragment" />
+        <action
+            android:id="@+id/action_redactor_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment" />
     </fragment>
 
 
     <fragment
         android:id = "@+id/viewPagerFragment"
         android:name = "com.example.task3.ViewPagerFragment"
-        tools:layout = "@layout/view_pager"
-        >
+        tools:layout = "@layout/view_pager">
 
         <action
             android:id = "@+id/action_go_home"
             app:destination="@id/habits" />
         <action
             android:id="@+id/action_goto_redactor"
-            app:destination="@id/redactor" />
+            app:destination="@id/redactor">
+
+        </action>
+
     </fragment>
 </navigation>
