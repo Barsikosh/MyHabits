@@ -3,13 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/android_navigation"
-    app:startDestination="@id/viewPagerFragment">
-    <fragment
-        android:id = "@+id/habits"
-        android:name = "com.example.task3.Fragments.HabitListFragment"
-        tools:layout = "@layout/habits_fragment">
-    </fragment>
-
+    app:startDestination="@id/nav_home">
 
     <fragment
         android:id = "@+id/redactor"
@@ -21,23 +15,40 @@
             app:destination = "@+id/last_page_fragment" />
         <action
             android:id="@+id/action_redactor_to_viewPagerFragment"
-            app:destination="@id/viewPagerFragment" />
+            app:destination="@id/nav_home" />
+
+        <action
+            android:id="@+id/action_redactor_to_colorPicker"
+            app:destination="@id/color_picker" />
     </fragment>
 
 
     <fragment
-        android:id = "@+id/viewPagerFragment"
+        android:id = "@+id/nav_home"
         android:name = "com.example.task3.ViewPagerFragment"
         tools:layout = "@layout/view_pager">
 
-        <action
-            android:id = "@+id/action_go_home"
-            app:destination="@id/habits" />
         <action
             android:id="@+id/action_goto_redactor"
             app:destination="@id/redactor">
 
         </action>
-
     </fragment>
+
+    <dialog
+        android:id = "@+id/color_picker"
+        android:name = "com.example.task3.Fragments.ColorPickerDialog"
+        tools:layout = "@layout/color_picker"
+        >
+        <action
+            android:id="@+id/action_colorPicker_to_redactor"
+            app:destination="@id/redactor" />
+    </dialog>
+
+    <fragment
+        android:id="@+id/nav_about_app"
+        android:name="com.example.task3.Fragments.InfoFragment"
+        android:label="InfoFragment"
+        tools:layout="@layout/info_fragment"/>
+
 </navigation>

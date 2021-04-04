@@ -1,4 +1,4 @@
-package com.example.task3
+package com.example.task3.Fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.findNavController
+import com.example.task3.R
 
 
 class ColorPickerDialog: DialogFragment() {
@@ -36,7 +38,10 @@ class ColorPickerDialog: DialogFragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
-            onInputListener = parentFragment as OnInputListener?
+            val fragment = requireActivity().supportFragmentManager
+                .findFragmentById(R.id.my_nav_host_fragment)!!
+                .childFragmentManager.fragments[0]
+            onInputListener = fragment as OnInputListener
         }
 
         catch (e: ClassCastException) {
