@@ -12,6 +12,8 @@
     <string name="bad_habit">Вредная</string>
     <string name="good_habit">Полезная</string>
     <string name="normal_habit">Нормальная</string>
+    <string name="information">Информация</string>
+    <string name="habits">Привычки</string>
     <string name="type_text">Тип</string>
     <string name="open_drawer" />
     <string name="close_drawer" />

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/my_shape"
-    android:layout_width="fill_parent"
+    android:layout_width="350dp"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:background="@drawable/border"
     android:orientation="vertical"
-    android:padding="10dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/habit_name"
@@ -22,9 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:paddingLeft="16dp"
         android:maxLength="100"
-        android:textStyle="bold"/>
+        android:paddingLeft="16dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/habit_priority"
@@ -32,14 +31,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:paddingLeft="16dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/habit_period"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:paddingLeft="16dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/habit_type"
@@ -47,15 +47,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:paddingLeft="16dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
 
-        <TextView
+    <TextView
         android:id="@+id/list_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:paddingLeft="16dp"
-        />
+        android:paddingLeft="16dp" />
 
-    </LinearLayout>
+</LinearLayout>

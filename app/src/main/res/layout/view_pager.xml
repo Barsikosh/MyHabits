@@ -19,7 +19,7 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:theme="@style/ThemeOverlay.AppCompat.Light"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -29,7 +29,7 @@
             android:layout_height="match_parent" />
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/type_bar"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="6dp"
             android:background="?attr/colorPrimary" />

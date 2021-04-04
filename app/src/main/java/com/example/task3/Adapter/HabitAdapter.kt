@@ -2,16 +2,15 @@ package com.example.task3.Adapter
 
 
 import android.graphics.PorterDuff
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task3.Habit
-import com.example.task3.HabitData
+import com.example.task3.Adapter.*
 import com.example.task3.R
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.list_item.*
+import kotlinx.android.synthetic.main.list_item.view.*
 
 class HabitAdapter(private val habits: MutableList<Habit>,
                    private val onItemClick: ((Habit) -> Unit))
@@ -51,11 +50,11 @@ class HabitAdapter(private val habits: MutableList<Habit>,
         }
 
         fun bind(habit: Habit) {
-            habit_name.text = "Название: ${habit.name}"
-            habit_description.text = "Описание: ${habit.description}"
-            habit_period.text = "Повторять ${habit.time} раз в ${habit.period} дней"
-            habit_priority.text =  habit.priority.toString()
-            habit_type.text = habit.type.toString()
+            containerView.habit_name.text = "Название: ${habit.name}"
+            containerView.habit_description.text = "Описание: ${habit.description}"
+            containerView.habit_period.text = "Повторять ${habit.time} раз в ${habit.period} дней"
+            containerView.habit_priority.text =  habit.priority.toString()
+            containerView.habit_type.text = habit.type.toString()
             val shape = itemView.findViewById<View>(R.id.my_shape).background
             shape.setColorFilter(habit.color,PorterDuff.Mode.SRC_ATOP)
         }
