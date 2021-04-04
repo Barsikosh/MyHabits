@@ -10,21 +10,6 @@ object HabitData {
 
     val size get() = habits.size
 
-    init {
-        addHabit(Habit(0, "Pit", "fdsf", Habit.HabitType.BAD, Habit.HabitPriority.HIGH, 2, 2))
-        addHabit(
-            Habit(
-                1,
-                "Pifdsfsdt",
-                "fdsf",
-                Habit.HabitType.GOOD,
-                Habit.HabitPriority.HIGH,
-                2,
-                2
-            )
-        )
-    }
-
     fun getNewOrUpdatedId(id: Long?): Long {
         return id ?: habits.size.toLong()
     }

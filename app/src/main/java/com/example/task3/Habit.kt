@@ -8,10 +8,9 @@ import java.io.Serializable
 
 
 data class Habit(var id: Long, val name: String, val description: String, val type: HabitType,
-                 val priority: HabitPriority, val time: Int, val period: Int)
+                 val priority: HabitPriority, val time: Int, val period: Int, var color: Int)
     : Serializable {
 
-    var color: Int = R.color.design_default_color_primary
 
     enum class HabitType(val value: Int) {
         GOOD(0),

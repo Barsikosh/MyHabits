@@ -19,9 +19,11 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
         const val ADD_HABIT = 1
         const val CHANGE_HABIT = 2
         const val COMMAND = "command"
+        const val COLOR = "color"
+
     }
 
-    var color: Int =  R.color.design_default_color_primary
+    var color: Int =  0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.redactor_fragment, container, false)
@@ -29,6 +31,7 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        color = resources.getColor(R.color.design_default_color_primary)
         when (arguments?.getInt(COMMAND)) {
 
             ADD_HABIT -> save_fab.setOnClickListener { saveNewData() }
@@ -45,6 +48,19 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
             val navController = activity?.findNavController(R.id.my_nav_host_fragment)
             navController!!.navigate(R.id.action_redactor_to_colorPicker)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt(COLOR, color)
+    }
+
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) {
+            color = savedInstanceState.getInt(COLOR)
+            color_button.backgroundTintList = ColorStateList.valueOf(color)
+        }
+        super.onViewStateRestored(savedInstanceState)
     }
 
     private fun updateText(habit: Habit) {
@@ -81,7 +97,6 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
         return result
     }
 
-
     private fun saveNewData() {
         if (checkAllProperties()) {
             val habit = collectHabit(null)
@@ -113,7 +128,8 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
             Habit.HabitType.fromInt(radioGroup.indexOfChild(requireView().findViewById(radioGroup.checkedRadioButtonId))),
             Habit.HabitPriority.fromInt(spinner.selectedItemPosition),
             Integer.valueOf(edit_times.text.toString()),
-            Integer.valueOf(edit_frequency.text.toString())
+            Integer.valueOf(edit_frequency.text.toString()),
+            color
         )
 
         habit.color = color
