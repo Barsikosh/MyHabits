@@ -1,6 +1,6 @@
 package com.example.task3
 
-object HabitData {
+object  HabitData {
 
     private var habits = mutableMapOf<Long, Habit>()
 
@@ -10,12 +10,9 @@ object HabitData {
 
     val size get() = habits.size
 
-    fun getNewOrUpdatedId(id: Long?): Long {
-        return id ?: habits.size.toLong()
-    }
-
     fun addHabit(habit: Habit) {
-        habits[getNewOrUpdatedId(null)] = habit
+        habit.id = habits.size.toLong()
+        habits[habits.size.toLong()] = habit
         when (habit.type) {
             Habit.HabitType.GOOD -> goodHabits.add(habit)
             Habit.HabitType.BAD -> badHabits.add(habit)

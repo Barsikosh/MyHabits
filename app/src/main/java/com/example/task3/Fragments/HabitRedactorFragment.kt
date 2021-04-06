@@ -14,18 +14,20 @@ import kotlinx.android.synthetic.main.redactor_fragment.*
 class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
 
     companion object {
-
         const val ARGS_HABIT = "args_habit"
         const val ADD_HABIT = 1
         const val CHANGE_HABIT = 2
         const val COMMAND = "command"
         const val COLOR = "color"
-
     }
 
-    var color: Int =  0
+    var color: Int = 0
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.redactor_fragment, container, false)
     }
 
@@ -54,9 +56,8 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
         outState.putInt(COLOR, color)
     }
 
-
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        if (savedInstanceState != null) {
+        if (savedInstanceState != null){
             color = savedInstanceState.getInt(COLOR)
             color_button.backgroundTintList = ColorStateList.valueOf(color)
         }
@@ -81,16 +82,16 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
     private fun checkAllProperties(): Boolean {
         var result = true
 
-        if (radioGroup.checkedRadioButtonId == -1){
+        if (radioGroup.checkedRadioButtonId == -1) {
             result = false
             habit_current_type.setTextColor(Color.RED)
         }
 
-        if (edit_frequency.text.isEmpty() || edit_times.text.isEmpty()){
+        if (edit_frequency.text.isEmpty() || edit_times.text.isEmpty()) {
             result = false
             habit_frequency.setTextColor(Color.RED)
         }
-        if (edit_habit_name.text.isEmpty()){
+        if (edit_habit_name.text.isEmpty()) {
             result = false
             edit_habit_name.setHintTextColor(Color.RED)
         }
@@ -113,6 +114,7 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
 
         if (checkAllProperties()) {
             val newHabit = collectHabit(habit.id)
+            newHabit.id = habit.id;
             HabitData.updateHabit(newHabit, habit.id)
             val navController = activity?.findNavController(R.id.my_nav_host_fragment)
             val bundle = Bundle()
@@ -122,18 +124,15 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
     }
 
     private fun collectHabit(id: Long?): Habit {
-        val habit = Habit(
-            HabitData.getNewOrUpdatedId(id),
+        return Habit(
+            -1,
             edit_habit_name.text.toString(), edit_description.text.toString(),
             Habit.HabitType.fromInt(radioGroup.indexOfChild(requireView().findViewById(radioGroup.checkedRadioButtonId))),
             Habit.HabitPriority.fromInt(spinner.selectedItemPosition),
             Integer.valueOf(edit_times.text.toString()),
             Integer.valueOf(edit_frequency.text.toString()),
-            color
+            this.color
         )
-
-        habit.color = color
-        return habit
     }
 
     override fun sendColor(color: Int) {

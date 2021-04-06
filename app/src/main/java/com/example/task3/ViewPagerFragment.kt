@@ -10,6 +10,7 @@ import com.example.task3.Fragments.HabitListFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.view_pager.*
 import kotlinx.android.synthetic.main.view_pager.view.*
+import java.lang.Exception
 
 
 class ViewPagerFragment : Fragment() {
@@ -37,7 +38,11 @@ class ViewPagerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         TabLayoutMediator(this.tablay, viewPager) { tab, position ->
-            tab.text = "tab ${position}"
+            tab.text =  when(position){
+                0 -> "Полезные"
+                1 -> "Вредные"
+                else -> throw Exception("no more habits")
+            }
             viewPager.setCurrentItem(tab.position, true)
         }.attach()
     }

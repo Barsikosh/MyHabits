@@ -7,13 +7,15 @@
     <string name="second_option">Бесполезная</string>
     <string name="priority_text">Приоритет</string>
     <string name="text_period">Повторять</string>
-    <string name="text_frequency">раза в</string>
+    <string name="text_frequency">раз в</string>
     <string name="text_days">дней</string>
     <string name="bad_habit">Вредная</string>
     <string name="good_habit">Полезная</string>
     <string name="normal_habit">Нормальная</string>
     <string name="information">Информация</string>
     <string name="habits">Привычки</string>
+    <string name="greeting">Привет! Это приложение "Мои привычки", в котором ты можешь добавлять и отслеживать свои хорошие или плохие привычки :)</string>
+
     <string name="type_text">Тип</string>
     <string name="open_drawer" />
     <string name="close_drawer" />
