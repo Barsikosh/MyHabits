@@ -1,5 +1,8 @@
 package com.example.task3
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+
 object  HabitData {
 
     private var habits = mutableMapOf<Long, Habit>()
@@ -19,6 +22,7 @@ object  HabitData {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     fun updateHabit(newHabit: Habit, id: Long) {
         newHabit.id = id
         if (habits[id]!!.type != newHabit.type) {

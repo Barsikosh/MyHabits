@@ -1,20 +1,18 @@
-package com.example.task3.Adapter
+package com.example.task3.Adapters
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.PorterDuff
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import com.example.task3.Adapter.*
 import com.example.task3.Habit
+import com.example.task3.MainActivity
 import com.example.task3.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.list_item.view.*
-
 
 class HabitAdapter(
     private val habits: MutableList<Habit>,
@@ -79,7 +77,9 @@ class HabitAdapter(
                 )
             }"
                 .also { containerView.habit_period.text = it }
-            containerView.habit_priority.text = habit.priority.toString()
+            "${MainActivity.CONTEXT.getString(R.string.priority_text)}: ${habit.priority}".also {
+                containerView.habit_priority.text = it
+            }
             containerView.habit_type.text = habit.type.toString()
             val stateList = ColorStateList.valueOf(habit.color)
             containerView.my_shape.backgroundTintList = stateList

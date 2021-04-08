@@ -1,4 +1,4 @@
-package com.example.task3
+package com.example.task3.Fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import com.example.task3.Fragments.HabitListFragment
+import com.example.task3.Adapters.HabitPagerAdapter
+import com.example.task3.Habit
+import com.example.task3.R
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.view_pager.*
 import kotlinx.android.synthetic.main.view_pager.view.*
@@ -38,9 +40,9 @@ class ViewPagerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         TabLayoutMediator(this.tablay, viewPager) { tab, position ->
-            tab.text =  when(position){
-                0 -> "Полезные"
-                1 -> "Вредные"
+            tab.text = when (position) {
+                0 -> resources.getString(R.string.good_habits)
+                1 -> resources.getString(R.string.bad_habits)
                 else -> throw Exception("no more habits")
             }
             viewPager.setCurrentItem(tab.position, true)

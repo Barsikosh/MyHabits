@@ -1,4 +1,4 @@
-package com.example.task3.Adapter
+package com.example.task3.Adapters
 
 interface ITouchHelperAdapter {
 

@@ -11,6 +11,8 @@
     <string name="text_days">дней</string>
     <string name="bad_habit">Вредная</string>
     <string name="good_habit">Полезная</string>
+    <string name="bad_habits">Вредные</string>
+    <string name="good_habits">Полезные</string>
     <string name="normal_habit">Нормальная</string>
     <string name="information">Информация</string>
     <string name="habits">Привычки</string>
@@ -23,8 +25,8 @@
     <string name="error_text">Заполните все поля</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Мои привычки</string>
+    <string name="nav_header_subtitle">alexic605@gmail.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="menu_home">Home</string>
@@ -32,6 +34,10 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="repeat">Повторять</string>
     <string name="in">в</string>
+    <string name="high">Высокий</string>
+    <string name="medium">Средний</string>
+    <string name="low">Низкий</string>
+
 
 
     <string-array name="priorities">

@@ -2,10 +2,12 @@ package com.example.task3.Fragments
 
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.task3.*
@@ -31,6 +33,7 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
         return inflater.inflate(R.layout.redactor_fragment, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         color = resources.getColor(R.color.design_default_color_primary)
@@ -110,6 +113,7 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun saveChangedData(habit: Habit) {
 
         if (checkAllProperties()) {

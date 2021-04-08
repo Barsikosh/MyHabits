@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.DOWN
 import androidx.recyclerview.widget.ItemTouchHelper.UP
 import androidx.recyclerview.widget.RecyclerView
-import com.example.task3.Adapter.HabitAdapter
+import com.example.task3.Adapters.HabitAdapter
 
 class MyItemTouchHelper(private val adapter: HabitAdapter) : ItemTouchHelper.Callback() {
 

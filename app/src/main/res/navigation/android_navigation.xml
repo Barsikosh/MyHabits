@@ -25,7 +25,7 @@
 
     <fragment
         android:id = "@+id/viewPagerFragment"
-        android:name = "com.example.task3.ViewPagerFragment"
+        android:name = "com.example.task3.Fragments.ViewPagerFragment"
         tools:layout = "@layout/view_pager">
 
         <action
