@@ -25,7 +25,6 @@ import kotlinx.android.synthetic.main.view_pager.*
 class HabitListFragment : Fragment() {
 
     companion object {
-
         const val HABIT_TYPE = "habit_type"
         const val RESULT_NEW_HABIT = 5
         const val RESULT_CHANGED_HABIT = 4
@@ -49,7 +48,7 @@ class HabitListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        add_habit_button.setOnClickListener {addHabit()}
+        add_habit_button.setOnClickListener { addHabit() }
         val habitList = when (this@HabitListFragment.arguments?.getSerializable(HABIT_TYPE)) {
             Habit.HabitType.GOOD -> HabitData.goodHabits
             else -> HabitData.badHabits
@@ -68,9 +67,13 @@ class HabitListFragment : Fragment() {
         habit_list.apply {
             layoutManager = LinearLayoutManager(context)
             adapter =
-                HabitAdapter(habitList) { habit ->
-                    changeHabit(habit)
-                }
+                HabitAdapter(
+                    habitList,
+                    { habit ->
+                        changeHabit(habit)
+                    },
+                    this@HabitListFragment.context
+                )
         }
         habit_list.adapter!!.notifyDataSetChanged()
         val habitAdapter = habit_list.adapter as HabitAdapter
@@ -85,6 +88,5 @@ class HabitListFragment : Fragment() {
         bundle.putInt(HabitRedactorFragment.COMMAND, HabitRedactorFragment.CHANGE_HABIT)
         bundle.putSerializable(HabitRedactorFragment.ARGS_HABIT, habit)
         navController!!.navigate(R.id.action_goto_redactor, bundle)
-
     }
 }

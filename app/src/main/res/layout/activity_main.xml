@@ -22,6 +22,5 @@
         app:headerLayout="@layout/nav_header"
         app:itemIconTint="@color/black"
         app:itemTextColor="@color/black"
-
         app:menu="@menu/nav_drawer" />
 </androidx.drawerlayout.widget.DrawerLayout>

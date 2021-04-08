@@ -15,7 +15,6 @@
     <string name="information">Информация</string>
     <string name="habits">Привычки</string>
     <string name="greeting">Привет! Это приложение "Мои привычки", в котором ты можешь добавлять и отслеживать свои хорошие или плохие привычки :)</string>
-
     <string name="type_text">Тип</string>
     <string name="open_drawer" />
     <string name="close_drawer" />
@@ -36,4 +35,22 @@
         <item>Низкий</item>
         <item>Средний</item>
     </string-array >
+
+    <plurals name="times">
+        <item quantity="zero">%1$d дней</item>
+        <item quantity="one">%1$d дней</item>
+        <item quantity="two">%1$d дней</item>
+        <item quantity="many">%1$d дней</item>
+        <item quantity="other">%1$d дня</item>
+    </plurals>
+
+    <plurals name="count">
+        <item quantity="zero">%1$d раз</item>
+        <item quantity="one">%1$d раз</item>
+        <item quantity="two">%1$d раза</item>
+        <item quantity="few">%1$d раз</item>
+        <item quantity="many">%1$d раз</item>
+        <item quantity="other">%1$d раза</item>
+    </plurals>
+
 </resources>
