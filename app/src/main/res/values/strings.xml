@@ -30,6 +30,10 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="repeat">Повторять</string>
+    <string name="in">в</string>
+
+
     <string-array name="priorities">
         <item>Высокий</item>
         <item>Низкий</item>

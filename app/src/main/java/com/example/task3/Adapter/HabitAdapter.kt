@@ -1,10 +1,13 @@
 package com.example.task3.Adapter
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.PorterDuff
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task3.Adapter.*
 import com.example.task3.Habit
@@ -27,6 +30,7 @@ class HabitAdapter(
 
     override fun getItemCount(): Int = habits.size
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onBindViewHolder(holder: HabitViewHolder, position: Int) {
         holder.bind(habits[position])
     }
@@ -43,7 +47,6 @@ class HabitAdapter(
         notifyItemRemoved(position)
     }
 
-
     inner class HabitViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
 
@@ -53,17 +56,23 @@ class HabitAdapter(
             }
         }
 
+        @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         fun bind(habit: Habit) {
-            "Название: ${habit.name}".also { containerView.habit_name.text = it }
-            "Описание: ${habit.description}".also { containerView.habit_description.text = it }
-            "Повторять ${
-                context!!.resources.getQuantityString(
+            val resources = context!!.resources
+            "${resources.getString(R.string.habit_name)}: ${habit.name}".also {
+                containerView.habit_name.text = it
+            }
+            "${resources.getString(R.string.description)}: ${habit.description}".also {
+                containerView.habit_description.text = it
+            }
+            "${resources.getString(R.string.repeat)} ${
+                resources.getQuantityString(
                     R.plurals.count,
                     habit.time,
                     habit.time
                 )
-            } в ${
-                context.resources.getQuantityString(
+            }  ${resources.getString(R.string.`in`)} ${
+                resources.getQuantityString(
                     R.plurals.times,
                     habit.period,
                     habit.period
@@ -72,8 +81,8 @@ class HabitAdapter(
                 .also { containerView.habit_period.text = it }
             containerView.habit_priority.text = habit.priority.toString()
             containerView.habit_type.text = habit.type.toString()
-            val shape = itemView.findViewById<View>(R.id.my_shape).background
-            shape.setColorFilter(habit.color, PorterDuff.Mode.SRC_ATOP)
+            val stateList = ColorStateList.valueOf(habit.color)
+            containerView.my_shape.backgroundTintList = stateList
         }
     }
 }
