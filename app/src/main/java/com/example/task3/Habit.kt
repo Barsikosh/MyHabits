@@ -9,6 +9,12 @@ data class Habit(var id: Long, val name: String, val description: String, val ty
                  val priority: HabitPriority, val time: Int, val period: Int, var color: Int)
     : Serializable {
 
+    companion object{
+        private val comparatorByPriority =  Comparator<Habit> { habit1,habi2b ->
+                 habit1.priority.value.compareTo(habi2b.priority.value)
+        }
+    }
+
     enum class HabitType(val value: Int) {
         GOOD(0),
         BAD(1);
@@ -25,9 +31,9 @@ data class Habit(var id: Long, val name: String, val description: String, val ty
     }
 
     enum class HabitPriority(val value: Int){
-        HIGH(0),
-        MEDIUM(2),
-        LOW(1);
+        HIGH(2),
+        MEDIUM(1),
+        LOW(0);
         companion object {
             fun fromInt(value: Int) = values().first { it.value == value }
         }

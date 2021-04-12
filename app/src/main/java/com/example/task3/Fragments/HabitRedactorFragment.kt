@@ -9,11 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.task3.*
 import kotlinx.android.synthetic.main.redactor_fragment.*
 
-class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
+class   HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
 
     companion object {
         const val ARGS_HABIT = "args_habit"
@@ -24,12 +26,18 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
     }
 
     var color: Int = 0
+    private lateinit var viewModel: RedactorHabitViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        viewModel = ViewModelProvider(this, object: ViewModelProvider.Factory{
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return RedactorHabitViewModel() as T
+            }
+        }).get(RedactorHabitViewModel::class.java)
         return inflater.inflate(R.layout.redactor_fragment, container, false)
     }
 
@@ -104,7 +112,7 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
     private fun saveNewData() {
         if (checkAllProperties()) {
             val habit = collectHabit(null)
-            HabitData.addHabit(habit)
+            viewModel.addHabit(habit)
             val navController = activity?.findNavController(R.id.my_nav_host_fragment)
             val bundle = Bundle()
             bundle.putInt(HabitListFragment.RESULT, HabitListFragment.RESULT_NEW_HABIT)
@@ -119,7 +127,7 @@ class HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
         if (checkAllProperties()) {
             val newHabit = collectHabit(habit.id)
             newHabit.id = habit.id;
-            HabitData.updateHabit(newHabit, habit.id)
+            viewModel.updateHabit(newHabit)
             val navController = activity?.findNavController(R.id.my_nav_host_fragment)
             val bundle = Bundle()
             bundle.putInt(HabitListFragment.RESULT, HabitListFragment.RESULT_CHANGED_HABIT)

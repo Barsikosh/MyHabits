@@ -4,18 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.task3.*
 import com.example.task3.Adapters.HabitAdapter
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.android.synthetic.main.habits_fragment.*
 import kotlinx.android.synthetic.main.redactor_fragment.*
 import kotlinx.android.synthetic.main.view_pager.*
 
-class HabitListFragment : Fragment() {
+
+class HabitListFragment : Fragment(), LifecycleOwner {
 
     companion object {
         const val HABIT_TYPE = "habit_type"
@@ -31,37 +40,60 @@ class HabitListFragment : Fragment() {
         }
     }
 
+    private lateinit var viewModel: HabitListViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val habitType = this@HabitListFragment.arguments?.getSerializable(HABIT_TYPE)
+        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return HabitListViewModel(habitType as Habit.HabitType) as T
+            }
+        }).get(HabitListViewModel::class.java)
         return inflater.inflate(R.layout.habits_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         add_habit_button.setOnClickListener { addHabit() }
-        val habitList = when (this@HabitListFragment.arguments?.getSerializable(HABIT_TYPE)) {
-            Habit.HabitType.GOOD -> HabitData.goodHabits
-            else -> HabitData.badHabits
-        }
-        addAdapter(habitList)
+        addAdapter()
+        viewModel.habits.observe(viewLifecycleOwner, Observer {
+            it.let {
+                (habit_list.adapter as HabitAdapter).refreshHabits(
+                    it
+                )
+            }
+        })
+        viewModel.habitsFilterList.observe(viewLifecycleOwner, Observer {
+            it.let {
+                (habit_list.adapter as HabitAdapter).refreshHabits(
+                    it
+                )
+            }
+        })
+        val bottom_sheet = view.findViewById<View>(R.id.bottom_sheet_behavior_id);
+        val sheetBehavior = BottomSheetBehavior.from(bottom_sheet);
+        sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        country_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.filter.filter(newText)
+                return false
+            }
+        })
     }
 
-    private fun addHabit() {
-        val navController = activity?.findNavController(R.id.my_nav_host_fragment)
-        val bundle = Bundle()
-        bundle.putInt(HabitRedactorFragment.COMMAND, HabitRedactorFragment.ADD_HABIT)
-        navController!!.navigate(R.id.action_goto_redactor, bundle)
-    }
-
-    private fun addAdapter(habitList: MutableList<Habit>) {
+    private fun addAdapter() {
         habit_list.apply {
             layoutManager = LinearLayoutManager(context)
             adapter =
                 HabitAdapter(
-                    habitList,
+                    viewModel,
                     { habit ->
                         changeHabit(habit)
                     },
@@ -73,6 +105,13 @@ class HabitListFragment : Fragment() {
         val callback: ItemTouchHelper.Callback = MyItemTouchHelper(habitAdapter)
         val myItemTouchHelper = ItemTouchHelper(callback)
         myItemTouchHelper.attachToRecyclerView(habit_list)
+    }
+
+    private fun addHabit() {
+        val navController = activity?.findNavController(R.id.my_nav_host_fragment)
+        val bundle = Bundle()
+        bundle.putInt(HabitRedactorFragment.COMMAND, HabitRedactorFragment.ADD_HABIT)
+        navController!!.navigate(R.id.action_goto_redactor, bundle)
     }
 
     private fun changeHabit(habit: Habit) {

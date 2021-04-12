@@ -2,57 +2,37 @@ package com.example.task3
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 
-object  HabitData {
+object HabitData : LiveData<Habit>() {
 
-    private var habits = mutableMapOf<Long, Habit>()
+    private var mutableLiveData = MutableLiveData<LinkedHashMap<Long, Habit>>()
 
-    val goodHabits = mutableListOf<Habit>()
+    val habits: LiveData<LinkedHashMap<Long, Habit>> = mutableLiveData
 
-    val badHabits = mutableListOf<Habit>()
+    init {
+        habits.value = LinkedHashMap()
+    }
 
-    val size get() = habits.size
+    val goodHabits: List<Habit>
+        get() = mutableLiveData.value?.filter { it -> it.value.type == Habit.HabitType.GOOD }?.values!!.toList()
+
+    val badHabits: List<Habit>
+        get() = mutableLiveData.value?.filter { it -> it.value.type == Habit.HabitType.BAD }?.values!!.toList()
 
     fun addHabit(habit: Habit) {
-        habit.id = habits.size.toLong()
-        habits[habits.size.toLong()] = habit
-        when (habit.type) {
-            Habit.HabitType.GOOD -> goodHabits.add(habit)
-            Habit.HabitType.BAD -> badHabits.add(habit)
-        }
+        val newId = mutableLiveData.value?.size?.toLong() ?: 1
+        habit.id = newId
+        mutableLiveData.value!![newId] = habit
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     fun updateHabit(newHabit: Habit, id: Long) {
         newHabit.id = id
-        if (habits[id]!!.type != newHabit.type) {
-            habits[id] = newHabit
-            when (newHabit.type) {
-                Habit.HabitType.GOOD -> {
-                    badHabits.removeIf { it.id == id }
-                    goodHabits.add(newHabit)
-                }
-                Habit.HabitType.BAD -> {
-                    goodHabits.removeIf { it.id == id }
-                    badHabits.add(newHabit)
-                }
-            }
-
-        } else {
-            habits[id] = newHabit
-            when (newHabit.type) {
-                Habit.HabitType.GOOD -> goodHabits[goodHabits.indexOfFirst { it.id == id }] =
-                    newHabit
-                Habit.HabitType.BAD -> badHabits[badHabits.indexOfFirst { it.id == id }] = newHabit
-            }
-        }
+        mutableLiveData.value!![id] = newHabit
     }
 
-    fun remove(id: Long) {
-        habits.remove(id)
+    fun removeItem(habit: Habit) {
+        mutableLiveData.value!!.remove(habit.id)
     }
-
-    fun getHabit(id: Long): Habit? = habits[id]
-
-    fun getHabits() = habits
 }

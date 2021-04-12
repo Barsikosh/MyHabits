@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import com.example.task3.Fragments.HabitListViewModel
 import com.example.task3.Habit
 import com.example.task3.MainActivity
 import com.example.task3.R
@@ -15,16 +16,24 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class HabitAdapter(
-    private val habits: MutableList<Habit>,
+    private val  viewModel: HabitListViewModel,
     private val onItemClick: ((Habit) -> Unit),
     private val context: Context?
 ) : RecyclerView.Adapter<HabitAdapter.HabitViewHolder>(),
     ITouchHelperAdapter {
 
+    private var habits: List<Habit> = viewModel.getItems() ?: emptyList()
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return HabitViewHolder(inflater.inflate(R.layout.list_item, parent, false))
     }
+
+    fun setData(habits: List<Habit>) {
+        this.habits = habits
+    }
+
 
     override fun getItemCount(): Int = habits.size
 
@@ -34,15 +43,18 @@ class HabitAdapter(
     }
 
     override fun moveItem(startPosition: Int, nextPosition: Int) {
-        val habit = habits[startPosition]
-        habits[startPosition] = habits[nextPosition]
-        habits[nextPosition] = habit
+        viewModel.habitsMoved(startPosition, nextPosition)
         notifyItemMoved(startPosition, nextPosition)
     }
 
     override fun deleteItem(position: Int) {
-        habits.removeAt(position)
+        viewModel.habitDeleted(habits[position])
         notifyItemRemoved(position)
+    }
+
+    fun refreshHabits(habitList: List<Habit>) {
+        habits = habitList
+        notifyDataSetChanged()
     }
 
     inner class HabitViewHolder(override val containerView: View) :

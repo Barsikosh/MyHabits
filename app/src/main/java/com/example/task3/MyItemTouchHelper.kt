@@ -22,6 +22,7 @@ class MyItemTouchHelper(private val adapter: HabitAdapter) : ItemTouchHelper.Cal
     override fun isItemViewSwipeEnabled(): Boolean {
         return true
     }
+
     override fun onMove(recyclerView: RecyclerView, dragged: RecyclerView.ViewHolder,
                         target: RecyclerView.ViewHolder): Boolean {
         val oldPosition = dragged.adapterPosition
@@ -34,5 +35,4 @@ class MyItemTouchHelper(private val adapter: HabitAdapter) : ItemTouchHelper.Cal
         val pos = viewHolder.adapterPosition
         adapter.deleteItem(pos)
     }
-
 }
