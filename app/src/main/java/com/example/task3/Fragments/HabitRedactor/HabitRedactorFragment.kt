@@ -1,4 +1,4 @@
-package com.example.task3.Fragments
+package com.example.task3.Fragments.HabitRedactor
 
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -8,25 +8,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.task3.*
+import com.example.task3.Fragments.HabitList.HabitListFragment
 import kotlinx.android.synthetic.main.redactor_fragment.*
 
-class   HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
+class  HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
 
     companion object {
         const val ARGS_HABIT = "args_habit"
         const val ADD_HABIT = 1
         const val CHANGE_HABIT = 2
         const val COMMAND = "command"
-        const val COLOR = "color"
     }
 
-    var color: Int = 0
-    private lateinit var viewModel: RedactorHabitViewModel
+    private lateinit var viewModel:RedactorHabitViewModel
+    lateinit var colorDialog: DialogFragment;
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,7 +45,7 @@ class   HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        color = resources.getColor(R.color.design_default_color_primary)
+        colorDialog = ColorPickerDialog()
         when (arguments?.getInt(COMMAND)) {
 
             ADD_HABIT -> save_fab.setOnClickListener { saveNewData() }
@@ -58,20 +59,12 @@ class   HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
             else -> throw IllegalArgumentException("Name required")
         }
         color_button.setOnClickListener {
-            val navController = activity?.findNavController(R.id.my_nav_host_fragment)
-            navController!!.navigate(R.id.action_redactor_to_colorPicker)
+            colorDialog.show(childFragmentManager, "Color Picker")
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putInt(COLOR, color)
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        if (savedInstanceState != null){
-            color = savedInstanceState.getInt(COLOR)
-            color_button.backgroundTintList = ColorStateList.valueOf(color)
-        }
+        color_button.backgroundTintList = ColorStateList.valueOf(viewModel.color)
         super.onViewStateRestored(savedInstanceState)
     }
 
@@ -85,7 +78,7 @@ class   HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
             Habit.HabitType.GOOD -> radioGroup.check(R.id.first_radio)
             Habit.HabitType.BAD -> radioGroup.check(R.id.second_radio)
         }
-        color = habit.color
+        viewModel.color = habit.color
         val state = ColorStateList.valueOf(habit.color)
         color_button.backgroundTintList = state
     }
@@ -143,13 +136,13 @@ class   HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
             Habit.HabitPriority.fromInt(spinner.selectedItemPosition),
             Integer.valueOf(edit_times.text.toString()),
             Integer.valueOf(edit_frequency.text.toString()),
-            this.color
+            viewModel.color
         )
     }
 
     override fun sendColor(color: Int) {
         val state = ColorStateList.valueOf(color)
         color_button.backgroundTintList = state
-        this.color = color
+        viewModel.color = color
     }
 }

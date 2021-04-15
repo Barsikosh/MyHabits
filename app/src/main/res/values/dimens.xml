@@ -3,6 +3,7 @@
     <dimen name="large_margin">22dp</dimen>
     <dimen name="normal_margin">10dp</dimen>
     <dimen name="small_margin">3dp</dimen>
+    <dimen name="recycle_top_margin">30dp</dimen>
     <dimen name="color_button_width">24dp</dimen>
     <dimen name="color_button_height">11dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>

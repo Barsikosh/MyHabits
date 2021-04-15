@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import com.example.task3.Fragments.HabitListViewModel
+import com.example.task3.Fragments.HabitList.HabitListViewModel
 import com.example.task3.Habit
 import com.example.task3.MainActivity
 import com.example.task3.R
@@ -29,11 +29,6 @@ class HabitAdapter(
         val inflater = LayoutInflater.from(parent.context)
         return HabitViewHolder(inflater.inflate(R.layout.list_item, parent, false))
     }
-
-    fun setData(habits: List<Habit>) {
-        this.habits = habits
-    }
-
 
     override fun getItemCount(): Int = habits.size
 

@@ -1,10 +1,11 @@
-package com.example.task3.Fragments
+package com.example.task3.Fragments.HabitList
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.task3.*
 import com.example.task3.Adapters.HabitAdapter
+import com.example.task3.Fragments.HabitRedactor.HabitRedactorFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_sheet.*
@@ -59,6 +61,39 @@ class HabitListFragment : Fragment(), LifecycleOwner {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         add_habit_button.setOnClickListener { addHabit() }
         addAdapter()
+        observeViewModels()
+        setupSort()
+        val bottom_sheet = view.findViewById<View>(R.id.bottom_sheet_behavior_id);
+        val sheetBehavior = BottomSheetBehavior.from(bottom_sheet);
+        sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        country_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.filter.filter(newText)
+                return false
+            }
+        })
+    }
+
+    private fun setupSort() {
+        sort_spinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(
+                adapterView: AdapterView<*>?,
+                view: View,
+                position: Int,
+                l: Long
+            ) {
+                viewModel.sortList(position)
+            }
+
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+        }
+    }
+
+    private fun observeViewModels() {
         viewModel.habits.observe(viewLifecycleOwner, Observer {
             it.let {
                 (habit_list.adapter as HabitAdapter).refreshHabits(
@@ -71,19 +106,6 @@ class HabitListFragment : Fragment(), LifecycleOwner {
                 (habit_list.adapter as HabitAdapter).refreshHabits(
                     it
                 )
-            }
-        })
-        val bottom_sheet = view.findViewById<View>(R.id.bottom_sheet_behavior_id);
-        val sheetBehavior = BottomSheetBehavior.from(bottom_sheet);
-        sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-        country_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                viewModel.filter.filter(newText)
-                return false
             }
         })
     }

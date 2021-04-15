@@ -1,4 +1,4 @@
-package com.example.task3.Fragments
+package com.example.task3.Fragments.HabitRedactor
 
 import android.content.Context
 import android.os.Bundle
@@ -9,9 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.fragment.app.DialogFragment
-import androidx.navigation.findNavController
 import com.example.task3.R
-
 
 class ColorPickerDialog: DialogFragment() {
 
@@ -38,9 +36,7 @@ class ColorPickerDialog: DialogFragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
-            val fragment = requireActivity().supportFragmentManager
-                .findFragmentById(R.id.my_nav_host_fragment)!!
-                .childFragmentManager.fragments[0]
+            val fragment = parentFragment
             onInputListener = fragment as OnInputListener
         }
 

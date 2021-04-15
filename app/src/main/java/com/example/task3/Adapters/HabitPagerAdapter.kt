@@ -2,9 +2,7 @@ package com.example.task3.Adapters
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.task3.Fragments.HabitListFragment
 
 class HabitPagerAdapter(activity: AppCompatActivity, private val fragments: List<Fragment>) :
     FragmentStateAdapter(activity) {

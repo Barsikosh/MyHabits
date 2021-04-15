@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
@@ -10,13 +10,27 @@
     app:behavior_peekHeight="120dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
+    <Spinner
+        android:id="@+id/sort_spinner"
+        android:layout_width="@dimen/color_button_width"
+        android:layout_height="@dimen/color_button_width"
+        android:background="@color/design_default_color_primary"
+        android:entries="@array/sort_parameters"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="@+id/country_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/country_search"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.SearchView
         android:id="@+id/country_search"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:textCursorDrawable="@null"
         app:iconifiedByDefault="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:queryBackground="@null" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

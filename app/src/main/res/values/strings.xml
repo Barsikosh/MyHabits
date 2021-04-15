@@ -40,10 +40,16 @@
 
 
 
+    <string-array name="sort_parameters">
+        <item>Дата добавления</item>
+        <item>Частота</item>
+        <item>Приоритет</item>
+    </string-array >
+
     <string-array name="priorities">
-        <item>Высокий</item>
         <item>Низкий</item>
         <item>Средний</item>
+        <item>Высокий</item>
     </string-array >
 
     <plurals name="times">

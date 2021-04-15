@@ -7,21 +7,21 @@
 
     <fragment
         android:id = "@+id/redactor"
-        android:name = "com.example.task3.Fragments.HabitRedactorFragment"
+        android:name = "com.example.task3.Fragments.HabitRedactor.HabitRedactorFragment"
         tools:layout = "@layout/redactor_fragment"
         >
         <action
             android:id = "@+id/action_go_home"
-            app:destination = "@+id/last_page_fragment" />
+            app:destination = "@+id/last_page_fragment"
+            app:popUpTo="@+id/viewPagerFragment"/>
+
         <action
             android:id="@+id/action_redactor_to_viewPagerFragment"
-            app:destination="@id/viewPagerFragment" />
+            app:destination="@id/viewPagerFragment"
+            app:popUpTo="@+id/viewPagerFragment"
+            app:popUpToInclusive="true"/>
 
-        <action
-            android:id="@+id/action_redactor_to_colorPicker"
-            app:destination="@id/color_picker" />
     </fragment>
-
 
     <fragment
         android:id = "@+id/viewPagerFragment"
@@ -30,20 +30,12 @@
 
         <action
             android:id="@+id/action_goto_redactor"
-            app:destination="@id/redactor">
+            app:destination="@id/redactor"
+            app:popUpTo="@id/redactor"
+            app:popUpToInclusive="true">
 
         </action>
     </fragment>
-
-    <dialog
-        android:id = "@+id/color_picker"
-        android:name = "com.example.task3.Fragments.ColorPickerDialog"
-        tools:layout = "@layout/color_picker"
-        >
-        <action
-            android:id="@+id/action_colorPicker_to_redactor"
-            app:destination="@id/redactor" />
-    </dialog>
 
     <fragment
         android:id="@+id/nav_about_app"
