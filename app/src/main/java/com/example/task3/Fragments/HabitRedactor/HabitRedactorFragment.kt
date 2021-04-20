@@ -26,7 +26,7 @@ class  HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
         const val COMMAND = "command"
     }
 
-    private lateinit var viewModel:RedactorHabitViewModel
+    private lateinit var viewModel: RedactorHabitViewModel
     lateinit var colorDialog: DialogFragment;
 
     override fun onCreateView(
@@ -34,7 +34,7 @@ class  HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this, object: ViewModelProvider.Factory{
+        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return RedactorHabitViewModel() as T
             }
@@ -45,6 +45,7 @@ class  HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        color_button.backgroundTintList = ColorStateList.valueOf(viewModel.color)
         colorDialog = ColorPickerDialog()
         when (arguments?.getInt(COMMAND)) {
 
@@ -61,11 +62,6 @@ class  HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
         color_button.setOnClickListener {
             colorDialog.show(childFragmentManager, "Color Picker")
         }
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        color_button.backgroundTintList = ColorStateList.valueOf(viewModel.color)
-        super.onViewStateRestored(savedInstanceState)
     }
 
     private fun updateText(habit: Habit) {
@@ -102,29 +98,26 @@ class  HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
         return result
     }
 
+    private fun backToHabitList() {
+        val navController = activity?.findNavController(R.id.my_nav_host_fragment)
+        navController!!.navigate(R.id.action_redactor_to_viewPagerFragment)
+    }
+
     private fun saveNewData() {
         if (checkAllProperties()) {
             val habit = collectHabit(null)
             viewModel.addHabit(habit)
-            val navController = activity?.findNavController(R.id.my_nav_host_fragment)
-            val bundle = Bundle()
-            bundle.putInt(HabitListFragment.RESULT, HabitListFragment.RESULT_NEW_HABIT)
-            bundle.putSerializable(ARGS_HABIT, habit)
-            navController!!.navigate(R.id.action_redactor_to_viewPagerFragment, bundle)
+            backToHabitList()
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun saveChangedData(habit: Habit) {
-
         if (checkAllProperties()) {
             val newHabit = collectHabit(habit.id)
             newHabit.id = habit.id;
             viewModel.updateHabit(newHabit)
-            val navController = activity?.findNavController(R.id.my_nav_host_fragment)
-            val bundle = Bundle()
-            bundle.putInt(HabitListFragment.RESULT, HabitListFragment.RESULT_CHANGED_HABIT)
-            navController!!.navigate(R.id.action_redactor_to_viewPagerFragment, bundle)
+            backToHabitList()
         }
     }
 
