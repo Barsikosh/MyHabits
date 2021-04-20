@@ -3,34 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:background="@android:color/white"
+    android:layout_height="100dp"
+    android:background="@color/white"
     android:orientation="vertical"
     app:behavior_hideable="false"
-    app:behavior_peekHeight="120dp"
+    app:behavior_peekHeight="50dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:id="@+id/peeker"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/habit_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/sort_spinner"
-        android:layout_width="@dimen/color_button_width"
-        android:layout_height="@dimen/color_button_width"
-        android:background="@color/design_default_color_primary"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/ic_sort2"
         android:entries="@array/sort_parameters"
         android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toBottomOf="@+id/country_search"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/country_search"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.522"
+        app:layout_constraintStart_toEndOf="@+id/habit_search"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.789" />
 
     <androidx.appcompat.widget.SearchView
-        android:id="@+id/country_search"
+        android:id="@+id/habit_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:textCursorDrawable="@null"
         app:iconifiedByDefault="false"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:queryBackground="@null" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

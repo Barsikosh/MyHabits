@@ -59,14 +59,14 @@ class HabitListViewModel(private val habitType: Habit.HabitType) : ViewModel(), 
         habits[nextPosition] = habit
     }
 
-    fun habitDeleted(habit: Habit) {
+    fun deleteHabit(habit: Habit) {
         HabitData.removeItem(habit)
     }
 
     fun sortList(position: Int){
         when(position){
             0 -> mutableHabit.value = mutableHabit.value!!.sortedBy {el-> el.id }
-            1 -> mutableHabit.value = mutableHabit.value!!.sortedBy {el-> el.time }
+            1 -> mutableHabit.value = mutableHabit.value!!.sortedBy {el-> el.time * el.period }
             2 -> mutableHabit.value = mutableHabit.value!!.sortedBy {el-> el.priority.value }
         }
     }
@@ -77,5 +77,4 @@ class HabitListViewModel(private val habitType: Habit.HabitType) : ViewModel(), 
             Habit.HabitType.BAD -> mutableHabit.value = HabitData.badHabits
         }
     }
-
 }

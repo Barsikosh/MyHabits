@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.task3.*
 import com.example.task3.Adapters.HabitAdapter
 import com.example.task3.Fragments.HabitRedactor.HabitRedactorFragment
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.android.synthetic.main.habits_fragment.*
@@ -62,11 +61,7 @@ class HabitListFragment : Fragment(), LifecycleOwner {
         add_habit_button.setOnClickListener { addHabit() }
         addAdapter()
         observeViewModels()
-        setupSort()
-        val bottom_sheet = view.findViewById<View>(R.id.bottom_sheet_behavior_id);
-        val sheetBehavior = BottomSheetBehavior.from(bottom_sheet);
-        sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-        country_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        habit_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -76,13 +71,15 @@ class HabitListFragment : Fragment(), LifecycleOwner {
                 return false
             }
         })
+        setupSort()
     }
 
     private fun setupSort() {
-        sort_spinner.onItemSelectedListener = object : OnItemSelectedListener {
+        sort_spinner.onItemSelectedListener =
+            object : OnItemSelectedListener {
             override fun onItemSelected(
                 adapterView: AdapterView<*>?,
-                view: View,
+                view: View?,
                 position: Int,
                 l: Long
             ) {

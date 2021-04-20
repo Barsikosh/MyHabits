@@ -18,7 +18,7 @@ object HabitData : LiveData<Habit>() {
         get() = habits.value!!.filter { it -> it.value.type == Habit.HabitType.BAD }.values.toList()
 
     fun addHabit(habit: Habit) {
-        val newId = habits.value!!.size.toLong() ?: 1
+        val newId = habits.value!!.size.toLong()
         habit.id = newId
         mutableHabits.value!![newId] = habit
     }
@@ -29,6 +29,6 @@ object HabitData : LiveData<Habit>() {
     }
 
     fun removeItem(habit: Habit) {
-        mutableHabits.value =  mutableHabits.value!!.filter{el -> el.key != habit.id} as LinkedHashMap<Long, Habit>
+        mutableHabits.value = mutableHabits.value!!.also{ it.remove(habit.id)}
     }
 }

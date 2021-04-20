@@ -43,7 +43,7 @@ class HabitAdapter(
     }
 
     override fun deleteItem(position: Int) {
-        viewModel.habitDeleted(habits[position])
+        viewModel.deleteHabit(habits[position])
         notifyItemRemoved(position)
     }
 
