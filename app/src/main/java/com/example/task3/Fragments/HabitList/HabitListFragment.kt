@@ -61,34 +61,12 @@ class HabitListFragment : Fragment(), LifecycleOwner {
         add_habit_button.setOnClickListener { addHabit() }
         addAdapter()
         observeViewModels()
-        habit_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                viewModel.filter.filter(newText)
-                return false
-            }
-        })
-        setupSort()
+        val bottomSheet = BottomSheet(viewModel)
+        childFragmentManager.beginTransaction()
+            .replace(R.id.containerBottomSheet, bottomSheet)
+            .commit();
     }
 
-    private fun setupSort() {
-        sort_spinner.onItemSelectedListener =
-            object : OnItemSelectedListener {
-            override fun onItemSelected(
-                adapterView: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                l: Long
-            ) {
-                viewModel.sortList(position)
-            }
-
-            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
-        }
-    }
 
     private fun observeViewModels() {
         viewModel.habits.observe(viewLifecycleOwner, Observer {

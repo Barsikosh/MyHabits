@@ -36,7 +36,17 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginRight="16dp" />
 
-    <include
-        android:id="@+id/bottom_sheet_behavior_id"
-        layout="@layout/bottom_sheet" />
+    <FrameLayout
+        android:id="@+id/containerBottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="50dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
+    <!--  <include
+            android:id="@+id/bottom_sheet_behavior_id"
+            layout="@layout/bottom_sheet" />-->
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
