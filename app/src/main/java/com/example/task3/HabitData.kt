@@ -20,7 +20,7 @@ object HabitData : LiveData<Habit>() {
     fun addHabit(habit: Habit) {
         val newId = habits.value!!.size.toLong()
         habit.id = newId
-        mutableHabits.value!![newId] = habit
+        mutableHabits.value = mutableHabits.value!!.also { it[newId] = habit }
     }
 
     fun updateHabit(newHabit: Habit, id: Long) {

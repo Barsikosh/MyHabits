@@ -7,17 +7,17 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import com.example.task3.Habit
 import com.example.task3.R
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet.*
-import kotlinx.android.synthetic.main.content_main.*
-import kotlinx.android.synthetic.main.habits_fragment.*
 
+class BottomSheet() : BottomSheetDialogFragment() {
 
-class BottomSheet(private val viewModel: HabitListViewModel): Fragment() {
+    private lateinit var viewModel: HabitListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,12 +29,8 @@ class BottomSheet(private val viewModel: HabitListViewModel): Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(requireParentFragment()).get(HabitListViewModel::class.java)
         setupSort()
-        val container: View? = parentFragment?.view?.findViewById<View>(R.id.containerBottomSheet) ?: null
-
-        val bottomSheetBehaviour = BottomSheetBehavior.from(container!!)
-
-
         habit_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false

@@ -29,9 +29,6 @@ class HabitListFragment : Fragment(), LifecycleOwner {
 
     companion object {
         const val HABIT_TYPE = "habit_type"
-        const val RESULT_NEW_HABIT = 5
-        const val RESULT_CHANGED_HABIT = 4
-        const val RESULT = "result"
         fun newInstance(habitType: Habit.HabitType): HabitListFragment {
             val fragment = HabitListFragment()
             val bundle = Bundle()
@@ -48,10 +45,12 @@ class HabitListFragment : Fragment(), LifecycleOwner {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val habitType = this@HabitListFragment.arguments?.getSerializable(HABIT_TYPE)
+        val habitType =
+            this@HabitListFragment.arguments?.getSerializable(HABIT_TYPE) as Habit.HabitType
+
         viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return HabitListViewModel(habitType as Habit.HabitType) as T
+                return HabitListViewModel(habitType) as T
             }
         }).get(HabitListViewModel::class.java)
         return inflater.inflate(R.layout.habits_fragment, container, false)
@@ -61,7 +60,7 @@ class HabitListFragment : Fragment(), LifecycleOwner {
         add_habit_button.setOnClickListener { addHabit() }
         addAdapter()
         observeViewModels()
-        val bottomSheet = BottomSheet(viewModel)
+        val bottomSheet = BottomSheet()
         childFragmentManager.beginTransaction()
             .replace(R.id.containerBottomSheet, bottomSheet)
             .commit();

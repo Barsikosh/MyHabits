@@ -13,7 +13,7 @@ import com.example.task3.R
 import kotlin.collections.ArrayList
 
 
-class HabitListViewModel(private val habitType: Habit.HabitType) : ViewModel(), Filterable {
+class HabitListViewModel(var habitType: Habit.HabitType) : ViewModel(), Filterable {
 
     private val mutableHabit = MutableLiveData<List<Habit>>()
     val habits: LiveData<List<Habit>> = mutableHabit
