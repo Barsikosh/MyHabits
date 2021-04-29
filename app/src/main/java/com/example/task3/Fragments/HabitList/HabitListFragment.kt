@@ -40,6 +40,8 @@ class HabitListFragment : Fragment(), LifecycleOwner {
 
     private lateinit var viewModel: HabitListViewModel
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -69,13 +71,6 @@ class HabitListFragment : Fragment(), LifecycleOwner {
 
     private fun observeViewModels() {
         viewModel.habits.observe(viewLifecycleOwner, Observer {
-            it.let {
-                (habit_list.adapter as HabitAdapter).refreshHabits(
-                    it
-                )
-            }
-        })
-        viewModel.habitsFilterList.observe(viewLifecycleOwner, Observer {
             it.let {
                 (habit_list.adapter as HabitAdapter).refreshHabits(
                     it

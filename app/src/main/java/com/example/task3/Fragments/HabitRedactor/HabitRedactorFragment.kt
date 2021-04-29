@@ -105,7 +105,7 @@ class  HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
 
     private fun saveNewData() {
         if (checkAllProperties()) {
-            val habit = collectHabit(null)
+            val habit = collectHabit()
             viewModel.addHabit(habit)
             backToHabitList()
         }
@@ -114,16 +114,15 @@ class  HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
     @RequiresApi(Build.VERSION_CODES.N)
     private fun saveChangedData(habit: Habit) {
         if (checkAllProperties()) {
-            val newHabit = collectHabit(habit.id)
-            newHabit.id = habit.id;
+            val newHabit = collectHabit()
+            newHabit.id = habit.id
             viewModel.updateHabit(newHabit)
             backToHabitList()
         }
     }
 
-    private fun collectHabit(id: Long?): Habit {
+    private fun collectHabit(): Habit {
         return Habit(
-            -1,
             edit_habit_name.text.toString(), edit_description.text.toString(),
             Habit.HabitType.fromInt(radioGroup.indexOfChild(requireView().findViewById(radioGroup.checkedRadioButtonId))),
             Habit.HabitPriority.fromInt(spinner.selectedItemPosition),

@@ -16,7 +16,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class HabitAdapter(
-    private val  viewModel: HabitListViewModel,
+    private val viewModel: HabitListViewModel,
     private val onItemClick: ((Habit) -> Unit),
     private val context: Context?
 ) : RecyclerView.Adapter<HabitAdapter.HabitViewHolder>(),

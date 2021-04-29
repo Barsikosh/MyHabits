@@ -7,45 +7,38 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.example.task3.Habit
-import com.example.task3.HabitData
-import com.example.task3.MainActivity
-import com.example.task3.R
-import kotlin.collections.ArrayList
+import com.example.task3.DbRoom.HabitRepository
 
 
 class HabitListViewModel(var habitType: Habit.HabitType) : ViewModel(), Filterable {
 
     private val mutableHabit = MutableLiveData<List<Habit>>()
     val habits: LiveData<List<Habit>> = mutableHabit
-    var habitsFilterList:  MutableLiveData<List<Habit>> = MutableLiveData()
+    private  var myHabitData: HabitRepository = HabitRepository()
 
     init {
-        updateListHabits()
-            habitsFilterList.value = habits.value
-        HabitData.habits.observeForever( Observer { it.also { updateListHabits() } })
+        onCreate()
+    }
+
+
+    private fun onCreate(){
+        myHabitData.habits.observeForever( Observer { it ->
+            mutableHabit.value = it.filter { el -> el.type == habitType } })
     }
 
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val charSearch = constraint.toString()
-                val result = ( if (charSearch.isEmpty()) {
-                    mutableHabit.value
-                } else {
-                    val resultList = ArrayList<Habit>()
-                    habits.value!!.forEach {
-                        if (it.name.startsWith(charSearch))
-                            resultList.add(it)
-                    }
-                    resultList.toList()
-                })
                 val filterResults = FilterResults()
-                filterResults.values = result
+                if (charSearch.isEmpty())
+                    filterResults.values =  mutableHabit.value
+                filterResults.values = mutableHabit.value!!.filter { it.name.startsWith(charSearch) }
                 return filterResults
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                habitsFilterList.value = results?.values as List<Habit>?
+                mutableHabit.value = results?.values as List<Habit>?
             }
         }
     }
@@ -60,7 +53,7 @@ class HabitListViewModel(var habitType: Habit.HabitType) : ViewModel(), Filterab
     }
 
     fun deleteHabit(habit: Habit) {
-        HabitData.removeItem(habit)
+        myHabitData.removeItem(habit)
     }
 
     fun sortList(position: Int){
@@ -68,13 +61,6 @@ class HabitListViewModel(var habitType: Habit.HabitType) : ViewModel(), Filterab
             0 -> mutableHabit.value = mutableHabit.value!!.sortedBy {el-> el.id }
             1 -> mutableHabit.value = mutableHabit.value!!.sortedBy {el-> el.time * el.period }
             2 -> mutableHabit.value = mutableHabit.value!!.sortedBy {el-> el.priority.value }
-        }
-    }
-
-    private fun updateListHabits() {
-        when (habitType) {
-            Habit.HabitType.GOOD -> mutableHabit.value = HabitData.goodHabits
-            Habit.HabitType.BAD -> mutableHabit.value = HabitData.badHabits
         }
     }
 }
