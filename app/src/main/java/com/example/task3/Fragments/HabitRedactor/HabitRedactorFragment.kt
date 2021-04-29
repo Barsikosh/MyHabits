@@ -7,9 +7,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.annotation.RequiresApi
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -45,23 +48,31 @@ class  HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        color_button.backgroundTintList = ColorStateList.valueOf(viewModel.color)
+        //color_button.backgroundTintList = ColorStateList.valueOf(viewModel.color)
         colorDialog = ColorPickerDialog()
         when (arguments?.getInt(COMMAND)) {
 
-            ADD_HABIT -> save_fab.setOnClickListener { saveNewData() }
+            ADD_HABIT -> save_fab.setOnClickListener {
+                viewModel.saveNewData()
+                checkAllProperties()
+                backToHabitList()}
             CHANGE_HABIT -> {
                 val habit = requireArguments().getSerializable(ARGS_HABIT)
                 save_fab.setOnClickListener {
-                    saveChangedData(habit as Habit)
+                    viewModel.saveChangedData(habit as Habit)
+                    checkAllProperties()
+                    backToHabitList()
                 }
-                updateText(habit as Habit)
+                viewModel.updateText(habit as Habit)
+               //updateText(habit as Habit)
             }
             else -> throw IllegalArgumentException("Name required")
         }
         color_button.setOnClickListener {
             colorDialog.show(childFragmentManager, "Color Picker")
         }
+        observeViewModel()
+        sendToViewModel()
     }
 
     private fun updateText(habit: Habit) {
@@ -74,7 +85,7 @@ class  HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
             Habit.HabitType.GOOD -> radioGroup.check(R.id.first_radio)
             Habit.HabitType.BAD -> radioGroup.check(R.id.second_radio)
         }
-        viewModel.color = habit.color
+        //viewModel.color = habit.color
         val state = ColorStateList.valueOf(habit.color)
         color_button.backgroundTintList = state
     }
@@ -98,12 +109,55 @@ class  HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
         return result
     }
 
+    private fun observeViewModel(){
+        viewModel.color.observe(viewLifecycleOwner,
+            Observer { color_button.backgroundTintList = ColorStateList.valueOf(it)})
+    }
+
+    private fun sendToViewModel(){
+        edit_habit_name.doOnTextChanged { text, _, _, _ ->
+            viewModel.name.value = text.toString()
+        }
+        edit_description.doOnTextChanged { text, _, _, _ ->
+            viewModel.desription.value = text.toString()
+        }
+
+        first_radio.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked)
+                viewModel.type.value = Habit.HabitType.GOOD
+        }
+        second_radio.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked)
+                viewModel.type.value = Habit.HabitType.BAD
+        }
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                viewModel.getPriority(position)
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+        edit_frequency.doOnTextChanged { text, start, before, count ->
+            if (text!!.isNotEmpty())
+                viewModel.frequency.value = text.toString().toInt()
+            else
+                viewModel.frequency.value = null
+        }
+        edit_times.doOnTextChanged { text, start, before, count ->
+            if (text!!.isNotEmpty())
+                viewModel.times.value = text.toString().toInt()
+            else
+                viewModel.timesText.value = null
+        }
+    }
+
+
     private fun backToHabitList() {
         val navController = activity?.findNavController(R.id.my_nav_host_fragment)
         navController!!.navigate(R.id.action_redactor_to_viewPagerFragment)
     }
 
-    private fun saveNewData() {
+   /* private fun saveNewData() {
         if (checkAllProperties()) {
             val habit = collectHabit()
             viewModel.addHabit(habit)
@@ -119,9 +173,9 @@ class  HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
             viewModel.updateHabit(newHabit)
             backToHabitList()
         }
-    }
+    }*/
 
-    private fun collectHabit(): Habit {
+    /*private fun collectHabit(): Habit {
         return Habit(
             edit_habit_name.text.toString(), edit_description.text.toString(),
             Habit.HabitType.fromInt(radioGroup.indexOfChild(requireView().findViewById(radioGroup.checkedRadioButtonId))),
@@ -130,7 +184,7 @@ class  HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
             Integer.valueOf(edit_frequency.text.toString()),
             viewModel.color
         )
-    }
+    }*/
 
     override fun sendColor(color: Int) {
         val state = ColorStateList.valueOf(color)

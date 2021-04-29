@@ -2,10 +2,7 @@ package com.example.task3.DbRoom
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.room.Room
 import com.example.task3.Habit
-import com.example.task3.MainActivity
 
 class HabitRepository: Application() {
 
