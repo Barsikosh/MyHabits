@@ -41,7 +41,6 @@ class HabitListFragment : Fragment(), LifecycleOwner {
     private lateinit var viewModel: HabitListViewModel
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

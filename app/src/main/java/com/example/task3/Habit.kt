@@ -9,13 +9,13 @@ import kotlin.coroutines.coroutineContext
 @Entity
 @TypeConverters(Habit.TypeConverter::class, Habit.PriorityConverter::class)
 data class Habit(
-    @ColumnInfo val name: String,
-    @ColumnInfo val description: String,
-    @ColumnInfo val type: HabitType,
-    @ColumnInfo val priority: HabitPriority,
-    @ColumnInfo val time: Int,
-    @ColumnInfo val period: Int,
-    @ColumnInfo var color: Int
+    val name: String,
+    val description: String,
+    val type: HabitType,
+    val priority: HabitPriority,
+    val time: Int,
+    val period: Int,
+    var color: Int
 ) : Serializable {
 
     @PrimaryKey(autoGenerate = true)
