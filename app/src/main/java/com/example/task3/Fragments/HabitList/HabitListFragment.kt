@@ -4,9 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
-import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
@@ -18,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.task3.*
 import com.example.task3.Adapters.HabitAdapter
 import com.example.task3.Fragments.HabitRedactor.HabitRedactorFragment
+import com.example.task3.Habit.Habit
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.android.synthetic.main.habits_fragment.*

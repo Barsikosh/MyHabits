@@ -1,10 +1,8 @@
 package com.example.task3.Fragments.HabitRedactor
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import com.example.task3.DbRoom.HabitRepository
-import com.example.task3.Habit
+import com.example.task3.Habit.Habit
 import com.example.task3.MainActivity
 import com.example.task3.R
 import kotlinx.coroutines.*
@@ -21,11 +19,11 @@ class RedactorHabitViewModel(): ViewModel(), CoroutineScope {
 
     fun addHabit(habit: Habit) = launch {
         withContext(Dispatchers.IO) {
-            delay(1000)
             repository.addHabit(habit)}
     }
 
     fun updateHabit(habit: Habit) = launch {
-        withContext(Dispatchers.IO) {repository.updateHabit(habit)}
+        withContext(Dispatchers.IO) {repository.updateHabit(habit)
+        }
     }
 }

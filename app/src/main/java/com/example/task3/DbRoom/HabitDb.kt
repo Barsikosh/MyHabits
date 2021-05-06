@@ -1,11 +1,8 @@
 package com.example.task3.DbRoom
 
 import androidx.room.Database
-import androidx.room.DatabaseConfiguration
-import androidx.room.InvalidationTracker
 import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteOpenHelper
-import com.example.task3.Habit
+import com.example.task3.Habit.Habit
 
 @Database(entities = [Habit::class], version = 2)
 abstract class HabitDb: RoomDatabase() {

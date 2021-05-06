@@ -2,8 +2,7 @@ package com.example.task3.DbRoom
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.task3.Habit
-
+import com.example.task3.Habit.Habit
 
 @Dao
 @TypeConverters(Habit.TypeConverter::class, Habit.PriorityConverter::class)
@@ -13,14 +12,17 @@ interface HabitDao {
     @Query("SELECT * FROM habit")
     fun getAll(): LiveData<List<Habit>>
 
-    @Query("SELECT * FROM Habit WHERE id = :id")
-    fun getById(id: Long): LiveData<Habit?>
+    @Query("SELECT  * FROM Habit WHERE uid LIKE :uid OR uid = :uid")
+    fun getById(uid: String?): Habit?
+
+    @Query("SELECT  * FROM Habit WHERE name = :name")
+    fun getByName(name: String): Habit?
 
     @Query("SELECT * FROM Habit WHERE type = :habitType")
     fun getByType(habitType: Habit.HabitType): LiveData<List<Habit>>
 
-    @Insert
-    fun insert(habit: Habit?)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(habit: Habit?): Long
 
     @Update
     fun update(habit: Habit?)

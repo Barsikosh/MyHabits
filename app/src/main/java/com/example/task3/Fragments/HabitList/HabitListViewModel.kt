@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import com.example.task3.Habit
+import com.example.task3.Habit.Habit
 import com.example.task3.DbRoom.HabitRepository
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -17,6 +17,7 @@ class HabitListViewModel(var habitType: Habit.HabitType) : ViewModel(), Filterab
     private val mutableHabit = MutableLiveData<List<Habit>>()
     val habits: LiveData<List<Habit>> = mutableHabit
     private var myHabitData: HabitRepository = HabitRepository()
+    private var allMyHabits = mutableHabit.value
 
     private val job = SupervisorJob()
     override val coroutineContext: CoroutineContext
@@ -33,8 +34,9 @@ class HabitListViewModel(var habitType: Habit.HabitType) : ViewModel(), Filterab
     private fun onCreate() {
         observer = Observer<List<Habit>> { it ->
             mutableHabit.value = it.filter { el -> el.type == habitType }
+            allMyHabits = mutableHabit.value
         }
-        myHabitData.habits.observeForever(observer)
+        HabitRepository.dbHabits.observeForever(observer)
     }
 
     override fun getFilter(): Filter {
@@ -42,10 +44,12 @@ class HabitListViewModel(var habitType: Habit.HabitType) : ViewModel(), Filterab
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val charSearch = constraint.toString()
                 val filterResults = FilterResults()
+
                 if (charSearch.isEmpty())
-                    filterResults.values = mutableHabit.value
-                filterResults.values =
-                    mutableHabit.value!!.filter { it.name.startsWith(charSearch) }
+                    filterResults.values = allMyHabits
+                else
+                    filterResults.values =
+                        mutableHabit.value!!.filter { it.name.startsWith(charSearch) }
                 return filterResults
             }
 
@@ -56,7 +60,7 @@ class HabitListViewModel(var habitType: Habit.HabitType) : ViewModel(), Filterab
     }
 
     override fun onCleared() {
-        myHabitData.habits.removeObserver(observer)
+        HabitRepository.dbHabits.removeObserver(observer)
         coroutineContext.cancelChildren()
     }
 
@@ -70,12 +74,12 @@ class HabitListViewModel(var habitType: Habit.HabitType) : ViewModel(), Filterab
     }
 
     fun deleteHabit(habit: Habit) = launch {
-        withContext(Dispatchers.Default) { myHabitData.removeItem(habit) }
+        withContext(Dispatchers.IO) { myHabitData.removeItem(habit) }
     }
 
-    fun sortList(position: Int) {
+    fun sortList(position: Int) = launch {
         when (position) {
-            0 -> mutableHabit.value = mutableHabit.value!!.sortedBy { el -> el.id }
+            0 -> mutableHabit.value = mutableHabit.value!!.sortedBy { el -> el.uid }
             1 -> mutableHabit.value = mutableHabit.value!!.sortedBy { el -> el.time * el.period }
             2 -> mutableHabit.value = mutableHabit.value!!.sortedBy { el -> el.priority.value }
         }

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task3.Fragments.HabitList.HabitListViewModel
-import com.example.task3.Habit
+import com.example.task3.Habit.Habit
 import com.example.task3.MainActivity
 import com.example.task3.R
 import kotlinx.android.extensions.LayoutContainer

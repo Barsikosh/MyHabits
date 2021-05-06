@@ -1,25 +1,30 @@
-package com.example.task3
+package com.example.task3.Habit
 
 
+import androidx.annotation.NonNull
 import androidx.room.*
+import com.example.task3.MainActivity
+import com.example.task3.R
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
-import kotlin.coroutines.coroutineContext
 
 
 @Entity
 @TypeConverters(Habit.TypeConverter::class, Habit.PriorityConverter::class)
 data class Habit(
-    val name: String,
+    @SerializedName("token")val name: String,
     val description: String,
     val type: HabitType,
     val priority: HabitPriority,
-    val time: Int,
-    val period: Int,
+    @SerializedName("count")val time: Int,
+    @SerializedName("frequency")val period: Int,
     var color: Int
 ) : Serializable {
 
+    var uid: String? = null
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
+    var id:Int? = null
+    var date:Int = 0
 
     companion object {
         private val comparatorByPriority = Comparator<Habit> { habit1, habi2b ->

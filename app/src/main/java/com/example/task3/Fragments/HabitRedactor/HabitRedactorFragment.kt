@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.task3.*
-import com.example.task3.Fragments.HabitList.HabitListFragment
+import com.example.task3.Habit.Habit
 import kotlinx.android.synthetic.main.redactor_fragment.*
 
 class  HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
@@ -115,7 +115,9 @@ class  HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
     private fun saveChangedData(habit: Habit) {
         if (checkAllProperties()) {
             val newHabit = collectHabit()
+            newHabit.uid = habit.uid
             newHabit.id = habit.id
+            newHabit.date = habit.date
             viewModel.updateHabit(newHabit)
             backToHabitList()
         }
