@@ -12,12 +12,12 @@ import java.io.Serializable
 @Entity
 @TypeConverters(Habit.TypeConverter::class, Habit.PriorityConverter::class)
 data class Habit(
-    @SerializedName("token")val name: String,
+    val name: String,
     val description: String,
     val type: HabitType,
     val priority: HabitPriority,
-    @SerializedName("count")val time: Int,
-    @SerializedName("frequency")val period: Int,
+    val time: Int,
+    val period: Int,
     var color: Int
 ) : Serializable {
 
