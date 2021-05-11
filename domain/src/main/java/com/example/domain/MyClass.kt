@@ -1,6 +1,4 @@
 package com.example.domain
 
-class DomainModule {
-
-
+class MyClass {
 }

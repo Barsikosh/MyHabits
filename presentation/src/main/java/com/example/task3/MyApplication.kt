@@ -1,11 +1,10 @@
-package com.example.task3.DbRoom
+package com.example.task3
 
 import android.app.Application
 import androidx.room.Room
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.task3.DbRoom.HabitDb
 
-class App: Application() {
+class MyApplication: Application() {
 
     companion object {
         lateinit var db: HabitDb
@@ -13,6 +12,9 @@ class App: Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+
+
         db = Room.databaseBuilder(
             applicationContext,
             HabitDb::class.java, "database")

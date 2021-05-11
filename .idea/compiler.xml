@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
+      <module name="Task3.data" target="1.8" />
       <module name="Task3.presentation" target="1.8" />
     </bytecodeTargetLevel>
   </component>

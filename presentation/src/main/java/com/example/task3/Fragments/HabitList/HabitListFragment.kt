@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.android.synthetic.main.habits_fragment.*
 import kotlinx.android.synthetic.main.redactor_fragment.*
 import kotlinx.android.synthetic.main.view_pager.*
+import javax.inject.Inject
 
 
 class HabitListFragment : Fragment(), LifecycleOwner {
@@ -44,6 +45,9 @@ class HabitListFragment : Fragment(), LifecycleOwner {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
+        //(requireActivity().application as MyApplication).
         val habitType =
             this@HabitListFragment.arguments?.getSerializable(HABIT_TYPE) as Habit.HabitType
 

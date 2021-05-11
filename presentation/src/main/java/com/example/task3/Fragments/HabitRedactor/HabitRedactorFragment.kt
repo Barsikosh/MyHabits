@@ -115,7 +115,8 @@ class  HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
     private fun saveChangedData(habit: Habit) {
         if (checkAllProperties()) {
             val newHabit = collectHabit()
-            newHabit.uid = habit.uid
+            if (habit.uid != null)
+                newHabit.uid = habit.uid
             newHabit.id = habit.id
             newHabit.date = habit.date
             viewModel.updateHabit(newHabit)

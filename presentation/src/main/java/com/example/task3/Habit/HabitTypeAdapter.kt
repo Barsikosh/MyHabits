@@ -17,7 +17,6 @@ class HabitTypeAdapter : TypeAdapter<Habit>() {
         out.name("priority").value(value?.priority!!.value ?: 0)
         out.name("title").value(value.name)
         out.name("type").value(value.type.value)
-        out.name("type").value(value.type.value)
         if (value.uid != null)
             out.name("uid").value(value.uid)
         out.endObject()

@@ -18,10 +18,10 @@ class RedactorHabitViewModel() : ViewModel(), CoroutineScope {
     //private val repository = HabitRepository()
 
     fun addHabit(habit: Habit) = launch(Dispatchers.IO) {
-        HabitRepository.addHabit(habit)
+        HabitRepository.addItem(habit)
     }
 
     fun updateHabit(habit: Habit) = launch(Dispatchers.IO) {
-        HabitRepository.updateHabit(habit)
+        HabitRepository.updateItem(habit)
     }
 }

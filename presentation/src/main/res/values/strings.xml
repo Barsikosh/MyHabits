@@ -11,6 +11,9 @@
     <string name="text_days">дней</string>
     <string name="bad_habit">Вредная</string>
     <string name="good_habit">Полезная</string>
+    <string name="select_image">Введите ссылку на изображение</string>
+    <string name="setup_image">Установить</string>
+
     <string name="bad_habits">Вредные</string>
     <string name="good_habits">Полезные</string>
     <string name="normal_habit">Нормальная</string>

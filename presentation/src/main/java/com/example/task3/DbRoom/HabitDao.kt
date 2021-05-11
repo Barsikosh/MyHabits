@@ -12,8 +12,11 @@ interface HabitDao {
     @Query("SELECT * FROM habit")
     fun getAll(): LiveData<List<Habit>>
 
-    @Query("SELECT  * FROM Habit WHERE uid LIKE :uid OR uid = :uid")
+    @Query("SELECT  * FROM Habit WHERE uid LIKE :uid")
     fun getById(uid: String?): Habit?
+
+    @Query("SELECT  * FROM Habit WHERE name LIKE :name")
+    fun getByName(name: String): Habit?
 
     @Query("SELECT * FROM Habit WHERE type = :habitType")
     fun getByType(habitType: Habit.HabitType): LiveData<List<Habit>>

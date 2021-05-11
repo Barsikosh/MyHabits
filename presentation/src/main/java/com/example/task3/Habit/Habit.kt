@@ -26,13 +26,6 @@ data class Habit(
     var id:Int? = null
     var date:Int = 0
 
-    companion object {
-        private val comparatorByPriority = Comparator<Habit> { habit1, habi2b ->
-            habit1.priority.value.compareTo(habi2b.priority.value)
-        }
-    }
-
-
     enum class HabitType(val value: Int) {
         GOOD(0),
         BAD(1);

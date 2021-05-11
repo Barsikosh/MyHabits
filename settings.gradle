@@ -1,3 +1,4 @@
-include ':Domain'
+include ':domain'
+include ':data'
 include ':presentation'
 rootProject.name = "Task3"
