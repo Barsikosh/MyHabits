@@ -65,7 +65,9 @@ object HabitRepository {
 
     private fun insertInDbRemoteHabits(habits: List<Habit>?) {
         habits?.forEach {
-            MyApplication.db.HabitDao().insert(it)
+            val habit = MyApplication.db.HabitDao().getByName(it.name)
+            if (habit == null)
+                MyApplication.db.HabitDao().insert(it)
         }
     }
 }
