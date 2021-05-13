@@ -31,6 +31,7 @@ class HabitTypeAdapter : TypeAdapter<Habit>() {
         var priority: Int = 0
         var frequency: Int = 0
         var count:Int = 0
+        var date: Int = 0
         `in`?.beginObject()
         while (`in`?.hasNext() == true) {
             val name = `in`.nextName()
@@ -48,7 +49,7 @@ class HabitTypeAdapter : TypeAdapter<Habit>() {
                 "priority" -> priority = `in`.nextInt()
                 "type" -> type = `in`.nextInt()
                 "color" -> color = `in`.nextInt()
-                "date" -> `in`.nextInt()
+                "date" -> date = `in`.nextInt()
                 "done_dates" -> {`in`.beginArray()
                 `in`.endArray()}
             }
@@ -56,6 +57,7 @@ class HabitTypeAdapter : TypeAdapter<Habit>() {
         `in`?.endObject()
         val habit = Habit(habitName,description, Habit.HabitType.fromInt(type), Habit.HabitPriority.fromInt(priority), count,frequency,color)
         habit.uid = uid
+        habit.date = date
         return habit
     }
 }

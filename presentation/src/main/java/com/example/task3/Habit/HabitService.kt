@@ -3,6 +3,7 @@ package com.example.task3.Habit
 
 import com.google.gson.GsonBuilder
 import com.google.gson.internal.LinkedTreeMap
+import kotlinx.coroutines.delay
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Retrofit
@@ -34,7 +35,7 @@ interface HabitService {
                 var response = chain.proceed(request)
                 var tryCount = 0
                 if (!(response.isSuccessful) && tryCount < 5) {
-
+                    Thread.sleep(100)
                     tryCount++
                     response = chain.proceed(request)
                 }

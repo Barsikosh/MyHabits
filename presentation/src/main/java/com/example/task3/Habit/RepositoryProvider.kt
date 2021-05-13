@@ -1,21 +1,20 @@
 package com.example.task3.Habit
 
 import com.google.gson.internal.LinkedTreeMap
-import retrofit2.Call
 
 object RepositoryProvider {
 
-    var searchRepository: SearchRepository? = null
+    var searchRepository: ApiRepository? = null
 
-    fun provideRepository(): SearchRepository {
+    fun provideRepository(): ApiRepository {
         return if (searchRepository == null){
-            searchRepository = SearchRepository(HabitService.create())
+            searchRepository = ApiRepository(HabitService.create())
             searchRepository!!
         } else searchRepository!!
     }
 }
 
-class SearchRepository(private val apiService: HabitService) {
+class ApiRepository(private val apiService: HabitService) {
 
     companion object{
         const val userToken = "0cfe4cac-170d-4f9f-9b50-ce8e112b57f7"
