@@ -12,7 +12,7 @@ import java.io.Serializable
 @Entity
 @TypeConverters(Habit.TypeConverter::class, Habit.PriorityConverter::class)
 data class Habit(
-    val name: String,
+    @PrimaryKey val name: String,
     val description: String,
     val type: HabitType,
     val priority: HabitPriority,
@@ -22,8 +22,8 @@ data class Habit(
 ) : Serializable {
 
     var uid: String? = null
-    @PrimaryKey(autoGenerate = true)
-    var id:Int? = null
+   /* @PrimaryKey(autoGenerate = true)
+    var id:Int? = null*/
     var date:Int = 0
 
     enum class HabitType(val value: Int) {

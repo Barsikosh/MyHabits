@@ -4,8 +4,14 @@ import com.google.gson.internal.LinkedTreeMap
 import retrofit2.Call
 
 object RepositoryProvider {
+
+    var searchRepository: SearchRepository? = null
+
     fun provideRepository(): SearchRepository {
-        return SearchRepository(HabitService.create())
+        return if (searchRepository == null){
+            searchRepository = SearchRepository(HabitService.create())
+            searchRepository!!
+        } else searchRepository!!
     }
 }
 

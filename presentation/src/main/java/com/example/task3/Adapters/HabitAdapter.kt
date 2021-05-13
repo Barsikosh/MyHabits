@@ -87,7 +87,6 @@ class HabitAdapter(
             "${MainActivity.CONTEXT.getString(R.string.priority_text)}: ${habit.priority}".also {
                 containerView.habit_priority.text = it
             }
-            containerView.habit_type.text = habit.type.toString()
             val stateList = ColorStateList.valueOf(habit.color)
             containerView.my_shape.backgroundTintList = stateList
         }

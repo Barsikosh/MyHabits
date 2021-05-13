@@ -15,7 +15,6 @@ class RedactorHabitViewModel() : ViewModel(), CoroutineScope {
         get() = Dispatchers.Main + job + CoroutineExceptionHandler { _, e -> throw  e }
 
     var color: Int = MainActivity.CONTEXT.resources.getColor(R.color.design_default_color_primary)
-    //private val repository = HabitRepository()
 
     fun addHabit(habit: Habit) = launch(Dispatchers.IO) {
         HabitRepository.addItem(habit)
@@ -23,5 +22,9 @@ class RedactorHabitViewModel() : ViewModel(), CoroutineScope {
 
     fun updateHabit(habit: Habit) = launch(Dispatchers.IO) {
         HabitRepository.updateItem(habit)
+    }
+
+    fun removeHabitFromDb(habit: Habit) = launch(Dispatchers.IO) {
+        HabitRepository.removeFromDb(habit)
     }
 }

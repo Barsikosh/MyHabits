@@ -1,10 +1,12 @@
 package com.example.task3.DbRoom
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.task3.Habit.Habit
 import com.example.task3.Habit.RepositoryProvider
 import com.example.task3.MyApplication
 import kotlinx.coroutines.*
+import retrofit2.HttpException
 
 object HabitRepository {
 
@@ -20,8 +22,8 @@ object HabitRepository {
     }
 
     suspend fun addItem(habit: Habit) {
-        val newId = MyApplication.db.HabitDao().insert(habit)
-        habit.id = newId.toInt()
+        MyApplication.db.HabitDao().insert(habit)
+        //habit.id = newId.toInt()
         putHabit(habit)
     }
 
@@ -36,18 +38,32 @@ object HabitRepository {
         deleteHabitFromServer(habit)
     }
 
+    suspend fun removeFromDb(habit: Habit){
+        MyApplication.db.HabitDao().delete(habit)
+    }
+
     private suspend fun getRemoteHabit() {
-        val response =
-            RepositoryProvider.provideRepository().getHabits() // в новом потоке ?
-        remoteHabits = response
-        insertInDbRemoteHabits(remoteHabits)
+        try{
+            val response =
+                RepositoryProvider.provideRepository().getHabits() // в новом потоке ?
+            remoteHabits = response
+            insertInDbRemoteHabits(remoteHabits)
+        }
+        catch (e:HttpException){
+            Log.e("Http", "cant get remote data")
+        }
     }
 
     private suspend fun putHabit(habit: Habit) {
-        val response =
-            RepositoryProvider.provideRepository().putHabit(habit)
-        habit.uid = response["uid"]
-        MyApplication.db.HabitDao().update(habit)
+        try{
+            val response =
+            RepositoryProvider.provideRepository().putHabit(habit)["uid"]
+            habit.uid = response
+            MyApplication.db.HabitDao().update(habit)
+        }
+        catch (e:HttpException){
+            Log.e("HttpRequest", "did`nt put")
+        }
     }
 
     private suspend fun updateRemoteData() {
@@ -58,15 +74,18 @@ object HabitRepository {
     }
 
     private suspend fun deleteHabitFromServer(habit: Habit) {
-        if (habit.uid != null) {
-            RepositoryProvider.provideRepository().deleteHabit(habit)
+        try {
+            if (habit.uid != null) {
+                RepositoryProvider.provideRepository().deleteHabit(habit)
+            }
         }
+       catch (e: HttpException){
+           Log.e("HttpRequest", "did`nt delete")
+       }
     }
 
     private fun insertInDbRemoteHabits(habits: List<Habit>?) {
         habits?.forEach {
-            val habit = MyApplication.db.HabitDao().getByName(it.name)
-            if (habit == null)
                 MyApplication.db.HabitDao().insert(it)
         }
     }
