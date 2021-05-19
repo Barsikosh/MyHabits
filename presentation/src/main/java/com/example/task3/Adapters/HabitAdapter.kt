@@ -6,6 +6,7 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.entities.Habit
@@ -13,17 +14,18 @@ import com.example.task3.Fragments.HabitList.HabitListViewModel
 import com.example.task3.MainActivity
 import com.example.task3.R
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.list_item.*
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class HabitAdapter(
     private val viewModel: HabitListViewModel,
     private val onItemClick: ((Habit) -> Unit),
+    private val habitExecution: ((Habit) -> Unit),
     private val context: Context?
 ) : RecyclerView.Adapter<HabitAdapter.HabitViewHolder>(),
     ITouchHelperAdapter {
 
     private var habits: List<Habit> = viewModel.getItems() ?: emptyList()
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -56,8 +58,11 @@ class HabitAdapter(
         RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         init {
-            itemView.setOnClickListener {
+            containerView.setOnClickListener {
                 onItemClick.invoke(habits[adapterPosition])
+            }
+            containerView.findViewById<Button>(R.id.accept_button).setOnClickListener {
+                habitExecution.invoke(habits[adapterPosition])
             }
         }
 

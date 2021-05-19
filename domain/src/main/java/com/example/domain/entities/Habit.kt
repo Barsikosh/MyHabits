@@ -29,8 +29,8 @@ data class Habit(
 
         override fun toString(): String {
             return if (this == BAD)
-                "Плохая"
-            else "Хорошая"
+                "Вредная"
+            else "Полезная"
         }
     }
 

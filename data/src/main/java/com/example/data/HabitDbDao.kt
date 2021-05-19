@@ -11,7 +11,7 @@ import java.io.Serializable
 data class HabitDbDao(
     @PrimaryKey val name: String,
     val description: String,
-    val type: Habit.HabitType,
+    var type: Habit.HabitType,
     val priority: Habit.HabitPriority,
     val time: Int,
     val period: Int,

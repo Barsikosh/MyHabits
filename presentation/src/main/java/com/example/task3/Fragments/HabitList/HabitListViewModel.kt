@@ -36,8 +36,10 @@ class HabitListViewModel(
     }
 
     init {
+        var da = getHabitsUseCase.getHabit().asLiveData()/*.observeForever(observer)*/
+        var b = da.value
+        da.observeForever(observer)
         allMyHabits = mutableHabit.value
-        getHabitsUseCase.getHabit().asLiveData().observeForever(observer)
     }
 
 
@@ -49,14 +51,18 @@ class HabitListViewModel(
 
                 if (charSearch.isEmpty())
                     filterResults.values = allMyHabits
-                else
+                else {
                     filterResults.values =
                         mutableHabit.value!!.filter { it.name.startsWith(charSearch) }
+                    if (allMyHabits == null)
+                        allMyHabits = mutableHabit.value!!
+
+                }
                 return filterResults
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                mutableHabit.value = results?.values as? List<Habit>?
+                mutableHabit.value = results?.values as List<Habit>?
             }
         }
     }
@@ -64,6 +70,10 @@ class HabitListViewModel(
     override fun onCleared() {
         getHabitsUseCase.getHabit().asLiveData().removeObserver(observer)
         coroutineContext.cancelChildren()
+    }
+
+    fun habitAchieved(habit: Habit){
+
     }
 
     fun getItems() = getHabitsUseCase.getHabit().asLiveData().value

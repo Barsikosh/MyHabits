@@ -70,7 +70,7 @@ class HabitRepositoryImpl(
                 retrofitService.getHabits()
             remoteHabits = response
             insertInDbRemoteHabits(remoteHabits)
-        } catch (e: HttpException) {
+        } catch (e: retrofit2.HttpException) {
             Log.e("Http", "cant get remote data")
         }
     }
@@ -81,7 +81,7 @@ class HabitRepositoryImpl(
                 this.retrofitService.putHabit(habit)["uid"]
             habit.uid = response
             dataBase.HabitDao().update(habit)
-        } catch (e: HttpException) {
+        } catch (e: retrofit2.HttpException) {
             Log.e("HttpRequest", "did`nt put")
         }
     }
@@ -98,7 +98,7 @@ class HabitRepositoryImpl(
             if (habit.uid != null) {
                 this.retrofitService.deleteHabit(habit)
             }
-        } catch (e: HttpException) {
+        } catch (e: retrofit2.HttpException) {
             Log.e("HttpRequest", "did`nt delete")
         }
     }

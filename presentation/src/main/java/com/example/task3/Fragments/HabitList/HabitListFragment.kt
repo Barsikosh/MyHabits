@@ -21,6 +21,7 @@ import com.example.task3.DI.MyApplication
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.android.synthetic.main.habits_fragment.*
+import kotlinx.android.synthetic.main.list_item.*
 import kotlinx.android.synthetic.main.redactor_fragment.*
 import kotlinx.android.synthetic.main.view_pager.*
 
@@ -48,7 +49,6 @@ class HabitListFragment: Fragment(), LifecycleOwner {
 
         val habitType =
             this@HabitListFragment.arguments?.getSerializable(HABIT_TYPE) as Habit.HabitType
-
         val habitsUseCase = (requireActivity().application as MyApplication)
             .applicationComponent.getGetHabitsUseCase()
         val deleteHabitUseCase = (requireActivity().application as MyApplication)
@@ -65,7 +65,10 @@ class HabitListFragment: Fragment(), LifecycleOwner {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        add_habit_button.setOnClickListener { addHabit() }
+        add_habit_button.setOnClickListener {
+            addHabit()
+        }
+
         addAdapter()
         observeViewModels()
         val bottomSheet = BottomSheet()
@@ -78,8 +81,7 @@ class HabitListFragment: Fragment(), LifecycleOwner {
     private fun observeViewModels() {
         viewModel.habits.observe(viewLifecycleOwner, Observer {
             it.let {
-                (habit_list.adapter as HabitAdapter).refreshHabits(
-                it)
+                (habit_list.adapter as HabitAdapter).refreshHabits(it)
             }
         })
     }
@@ -92,6 +94,10 @@ class HabitListFragment: Fragment(), LifecycleOwner {
                     viewModel,
                     { habit ->
                         changeHabit(habit)
+                    },
+
+                    {
+                        habit ->
                     },
                     this@HabitListFragment.context
                 )

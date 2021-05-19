@@ -18,6 +18,7 @@ class HabitTypeAdapter : TypeAdapter<HabitDbDao>() {
         out.name("priority").value(value?.priority!!.value ?: 0)
         out.name("title").value(value.name)
         out.name("type").value(value.type.value)
+        out.name("авыа").value(value.type.value)
         if (value.uid != null)
             out.name("uid").value(value.uid)
         out.endObject()
@@ -51,8 +52,10 @@ class HabitTypeAdapter : TypeAdapter<HabitDbDao>() {
                 "type" -> type = `in`.nextInt()
                 "color" -> color = `in`.nextInt()
                 "date" -> date = `in`.nextInt()
-                "done_dates" -> {`in`.beginArray()
-                `in`.endArray()}
+                "done_dates" -> {
+                    `in`.beginArray()
+                `in`.endArray()
+                }
             }
         }
         `in`?.endObject()
