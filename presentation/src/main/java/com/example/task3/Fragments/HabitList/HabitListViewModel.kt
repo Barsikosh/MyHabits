@@ -2,41 +2,44 @@ package com.example.task3.Fragments.HabitList
 
 import android.widget.Filter
 import android.widget.Filterable
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import com.example.task3.Habit.Habit
-import com.example.task3.DbRoom.HabitRepository
+import androidx.lifecycle.*
+import com.example.data.HabitDbDao
+import com.example.data.HabitRepositoryImpl
+import com.example.domain.entities.Habit
+import com.example.domain.useCases.DeleteHabitUseCase
+import com.example.domain.useCases.GetHabitsUseCase
+import com.example.task3.DI.MyApplication
 import kotlinx.coroutines.*
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 
-class HabitListViewModel(var habitType: Habit.HabitType) : ViewModel(), Filterable, CoroutineScope {
+class HabitListViewModel(
+    private val getHabitsUseCase: GetHabitsUseCase,
+    private val deleteHabitUseCase: DeleteHabitUseCase,
+    private val habitType: Habit.HabitType
+) : ViewModel(), Filterable, CoroutineScope {
 
     private val mutableHabit = MutableLiveData<List<Habit>>()
     val habits: LiveData<List<Habit>> = mutableHabit
-    //private var myHabitData: HabitRepository = HabitRepository()
+
+
     private var allMyHabits = mutableHabit.value
 
     private val job = SupervisorJob()
+
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job + CoroutineExceptionHandler { _, e -> throw  e }
 
+    private var observer: Observer<List<Habit>> = Observer<List<Habit>> {
+        mutableHabit.value = it.filter { el -> el.type == habitType }
+    }
+
     init {
-        onCreate()
+        allMyHabits = mutableHabit.value
+        getHabitsUseCase.getHabit().asLiveData().observeForever(observer)
     }
 
-    private lateinit var observer: Observer<List<Habit>>
-
-
-    private fun onCreate() {
-        observer = Observer<List<Habit>> { it ->
-            mutableHabit.value = it.filter { el -> el.type == habitType }
-            allMyHabits = mutableHabit.value
-        }
-        HabitRepository.dbHabits.observeForever(observer)
-    }
 
     override fun getFilter(): Filter {
         return object : Filter() {
@@ -59,11 +62,11 @@ class HabitListViewModel(var habitType: Habit.HabitType) : ViewModel(), Filterab
     }
 
     override fun onCleared() {
-        HabitRepository.dbHabits.removeObserver(observer)
+        getHabitsUseCase.getHabit().asLiveData().removeObserver(observer)
         coroutineContext.cancelChildren()
     }
 
-    fun getItems() = habits.value
+    fun getItems() = getHabitsUseCase.getHabit().asLiveData().value
 
     fun habitsMoved(startPosition: Int, nextPosition: Int) {
         val habits = mutableHabit.value as MutableList
@@ -72,14 +75,14 @@ class HabitListViewModel(var habitType: Habit.HabitType) : ViewModel(), Filterab
         habits[nextPosition] = habit
     }
 
-    fun deleteHabit(habit: Habit) = launch(Dispatchers.IO){
-         HabitRepository.removeItem(habit)
+    fun deleteHabit(habit: Habit) = launch(Dispatchers.IO) {
+        deleteHabitUseCase.deleteHabit(habit)
     }
 
     fun sortList(position: Int) = launch(Dispatchers.Default) {
         when (position) {
-            0 -> mutableHabit.postValue(mutableHabit.value!!.sortedBy { el -> el.uid })
-            1 -> mutableHabit.postValue( mutableHabit.value!!.sortedBy { el -> el.time * el.period })
+            0 -> mutableHabit.postValue(mutableHabit.value!!.sortedBy { el -> el.date })
+            1 -> mutableHabit.postValue(mutableHabit.value!!.sortedBy { el -> el.time * el.period })
             2 -> mutableHabit.postValue(mutableHabit.value!!.sortedBy { el -> el.priority.value })
         }
     }

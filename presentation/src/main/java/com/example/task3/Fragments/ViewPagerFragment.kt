@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.example.task3.Adapters.HabitPagerAdapter
 import com.example.task3.Fragments.HabitList.HabitListFragment
-import com.example.task3.Habit.Habit
+import com.example.domain.entities.Habit
 import com.example.task3.R
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.view_pager.*

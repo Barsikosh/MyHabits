@@ -1,18 +1,19 @@
-package com.example.task3.Habit
+package com.example.data
 
+import com.example.domain.entities.Habit
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
 
-class HabitTypeAdapter : TypeAdapter<Habit>() {
+class HabitTypeAdapter : TypeAdapter<HabitDbDao>() {
 
-    override fun write(out: JsonWriter?, value: Habit?) {
+    override fun write(out: JsonWriter?, value: HabitDbDao?) {
         out!!.beginObject()
         out.name("color").value(value?.color ?: 0)
         out.name("count").value(value?.time ?: 0)
         out.name("date").value( value?.date)
-        out.name("description").value(value?.description)
+        out.name("description").value(value?.description + " ")
         out.name("frequency").value(value?.period)
         out.name("priority").value(value?.priority!!.value ?: 0)
         out.name("title").value(value.name)
@@ -22,7 +23,7 @@ class HabitTypeAdapter : TypeAdapter<Habit>() {
         out.endObject()
     }
 
-    override fun read(`in`: JsonReader?): Habit {
+    override fun read(`in`: JsonReader?): HabitDbDao {
         var uid: String = ""
         var type: Int = 0
         var habitName: String = ""
@@ -55,7 +56,7 @@ class HabitTypeAdapter : TypeAdapter<Habit>() {
             }
         }
         `in`?.endObject()
-        val habit = Habit(habitName,description, Habit.HabitType.fromInt(type), Habit.HabitPriority.fromInt(priority), count,frequency,color)
+        val habit = HabitDbDao(habitName,description, Habit.HabitType.fromInt(type), Habit.HabitPriority.fromInt(priority), count,frequency,color)
         habit.uid = uid
         habit.date = date
         return habit

@@ -15,16 +15,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.task3.*
 import com.example.task3.Adapters.HabitAdapter
 import com.example.task3.Fragments.HabitRedactor.HabitRedactorFragment
-import com.example.task3.Habit.Habit
+import com.example.domain.entities.Habit
+import com.example.task3.Adapters.MyItemTouchHelper
+import com.example.task3.DI.MyApplication
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.android.synthetic.main.habits_fragment.*
 import kotlinx.android.synthetic.main.redactor_fragment.*
 import kotlinx.android.synthetic.main.view_pager.*
-import javax.inject.Inject
 
 
-class HabitListFragment : Fragment(), LifecycleOwner {
+class HabitListFragment: Fragment(), LifecycleOwner {
 
     companion object {
         const val HABIT_TYPE = "habit_type"
@@ -37,9 +38,7 @@ class HabitListFragment : Fragment(), LifecycleOwner {
         }
     }
 
-    private lateinit var viewModel: HabitListViewModel
-
-
+    lateinit var viewModel: HabitListViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,15 +46,21 @@ class HabitListFragment : Fragment(), LifecycleOwner {
     ): View? {
 
 
-        //(requireActivity().application as MyApplication).
         val habitType =
             this@HabitListFragment.arguments?.getSerializable(HABIT_TYPE) as Habit.HabitType
 
+        val habitsUseCase = (requireActivity().application as MyApplication)
+            .applicationComponent.getGetHabitsUseCase()
+        val deleteHabitUseCase = (requireActivity().application as MyApplication)
+            .applicationComponent.getDeleteHabitUseCase()
+
         viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return HabitListViewModel(habitType) as T
+                return HabitListViewModel(habitsUseCase, deleteHabitUseCase,habitType) as T
             }
         }).get(HabitListViewModel::class.java)
+
+
         return inflater.inflate(R.layout.habits_fragment, container, false)
     }
 
@@ -74,8 +79,7 @@ class HabitListFragment : Fragment(), LifecycleOwner {
         viewModel.habits.observe(viewLifecycleOwner, Observer {
             it.let {
                 (habit_list.adapter as HabitAdapter).refreshHabits(
-                    it
-                )
+                it)
             }
         })
     }

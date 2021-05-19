@@ -13,11 +13,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.example.data.HabitDbDao
 import com.example.task3.*
-import com.example.task3.Habit.Habit
+import com.example.domain.entities.Habit
+import com.example.task3.DI.MyApplication
 import kotlinx.android.synthetic.main.redactor_fragment.*
 
-class  HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
+class HabitRedactorFragment : Fragment(), ColorPickerDialog.OnInputListener {
 
     companion object {
         const val ARGS_HABIT = "args_habit"
@@ -26,7 +28,8 @@ class  HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
         const val COMMAND = "command"
     }
 
-    private lateinit var viewModel: RedactorHabitViewModel
+    lateinit var viewModel: RedactorHabitViewModel
+
     lateinit var colorDialog: DialogFragment;
 
     override fun onCreateView(
@@ -34,11 +37,18 @@ class  HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val addHabitUseCase = (requireActivity().application as MyApplication)
+            .applicationComponent.getAddHabitUseCase()
+        val updateHabitUseCase = (requireActivity().application as MyApplication)
+            .applicationComponent.getUpdateHabitUseCase()
+
         viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return RedactorHabitViewModel() as T
+                return RedactorHabitViewModel(addHabitUseCase, updateHabitUseCase) as T
             }
         }).get(RedactorHabitViewModel::class.java)
+
         return inflater.inflate(R.layout.redactor_fragment, container, false)
     }
 
@@ -117,11 +127,9 @@ class  HabitRedactorFragment: Fragment(), ColorPickerDialog.OnInputListener {
             val newHabit = collectHabit()
             if (habit.uid != null)
                 newHabit.uid = habit.uid
-            //newHabit.id = habit.id
             newHabit.date = habit.date
-            if (newHabit.name != habit.name){
+            if (newHabit.name != habit.name) {
                 viewModel.addHabit(newHabit)
-                viewModel.removeHabitFromDb(habit)
             }
             viewModel.updateHabit(newHabit)
             backToHabitList()

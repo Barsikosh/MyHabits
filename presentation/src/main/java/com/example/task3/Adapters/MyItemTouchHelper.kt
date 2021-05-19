@@ -1,4 +1,4 @@
-package com.example.task3
+package com.example.task3.Adapters
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.DOWN
