@@ -14,7 +14,10 @@
     <string name="select_image">Введите ссылку на изображение</string>
     <string name="setup_image">Установить</string>
     <string name="sort_and_filter">Сортировка и фильтрация</string>
-
+    <string name="good_toast1">Стоит выполнить</string>
+    <string name="good_toast2">You are breathtaking</string>
+    <string name="bad_toast1">Можете выполнить</string>
+    <string name="bad_toast2">Хватит это делать :(</string>
     <string name="bad_habits">Вредные</string>
     <string name="good_habits">Полезные</string>
     <string name="normal_habit">Нормальная</string>

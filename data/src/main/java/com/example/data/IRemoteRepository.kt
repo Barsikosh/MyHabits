@@ -9,4 +9,6 @@ interface IRemoteRepository {
     suspend fun getHabits(): List<HabitDbDao>
 
     suspend fun putHabit(habit: HabitDbDao): LinkedTreeMap<String, String>
+
+    suspend fun postHabit(habit: HabitDbDao)
 }

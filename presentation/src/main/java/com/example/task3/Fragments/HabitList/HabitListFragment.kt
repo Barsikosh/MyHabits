@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,9 +23,11 @@ import kotlinx.android.synthetic.main.habits_fragment.*
 import kotlinx.android.synthetic.main.list_item.*
 import kotlinx.android.synthetic.main.redactor_fragment.*
 import kotlinx.android.synthetic.main.view_pager.*
+import java.util.*
+import javax.inject.Inject
 
 
-class HabitListFragment: Fragment(), LifecycleOwner {
+class HabitListFragment : Fragment(), LifecycleOwner {
 
     companion object {
         const val HABIT_TYPE = "habit_type"
@@ -39,7 +40,9 @@ class HabitListFragment: Fragment(), LifecycleOwner {
         }
     }
 
+    @Inject
     lateinit var viewModel: HabitListViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,18 +52,8 @@ class HabitListFragment: Fragment(), LifecycleOwner {
 
         val habitType =
             this@HabitListFragment.arguments?.getSerializable(HABIT_TYPE) as Habit.HabitType
-        val habitsUseCase = (requireActivity().application as MyApplication)
-            .applicationComponent.getGetHabitsUseCase()
-        val deleteHabitUseCase = (requireActivity().application as MyApplication)
-            .applicationComponent.getDeleteHabitUseCase()
-
-        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return HabitListViewModel(habitsUseCase, deleteHabitUseCase,habitType) as T
-            }
-        }).get(HabitListViewModel::class.java)
-
-
+        (requireActivity().application as MyApplication).initViewModelListComponent(this, habitType)
+        (requireActivity().application as MyApplication).listViewModelComponent.injectFragment(this)
         return inflater.inflate(R.layout.habits_fragment, container, false)
     }
 
@@ -96,8 +89,8 @@ class HabitListFragment: Fragment(), LifecycleOwner {
                         changeHabit(habit)
                     },
 
-                    {
-                        habit ->
+                    { habit ->
+                        doneHabit(habit)
                     },
                     this@HabitListFragment.context
                 )
@@ -107,6 +100,36 @@ class HabitListFragment: Fragment(), LifecycleOwner {
         val callback: ItemTouchHelper.Callback = MyItemTouchHelper(habitAdapter)
         val myItemTouchHelper = ItemTouchHelper(callback)
         myItemTouchHelper.attachToRecyclerView(habit_list)
+    }
+
+    private fun doneHabit(habit: Habit) {
+        viewModel.postHabit(habit)
+        val countsLeft = habit.time - habit.postDate(Calendar.DAY_OF_YEAR - 1)
+        val text: String = if (habit.type == Habit.HabitType.GOOD) {
+            if (countsLeft > 0) {
+                "${getString(R.string.good_toast1)} ${
+                    requireContext().resources.getQuantityString(
+                        R.plurals.times,
+                        countsLeft,
+                        countsLeft
+                    )
+                }"
+            } else
+                getString(R.string.good_toast2)
+        } else {
+            if (countsLeft > 0) {
+                "${getString(R.string.bad_toast1)} ${
+                    requireContext().resources.getQuantityString(
+                        R.plurals.times,
+                        countsLeft,
+                        countsLeft
+                    )
+                }"
+            } else {
+                getString(R.string.bad_toast2)
+            }
+        }
+        Toast.makeText(MainActivity.CONTEXT, text, Toast.LENGTH_SHORT).show()
     }
 
     private fun addHabit() {

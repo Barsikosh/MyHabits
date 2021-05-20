@@ -3,26 +3,32 @@ package com.example.task3.Fragments.HabitList
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.lifecycle.*
+import androidx.lifecycle.Observer
 import com.example.data.HabitDbDao
 import com.example.data.HabitRepositoryImpl
 import com.example.domain.entities.Habit
 import com.example.domain.useCases.DeleteHabitUseCase
 import com.example.domain.useCases.GetHabitsUseCase
+import com.example.domain.useCases.PostHabitUseCase
 import com.example.task3.DI.MyApplication
 import kotlinx.coroutines.*
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
 
 
 class HabitListViewModel(
     private val getHabitsUseCase: GetHabitsUseCase,
     private val deleteHabitUseCase: DeleteHabitUseCase,
+    private val postHabitUseCase: PostHabitUseCase,
     private val habitType: Habit.HabitType
 ) : ViewModel(), Filterable, CoroutineScope {
 
     private val mutableHabit = MutableLiveData<List<Habit>>()
     val habits: LiveData<List<Habit>> = mutableHabit
 
+    private val todayTime = Calendar.DAY_OF_YEAR
 
     private var allMyHabits = mutableHabit.value
 
@@ -36,9 +42,7 @@ class HabitListViewModel(
     }
 
     init {
-        var da = getHabitsUseCase.getHabit().asLiveData()/*.observeForever(observer)*/
-        var b = da.value
-        da.observeForever(observer)
+        getHabitsUseCase.getHabit().asLiveData().observeForever(observer)
         allMyHabits = mutableHabit.value
     }
 
@@ -54,15 +58,21 @@ class HabitListViewModel(
                 else {
                     filterResults.values =
                         mutableHabit.value!!.filter { it.name.startsWith(charSearch) }
-                    if (allMyHabits == null)
+                    if (allMyHabits == null) {
+                        filterResults.values =
+                            mutableHabit.value!!.filter { it.name.startsWith(charSearch) }
                         allMyHabits = mutableHabit.value!!
+                    } else {
+                        filterResults.values =
+                            allMyHabits!!.filter { it.name.startsWith(charSearch) }
+                    }
 
                 }
                 return filterResults
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                mutableHabit.value = results?.values as List<Habit>?
+                mutableHabit.value = results?.values as List<Habit>? ?: ArrayList<Habit>()
             }
         }
     }
@@ -72,8 +82,9 @@ class HabitListViewModel(
         coroutineContext.cancelChildren()
     }
 
-    fun habitAchieved(habit: Habit){
 
+    fun postHabit(habit: Habit) = launch(Dispatchers.IO){
+        postHabitUseCase.postHabit(habit, todayTime)
     }
 
     fun getItems() = getHabitsUseCase.getHabit().asLiveData().value

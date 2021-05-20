@@ -4,10 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.data.*
 import com.example.domain.repository.HabitRepository
-import com.example.domain.useCases.AddHabitUseCase
-import com.example.domain.useCases.DeleteHabitUseCase
-import com.example.domain.useCases.GetHabitsUseCase
-import com.example.domain.useCases.UpdateHabitUseCase
+import com.example.domain.useCases.*
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -41,6 +38,11 @@ class HabitsModule {
     @Provides
     fun provideGetHabitsUseCase(habitRepository: HabitRepository): GetHabitsUseCase {
         return GetHabitsUseCase(habitRepository, Dispatchers.IO)
+    }
+
+    @Provides
+    fun providePostHabitUseCase(habitRepository: HabitRepository): PostHabitUseCase {
+        return PostHabitUseCase(habitRepository, Dispatchers.IO)
     }
 
     @Provides

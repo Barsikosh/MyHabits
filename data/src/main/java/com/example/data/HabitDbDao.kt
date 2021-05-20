@@ -18,28 +18,32 @@ data class HabitDbDao(
     var color: Int
 ) : Serializable {
 
+    var doneDates = mutableListOf<Int>()
+
     var uid: String? = null
     var date: Int = 0
 
     companion object {
         fun toDbDao(habit: Habit): HabitDbDao {
-            var result = HabitDbDao(
+            val result = HabitDbDao(
                 habit.name, habit.description, habit.type,
                 habit.priority, habit.time, habit.period, habit.color
             )
             if (habit.uid != null)
                 result.uid = habit.uid
             result.date = habit.date
+            result.doneDates = habit.doneDates
             return  result;
         }
 
         fun toHabit(habit: HabitDbDao): Habit {
-            var result = Habit(
+            val result = Habit(
                 habit.name, habit.description, habit.type,
                 habit.priority, habit.time, habit.period, habit.color
             )
             result.date = habit.date
             result.uid = habit.uid
+            result.doneDates = habit.doneDates
             return result
         }
     }
@@ -74,5 +78,4 @@ data class HabitDbDao(
             }
         }
     }
-
 }

@@ -16,7 +16,13 @@ data class Habit(
     var date:Int = 0
     var uid: String? = null
 
+    var doneDates = mutableListOf<Int>()
 
+
+    fun postDate(currentData: Int): Int{
+        val lastUpdateDay = currentData - currentData.rem(this.period)
+        return this.doneDates.filter { it >= lastUpdateDay }.size
+    }
 
 
     enum class HabitType(val value: Int) {

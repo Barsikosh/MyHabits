@@ -20,4 +20,10 @@ interface HabitService {
         @Header("Authorization") token: String,
         @Body uid: LinkedTreeMap<String, String>
     )
+
+    @POST("api/habit")
+    suspend fun postHabit(
+        @Header("Authorization") token: String,
+        @Body uidAndDate: LinkedTreeMap<String, String>
+      /*  @Body date: LinkedTreeMap<String, Int>*/)
 }

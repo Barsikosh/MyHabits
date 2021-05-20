@@ -62,6 +62,21 @@ class HabitRepositoryImpl(
         dataBase.HabitDao().delete(dbHabit)
     }
 
+    override suspend fun postItem(habit: Habit) {
+        val dbHabit = HabitDbDao.toDbDao(habit)
+        putHabit(dbHabit)
+        dataBase.HabitDao().update(dbHabit)
+
+    }
+
+    private suspend fun postHabit(habit: HabitDbDao){
+        try {
+            retrofitService.postHabit(habit)
+        } catch (e: retrofit2.HttpException) {
+            Log.e("HttpRequest", "did`nt post")
+        }
+    }
+
     override fun getRemoteData(): List<Habit>? = remoteHabits?.map { el -> HabitDbDao.toHabit(el) }
 
     private suspend fun getRemoteHabit() {

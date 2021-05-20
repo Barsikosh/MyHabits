@@ -1,10 +1,9 @@
 package com.example.task3.DI
 
 
-import com.example.domain.useCases.AddHabitUseCase
-import com.example.domain.useCases.DeleteHabitUseCase
-import com.example.domain.useCases.GetHabitsUseCase
-import com.example.domain.useCases.UpdateHabitUseCase
+import com.example.domain.useCases.*
+import com.example.task3.DI.ViewModelComponent.HabitListViewModelComponent
+import com.example.task3.DI.ViewModelComponent.ViewModelComponent
 import dagger.Component
 import javax.inject.Singleton
 
@@ -16,5 +15,7 @@ interface ApplicationComponent {
     fun getUpdateHabitUseCase() : UpdateHabitUseCase
     fun getDeleteHabitUseCase() : DeleteHabitUseCase
     fun getGetHabitsUseCase() : GetHabitsUseCase
-
+    fun getPostHabitUseCase() : PostHabitUseCase
+    fun getViewModelComponent(): ViewModelComponent.Builder
+    fun getListViewModelComponent(): HabitListViewModelComponent.Builder
 }

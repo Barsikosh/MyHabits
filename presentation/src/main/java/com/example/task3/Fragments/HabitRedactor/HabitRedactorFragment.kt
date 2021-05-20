@@ -10,14 +10,12 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.example.data.HabitDbDao
 import com.example.task3.*
 import com.example.domain.entities.Habit
 import com.example.task3.DI.MyApplication
 import kotlinx.android.synthetic.main.redactor_fragment.*
+import javax.inject.Inject
 
 class HabitRedactorFragment : Fragment(), ColorPickerDialog.OnInputListener {
 
@@ -28,6 +26,7 @@ class HabitRedactorFragment : Fragment(), ColorPickerDialog.OnInputListener {
         const val COMMAND = "command"
     }
 
+    @Inject
     lateinit var viewModel: RedactorHabitViewModel
 
     lateinit var colorDialog: DialogFragment;
@@ -38,16 +37,19 @@ class HabitRedactorFragment : Fragment(), ColorPickerDialog.OnInputListener {
         savedInstanceState: Bundle?
     ): View? {
 
-        val addHabitUseCase = (requireActivity().application as MyApplication)
+       /* val addHabitUseCase = (requireActivity().application as MyApplication)
             .applicationComponent.getAddHabitUseCase()
         val updateHabitUseCase = (requireActivity().application as MyApplication)
-            .applicationComponent.getUpdateHabitUseCase()
+            .applicationComponent.getUpdateHabitUseCase()*/
 
-        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+        (requireActivity().application as MyApplication).initViewModelRedactorComponent(this)
+        (requireActivity().application as MyApplication).viewModelComponent.injectFragment2(this)
+
+        /*viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return RedactorHabitViewModel(addHabitUseCase, updateHabitUseCase) as T
             }
-        }).get(RedactorHabitViewModel::class.java)
+        }).get(RedactorHabitViewModel::class.java)*/
 
         return inflater.inflate(R.layout.redactor_fragment, container, false)
     }
