@@ -84,6 +84,7 @@ class HabitListViewModel(
 
 
     fun postHabit(habit: Habit) = launch(Dispatchers.IO){
+        habit.date = todayTime
         postHabitUseCase.postHabit(habit, todayTime)
     }
 

@@ -19,9 +19,9 @@ class ApiRepository(private val apiService: HabitService): IRemoteRepository {
     }
 
     override suspend fun postHabit(habit: HabitDbDao) {
-        return apiService.postHabit(userToken, LinkedTreeMap<String,String>().also {
-            it["date"] = habit.date.toString()
-            it["uid"] = habit.uid
+        return apiService.postHabit(userToken, LinkedTreeMap<String,Any>().also {
+            it["date"] = habit.date
+            it["habit_uid"] = habit.uid
         }/*, LinkedTreeMap<String, Int>().also {it["date"] = habit.date}*/ )
     }
 

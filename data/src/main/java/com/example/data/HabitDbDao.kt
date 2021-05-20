@@ -3,21 +3,31 @@ package com.example.data
 
 import androidx.room.*
 import com.example.domain.entities.Habit
+import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
+import com.google.gson.reflect.TypeToken
 import java.io.Serializable
 
 
 @Entity
-@TypeConverters(HabitDbDao.TypeConverter::class, HabitDbDao.PriorityConverter::class)
+@TypeConverters(
+    HabitDbDao.TypeConverter::class,
+    HabitDbDao.PriorityConverter::class,
+    HabitDbDao.DatesConverter::class
+)
 data class HabitDbDao(
-    @PrimaryKey val name: String,
+    @PrimaryKey
+    @SerializedName("title")
+    val name: String,
     val description: String,
     var type: Habit.HabitType,
     val priority: Habit.HabitPriority,
     val time: Int,
-    val period: Int,
+    @SerializedName("frequency") val period: Int,
     var color: Int
 ) : Serializable {
 
+    @SerializedName("done_dates")
     var doneDates = mutableListOf<Int>()
 
     var uid: String? = null
@@ -33,7 +43,7 @@ data class HabitDbDao(
                 result.uid = habit.uid
             result.date = habit.date
             result.doneDates = habit.doneDates
-            return  result;
+            return result;
         }
 
         fun toHabit(habit: HabitDbDao): Habit {
@@ -47,6 +57,7 @@ data class HabitDbDao(
             return result
         }
     }
+
 
     class TypeConverter {
         @androidx.room.TypeConverter
@@ -62,6 +73,21 @@ data class HabitDbDao(
             }
         }
     }
+
+    class DatesConverter {
+        @androidx.room.TypeConverter
+        fun fromDates(doneDates: MutableList<Int>): String {
+            val gson = Gson()
+            return gson.toJson(doneDates)
+        }
+
+        @androidx.room.TypeConverter
+        fun toDates(datesString: String): MutableList<Int> {
+            val listType = object : TypeToken<MutableList<Int>>() {}.type
+            return Gson().fromJson(datesString, listType)
+        }
+    }
+
 
     class PriorityConverter {
         @androidx.room.TypeConverter

@@ -64,7 +64,7 @@ class HabitRepositoryImpl(
 
     override suspend fun postItem(habit: Habit) {
         val dbHabit = HabitDbDao.toDbDao(habit)
-        putHabit(dbHabit)
+        postHabit(dbHabit)
         dataBase.HabitDao().update(dbHabit)
 
     }
@@ -120,7 +120,7 @@ class HabitRepositoryImpl(
 
     private fun insertInDbRemoteHabits(habits: List<HabitDbDao>?) {
         habits?.forEach {
-            this.dataBase.HabitDao().insert(it)
+                this.dataBase.HabitDao().insert(it)
         }
     }
 

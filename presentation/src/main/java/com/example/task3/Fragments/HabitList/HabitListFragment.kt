@@ -1,6 +1,7 @@
 package com.example.task3.Fragments.HabitList
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -109,7 +110,7 @@ class HabitListFragment : Fragment(), LifecycleOwner {
             if (countsLeft > 0) {
                 "${getString(R.string.good_toast1)} ${
                     requireContext().resources.getQuantityString(
-                        R.plurals.times,
+                        R.plurals.count,
                         countsLeft,
                         countsLeft
                     )
@@ -120,7 +121,7 @@ class HabitListFragment : Fragment(), LifecycleOwner {
             if (countsLeft > 0) {
                 "${getString(R.string.bad_toast1)} ${
                     requireContext().resources.getQuantityString(
-                        R.plurals.times,
+                        R.plurals.count,
                         countsLeft,
                         countsLeft
                     )
@@ -129,7 +130,8 @@ class HabitListFragment : Fragment(), LifecycleOwner {
                 getString(R.string.bad_toast2)
             }
         }
-        Toast.makeText(MainActivity.CONTEXT, text, Toast.LENGTH_SHORT).show()
+        val toast = Toast.makeText(requireActivity(), text, Toast.LENGTH_LONG)
+        toast.show()
     }
 
     private fun addHabit() {

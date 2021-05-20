@@ -21,9 +21,9 @@ interface HabitService {
         @Body uid: LinkedTreeMap<String, String>
     )
 
-    @POST("api/habit")
+    @POST("api/habit_done")
     suspend fun postHabit(
         @Header("Authorization") token: String,
-        @Body uidAndDate: LinkedTreeMap<String, String>
+        @Body uidAndDate: LinkedTreeMap<String, Any>
       /*  @Body date: LinkedTreeMap<String, Int>*/)
 }
