@@ -69,7 +69,7 @@ class HabitAdapter(
         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         fun bind(habit: Habit) {
             val resources = context!!.resources
-            "${resources.getString(R.string.habit_name)}: ${habit.name}".also {
+            habit.name.also {
                 containerView.habit_name.text = it
             }
             "${resources.getString(R.string.description)}: ${habit.description}".also {

@@ -19,6 +19,10 @@ import javax.inject.Singleton
 @Module
 class HabitsModule {
 
+    companion object{
+        const val userToken = "0cfe4cac-170d-4f9f-9b50-ce8e112b57f7"
+    }
+
     @Provides
     fun provideAddHabitUseCase(habitRepository: HabitRepository): AddHabitUseCase {
         return AddHabitUseCase(habitRepository, Dispatchers.IO)
@@ -68,7 +72,10 @@ class HabitsModule {
     fun providesRetrofit(): Retrofit {
         val okHttpClient = OkHttpClient().newBuilder().addInterceptor { chain ->
 
-            val request: Request = chain.request()
+            val request: Request = chain.request().newBuilder()
+                .addHeader("Authorization", userToken)
+                .build()
+
             var response = chain.proceed(request)
             var tryCount = 0
             while (!(response.isSuccessful) && tryCount < 5) {

@@ -4,28 +4,24 @@ import com.google.gson.internal.LinkedTreeMap
 import javax.inject.Inject
 
 
-class ApiRepository(private val apiService: HabitService): IRemoteRepository {
-
-    companion object{
-        const val userToken = "0cfe4cac-170d-4f9f-9b50-ce8e112b57f7"
-    }
+class ApiRepository(private val apiService: HabitService) : IRemoteRepository {
 
     override suspend fun getHabits(): List<HabitDbDao> {
-        return apiService.listHabits(userToken)
+        return apiService.listHabits()
     }
 
     override suspend fun putHabit(habit: HabitDbDao): LinkedTreeMap<String, String> {
-        return apiService.putHabit(userToken,habit )
+        return apiService.putHabit(habit)
     }
 
     override suspend fun postHabit(habit: HabitDbDao) {
-        return apiService.postHabit(userToken, LinkedTreeMap<String,Any>().also {
+        return apiService.postHabit(LinkedTreeMap<String, Any>().also {
             it["date"] = habit.date
             it["habit_uid"] = habit.uid
-        }/*, LinkedTreeMap<String, Int>().also {it["date"] = habit.date}*/ )
+        })
     }
 
-    override suspend fun deleteHabit(habit: HabitDbDao){
-        apiService.deleteHabit(userToken, LinkedTreeMap<String,String>().also { it["uid"] = habit.uid })
+    override suspend fun deleteHabit(habit: HabitDbDao) {
+        apiService.deleteHabit(LinkedTreeMap<String, String>().also { it["uid"] = habit.uid })
     }
 }

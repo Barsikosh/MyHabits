@@ -17,6 +17,8 @@ interface HabitRepository {
 
     fun getLocalData() : Flow<List<Habit>>
 
+/*
     fun getRemoteData() : List<Habit>?
+*/
 
 }

@@ -24,11 +24,11 @@ class RedactorHabitViewModel(private val addHabitUseCase: AddHabitUseCase,
 
     var color: Int = MainActivity.CONTEXT.resources.getColor(R.color.design_default_color_primary)
 
-    fun addHabit(habit: Habit) = launch(Dispatchers.IO) {
+    fun addHabit(habit: Habit) = launch {
         addHabitUseCase.addHabit(habit)
     }
 
-    fun updateHabit(habit: Habit) = launch(Dispatchers.IO) {
+    fun updateHabit(habit: Habit) = launch {
         updateHabitUseCase.updateHabit(habit)
     }
 

@@ -23,14 +23,11 @@ class HabitRepositoryImpl(
 
     val dbHabits = dataBase.HabitDao().getAll()
 
-
     init {
         GlobalScope.launch(Dispatchers.IO) {
-            //updateRemoteData()
             getRemoteHabit()
         }
     }
-
 
     override suspend fun addItem(habit: Habit) {
         val dbHabit = HabitDbDao.toDbDao(habit)
@@ -39,7 +36,7 @@ class HabitRepositoryImpl(
     }
 
     override fun getLocalData(): Flow<List<Habit>> {
-        return dataBase.HabitDao().getAll().map { el ->
+        return dbHabits.map { el ->
             el.map { HabitDbDao.toHabit(it) }
         }
     }
@@ -66,18 +63,15 @@ class HabitRepositoryImpl(
         val dbHabit = HabitDbDao.toDbDao(habit)
         postHabit(dbHabit)
         dataBase.HabitDao().update(dbHabit)
-
     }
 
-    private suspend fun postHabit(habit: HabitDbDao){
+    private suspend fun postHabit(habit: HabitDbDao) {
         try {
             retrofitService.postHabit(habit)
         } catch (e: retrofit2.HttpException) {
             Log.e("HttpRequest", "did`nt post")
         }
     }
-
-    override fun getRemoteData(): List<Habit>? = remoteHabits?.map { el -> HabitDbDao.toHabit(el) }
 
     private suspend fun getRemoteHabit() {
         try {
@@ -101,13 +95,6 @@ class HabitRepositoryImpl(
         }
     }
 
-    private suspend fun updateRemoteData() {
-        dbHabits.first().forEach {
-            if (it.uid == null)
-                putHabit(it)
-        }
-    }
-
     private suspend fun deleteHabitFromServer(habit: HabitDbDao) {
         try {
             if (habit.uid != null) {
@@ -120,10 +107,8 @@ class HabitRepositoryImpl(
 
     private fun insertInDbRemoteHabits(habits: List<HabitDbDao>?) {
         habits?.forEach {
-                this.dataBase.HabitDao().insert(it)
+            this.dataBase.HabitDao().insert(it)
         }
     }
-
-
 }
 
