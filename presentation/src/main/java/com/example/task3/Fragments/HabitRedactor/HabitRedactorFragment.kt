@@ -29,7 +29,7 @@ class HabitRedactorFragment : Fragment(), ColorPickerDialog.OnInputListener {
     @Inject
     lateinit var viewModel: RedactorHabitViewModel
 
-    lateinit var colorDialog: DialogFragment;
+    private lateinit var colorDialog: DialogFragment;
 
     override fun onCreateView(
         inflater: LayoutInflater,
