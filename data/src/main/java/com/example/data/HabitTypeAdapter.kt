@@ -1,17 +1,14 @@
 package com.example.data
 
 import com.example.domain.entities.Habit
-import com.google.gson.Gson
 import com.google.gson.TypeAdapter
-import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
-import kotlin.reflect.typeOf
 
-class HabitTypeAdapter : TypeAdapter<HabitDbDao>() {
+class HabitTypeAdapter : TypeAdapter<HabitDataDao>() {
 
-    override fun write(out: JsonWriter?, value: HabitDbDao?) {
+    override fun write(out: JsonWriter?, value: HabitDataDao?) {
         out!!.beginObject()
         out.name("color").value(value?.color ?: 0)
         out.name("count").value(value?.time ?: 0)
@@ -30,7 +27,7 @@ class HabitTypeAdapter : TypeAdapter<HabitDbDao>() {
     }
 
     @ExperimentalStdlibApi
-    override fun read(`in`: JsonReader?): HabitDbDao {
+    override fun read(`in`: JsonReader?): HabitDataDao {
         var uid: String = ""
         var type: Int = 0
         var habitName: String = ""
@@ -68,7 +65,7 @@ class HabitTypeAdapter : TypeAdapter<HabitDbDao>() {
             }
         }
         `in`?.endObject()
-        val habit = HabitDbDao(habitName,description, Habit.HabitType.fromInt(type), Habit.HabitPriority.fromInt(priority), count,frequency,color)
+        val habit = HabitDataDao(habitName,description, Habit.HabitType.fromInt(type), Habit.HabitPriority.fromInt(priority), count,frequency,color)
         habit.uid = uid
         habit.date = date
         habit.doneDates = done_dates

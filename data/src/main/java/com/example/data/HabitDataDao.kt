@@ -11,11 +11,11 @@ import java.io.Serializable
 
 @Entity
 @TypeConverters(
-    HabitDbDao.TypeConverter::class,
-    HabitDbDao.PriorityConverter::class,
-    HabitDbDao.DatesConverter::class
+    HabitDataDao.TypeConverter::class,
+    HabitDataDao.PriorityConverter::class,
+    HabitDataDao.DatesConverter::class
 )
-data class HabitDbDao(
+data class HabitDataDao(
     @PrimaryKey
     @SerializedName("title")
     val name: String,
@@ -34,8 +34,8 @@ data class HabitDbDao(
     var date: Int = 0
 
     companion object {
-        fun toDbDao(habit: Habit): HabitDbDao {
-            val result = HabitDbDao(
+        fun toDbDao(habit: Habit): HabitDataDao {
+            val result = HabitDataDao(
                 habit.name, habit.description, habit.type,
                 habit.priority, habit.time, habit.period, habit.color
             )
@@ -46,7 +46,7 @@ data class HabitDbDao(
             return result;
         }
 
-        fun toHabit(habit: HabitDbDao): Habit {
+        fun toHabit(habit: HabitDataDao): Habit {
             val result = Habit(
                 habit.name, habit.description, habit.type,
                 habit.priority, habit.time, habit.period, habit.color

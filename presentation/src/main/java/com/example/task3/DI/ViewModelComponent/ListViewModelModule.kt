@@ -1,6 +1,5 @@
 package com.example.task3.DI.ViewModelComponent
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.domain.entities.Habit
@@ -15,7 +14,7 @@ import dagger.Provides
 @Module
 class ListViewModelModule(private val habitListFragment: HabitListFragment, private val habitType: Habit.HabitType) {
 
-    @ViewModelScope
+    @ListViewModelScope
     @Provides
     fun provideHabitListViewModel(
         habitsUseCase: GetHabitsUseCase,
@@ -33,6 +32,5 @@ class ListViewModelModule(private val habitListFragment: HabitListFragment, priv
                 ) as T
             }
         }).get(HabitListViewModel::class.java)
-
     }
 }

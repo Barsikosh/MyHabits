@@ -7,11 +7,11 @@ import retrofit2.http.*
 interface HabitService {
 
     @GET("api/habit")
-    suspend fun listHabits(): List<HabitDbDao>
+    suspend fun listHabits(): List<HabitDataDao>
 
     @PUT("api/habit")
     suspend fun putHabit(
-        @Body habit: HabitDbDao
+        @Body habit: HabitDataDao
     ): LinkedTreeMap<String, String>
 
     @HTTP(method = "DELETE", path = "api/habit", hasBody = true)

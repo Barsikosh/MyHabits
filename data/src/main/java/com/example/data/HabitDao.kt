@@ -5,26 +5,26 @@ import kotlinx.coroutines.flow.Flow
 
 
 @Dao
-@TypeConverters(HabitDbDao.TypeConverter::class, HabitDbDao.PriorityConverter::class)
+@TypeConverters(HabitDataDao.TypeConverter::class, HabitDataDao.PriorityConverter::class)
 @Suppress("AndroidUnresolvedRoomSqlReference")
 interface HabitDao {
 
 
-    @Query("SELECT * FROM HabitDbDao")
-    fun getAll(): Flow<List<HabitDbDao>>
+    @Query("SELECT * FROM HabitDataDao")
+    fun getAll(): Flow<List<HabitDataDao>>
 
-    @Query("SELECT  * FROM HabitDbDao WHERE uid LIKE :uid")
-    fun getById(uid: String?): HabitDbDao?
+    @Query("SELECT  * FROM HabitDataDao WHERE uid LIKE :uid")
+    fun getById(uid: String?): HabitDataDao?
 
-    @Query("SELECT  * FROM HabitDbDao WHERE name LIKE :name")
-    fun getByName(name: String): HabitDbDao?
+    @Query("SELECT  * FROM HabitDataDao WHERE name LIKE :name")
+    fun getByName(name: String): HabitDataDao?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(habit: HabitDbDao?)
+    fun insert(habit: HabitDataDao?)
 
     @Update
-    fun update(habit: HabitDbDao?)
+    fun update(habit: HabitDataDao?)
 
     @Delete
-    fun delete(habit: HabitDbDao?)
+    fun delete(habit: HabitDataDao?)
 }

@@ -3,18 +3,18 @@ package com.example.task3.DI
 import android.app.Application
 import com.example.domain.entities.Habit
 import com.example.task3.DI.ViewModelComponent.HabitListViewModelComponent
-import com.example.task3.DI.ViewModelComponent.ViewModelComponent
+import com.example.task3.DI.ViewModelComponent.RedactorViewModelComponent
 import com.example.task3.DI.ViewModelComponent.ListViewModelModule
 import com.example.task3.DI.ViewModelComponent.RedactorViewModelModule
 import com.example.task3.Fragments.HabitList.HabitListFragment
 import com.example.task3.Fragments.HabitRedactor.HabitRedactorFragment
 
-class MyApplication: Application() {
+class MyApplication : Application() {
 
     lateinit var applicationComponent: ApplicationComponent
-    private set
+        private set
 
-    lateinit var viewModelComponent: ViewModelComponent
+    lateinit var viewModelComponent: RedactorViewModelComponent
 
     lateinit var listViewModelComponent: HabitListViewModelComponent
 
@@ -28,13 +28,18 @@ class MyApplication: Application() {
             .build()
     }
 
-    fun initViewModelListComponent(habitListFragment: HabitListFragment, habitType: Habit.HabitType){
+    fun initViewModelListComponent(
+        habitListFragment: HabitListFragment,
+        habitType: Habit.HabitType
+    ) {
         listViewModelComponent = applicationComponent.getListViewModelComponent().requestModule(
-            ListViewModelModule(habitListFragment,habitType))!!.build()!!
+            ListViewModelModule(habitListFragment, habitType)
+        )!!.build()!!
     }
 
-    fun initViewModelRedactorComponent(habitRedactorFragment: HabitRedactorFragment){
-        viewModelComponent = applicationComponent.getViewModelComponent().requestModule(
-            RedactorViewModelModule(habitRedactorFragment))!!.build()!!
+    fun initViewModelRedactorComponent(habitRedactorFragment: HabitRedactorFragment) {
+        viewModelComponent = applicationComponent.getRedactorViewModelComponent().requestModule(
+            RedactorViewModelModule(habitRedactorFragment)
+        )!!.build()!!
     }
 }

@@ -16,9 +16,4 @@ interface HabitRepository {
     suspend fun postItem(habit: Habit)
 
     fun getLocalData() : Flow<List<Habit>>
-
-/*
-    fun getRemoteData() : List<Habit>?
-*/
-
 }

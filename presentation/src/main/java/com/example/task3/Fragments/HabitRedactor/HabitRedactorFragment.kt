@@ -37,24 +37,11 @@ class HabitRedactorFragment : Fragment(), ColorPickerDialog.OnInputListener {
         savedInstanceState: Bundle?
     ): View? {
 
-       /* val addHabitUseCase = (requireActivity().application as MyApplication)
-            .applicationComponent.getAddHabitUseCase()
-        val updateHabitUseCase = (requireActivity().application as MyApplication)
-            .applicationComponent.getUpdateHabitUseCase()*/
-
         (requireActivity().application as MyApplication).initViewModelRedactorComponent(this)
-        (requireActivity().application as MyApplication).viewModelComponent.injectFragment2(this)
-
-        /*viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return RedactorHabitViewModel(addHabitUseCase, updateHabitUseCase) as T
-            }
-        }).get(RedactorHabitViewModel::class.java)*/
-
+        (requireActivity().application as MyApplication).viewModelComponent.injectRedactorFragment(this)
         return inflater.inflate(R.layout.redactor_fragment, container, false)
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         color_button.backgroundTintList = ColorStateList.valueOf(viewModel.color)
@@ -123,7 +110,6 @@ class HabitRedactorFragment : Fragment(), ColorPickerDialog.OnInputListener {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     private fun saveChangedData(habit: Habit) {
         if (checkAllProperties()) {
             val newHabit = collectHabit()
@@ -133,7 +119,7 @@ class HabitRedactorFragment : Fragment(), ColorPickerDialog.OnInputListener {
             if (newHabit.name != habit.name) {
                 viewModel.addHabit(newHabit)
             }
-            viewModel.updateHabit(newHabit)
+            else viewModel.updateHabit(newHabit)
             backToHabitList()
         }
     }

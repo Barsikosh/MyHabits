@@ -5,7 +5,6 @@
     android:layout_width="350dp"
     android:layout_height="120dp"
     android:layout_margin="10dp"
-    android:background="@drawable/border"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -16,7 +15,9 @@
         android:layout_gravity="left"
         android:paddingLeft="16dp"
         android:textSize="@dimen/habit_name"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"/>
 
     <TextView
         android:id="@+id/habit_description"
@@ -25,9 +26,11 @@
         android:layout_gravity="bottom"
         app:layout_anchorGravity="bottom"
         app:layout_anchor="@id/habit_name"
-        android:maxLength="100"
+        android:maxLength="30"
         android:paddingLeft="16dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"/>
 
     <TextView
         android:id="@+id/habit_priority"
@@ -37,7 +40,9 @@
         app:layout_anchorGravity="bottom"
         app:layout_anchor="@id/habit_description"
         android:paddingLeft="16dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"/>
 
     <TextView
         android:id="@+id/habit_period"
@@ -47,7 +52,9 @@
         app:layout_anchorGravity="bottom"
         app:layout_anchor="@id/habit_priority"
         android:paddingLeft="16dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"/>
 
     <TextView
         android:id="@+id/list_description"
@@ -56,7 +63,17 @@
         android:layout_gravity="bottom"
         app:layout_anchorGravity="bottom"
         app:layout_anchor="@id/habit_period"
-        android:paddingLeft="16dp" />
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="4dp"
+        android:layout_height="90dp"
+        app:cardBackgroundColor="@color/design_default_color_primary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/accept_button"

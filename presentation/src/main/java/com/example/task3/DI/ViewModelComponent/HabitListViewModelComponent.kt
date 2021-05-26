@@ -1,12 +1,13 @@
 package com.example.task3.DI.ViewModelComponent
 
 import com.example.task3.Fragments.HabitList.HabitListFragment
-import com.example.task3.Fragments.HabitRedactor.HabitRedactorFragment
-import dagger.Component
 import dagger.Subcomponent
+import javax.inject.Scope
 
+@Scope
+annotation class ListViewModelScope
 
-@ViewModelScope
+@ListViewModelScope
 @Subcomponent(modules = [ListViewModelModule::class])
 interface HabitListViewModelComponent {
 
@@ -16,5 +17,5 @@ interface HabitListViewModelComponent {
         fun build(): HabitListViewModelComponent?
     }
 
-    fun injectFragment(habitListFragment: HabitListFragment)
+    fun injectListFragment(habitListFragment: HabitListFragment)
 }

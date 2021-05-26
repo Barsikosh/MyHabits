@@ -1,7 +1,6 @@
 package com.example.task3.Fragments.HabitList
 
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,11 +49,10 @@ class HabitListFragment : Fragment(), LifecycleOwner {
         savedInstanceState: Bundle?
     ): View? {
 
-
         val habitType =
             this@HabitListFragment.arguments?.getSerializable(HABIT_TYPE) as Habit.HabitType
         (requireActivity().application as MyApplication).initViewModelListComponent(this, habitType)
-        (requireActivity().application as MyApplication).listViewModelComponent.injectFragment(this)
+        (requireActivity().application as MyApplication).listViewModelComponent.injectListFragment(this)
         return inflater.inflate(R.layout.habits_fragment, container, false)
     }
 
@@ -70,7 +68,6 @@ class HabitListFragment : Fragment(), LifecycleOwner {
             .replace(R.id.containerBottomSheet, bottomSheet)
             .commit();
     }
-
 
     private fun observeViewModels() {
         viewModel.habits.observe(viewLifecycleOwner, Observer {
@@ -105,7 +102,7 @@ class HabitListFragment : Fragment(), LifecycleOwner {
 
     private fun doneHabit(habit: Habit) {
         viewModel.postHabit(habit)
-        val countsLeft = habit.time - habit.postDate(Calendar.DAY_OF_YEAR - 1)
+        val countsLeft = habit.time - habit.postDate(Calendar.getInstance().get(Calendar.DAY_OF_YEAR) - 1)
         val text: String = if (habit.type == Habit.HabitType.GOOD) {
             if (countsLeft > 0) {
                 "${getString(R.string.good_toast1)} ${

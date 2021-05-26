@@ -13,6 +13,7 @@ class UpdateHabitUseCase(
 
     suspend fun updateHabit(habit: Habit) {
         withContext(dispatcher) {
+            habit.date++
             habitDBRepository.updateItem(habit)
         }
     }

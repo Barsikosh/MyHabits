@@ -1,22 +1,21 @@
 package com.example.task3.DI.ViewModelComponent
 
-import com.example.task3.Fragments.HabitList.HabitListFragment
 import com.example.task3.Fragments.HabitRedactor.HabitRedactorFragment
 import dagger.Subcomponent
 import javax.inject.Scope
 
 @Scope
-annotation class ViewModelScope
+annotation class RedactorViewModelScope
 
-@ViewModelScope
+@RedactorViewModelScope
 @Subcomponent(modules = [RedactorViewModelModule::class])
-interface ViewModelComponent {
+interface RedactorViewModelComponent {
 
     @Subcomponent.Builder
     interface Builder {
         fun requestModule(module: RedactorViewModelModule?): Builder?
-        fun build(): ViewModelComponent?
+        fun build(): RedactorViewModelComponent?
     }
 
-    fun injectFragment2(habitRedactorFragment: HabitRedactorFragment)
+    fun injectRedactorFragment(habitRedactorFragment: HabitRedactorFragment)
 }

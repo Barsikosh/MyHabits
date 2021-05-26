@@ -24,30 +24,12 @@
         android:id="@+id/add_habit_button"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-
         android:layout_margin="16dp"
-        app:layout_anchor="@id/containerBottomSheet"
-        app:layout_anchorGravity="end"
         android:background="@color/design_default_color_primary"
-        android:src="@android:drawable/ic_input_add"
-        />
+        app:srcCompat="@drawable/ic_add_fab_foreground"
+        app:layout_anchor="@id/containerBottomSheet"
+        app:layout_anchorGravity="end" />
 
-
-  <!--  android:id="@+id/add_habit_button"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_gravity="end|bottom"
-    android:layout_alignParentBottom="true"
-    android:layout_marginBottom="45dp"
-    app:layout_anchor="@id/containerBottomSheet"
-    android:background="@color/design_default_color_primary"
-    android:contentDescription="TODO"
-    android:src="@android:drawable/ic_input_add"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    android:layout_marginRight="16dp" />-->
     <FrameLayout
         android:id="@+id/containerBottomSheet"
         android:layout_width="match_parent"

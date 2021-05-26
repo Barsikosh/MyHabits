@@ -93,7 +93,7 @@ class HabitAdapter(
                 containerView.habit_priority.text = it
             }
             val stateList = ColorStateList.valueOf(habit.color)
-            containerView.my_shape.backgroundTintList = stateList
+            containerView.card_view.backgroundTintList = stateList
         }
     }
 }

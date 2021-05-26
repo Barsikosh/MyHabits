@@ -4,8 +4,8 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryVariant">@color/white</item>
-        <item name="colorOnPrimary">@color/design_default_color_primary</item>
-        <item name="colorAccent" > #00e676</item>
+        <item name="colorOnPrimary">#FFD873</item>
+        <item name="colorAccent" > #FFD873</item>
 
         <item name="colorSecondary">@color/design_default_color_primary</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>

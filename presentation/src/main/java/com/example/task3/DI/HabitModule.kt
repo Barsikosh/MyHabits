@@ -11,7 +11,6 @@ import dagger.Provides
 import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -24,29 +23,29 @@ class HabitsModule {
     }
 
     @Provides
+    fun provideUpdateHabitUseCase(habitRepository: HabitRepository): UpdateHabitUseCase {
+        return UpdateHabitUseCase(habitRepository, Dispatchers.IO)
+    }
+
+    @Provides
     fun provideAddHabitUseCase(habitRepository: HabitRepository): AddHabitUseCase {
         return AddHabitUseCase(habitRepository, Dispatchers.IO)
     }
 
-    @Provides
-    fun provideUpdateHabitUseCase(habitRepository: HabitRepository): UpdateHabitUseCase {
-        return UpdateHabitUseCase(habitRepository, Dispatchers.IO)
-    }
 
     @Provides
     fun provideDeleteHabitUseCase(habitRepository: HabitRepository): DeleteHabitUseCase {
         return DeleteHabitUseCase(habitRepository, Dispatchers.IO)
     }
 
+    @Provides
+    fun providePostHabitUseCase(habitRepository: HabitRepository): PostHabitUseCase {
+        return PostHabitUseCase(habitRepository, Dispatchers.IO)
+    }
 
     @Provides
     fun provideGetHabitsUseCase(habitRepository: HabitRepository): GetHabitsUseCase {
         return GetHabitsUseCase(habitRepository, Dispatchers.IO)
-    }
-
-    @Provides
-    fun providePostHabitUseCase(habitRepository: HabitRepository): PostHabitUseCase {
-        return PostHabitUseCase(habitRepository, Dispatchers.IO)
     }
 
     @Provides
@@ -89,7 +88,7 @@ class HabitsModule {
             .build()
 
         val gSon = GsonBuilder().registerTypeAdapter(
-            HabitDbDao::class.java,
+            HabitDataDao::class.java,
             HabitTypeAdapter()
         ).create()
 

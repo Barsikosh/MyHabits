@@ -4,11 +4,11 @@ import com.google.gson.internal.LinkedTreeMap
 
 interface IRemoteRepository {
 
-    suspend fun deleteHabit(habit: HabitDbDao)
+    suspend fun deleteHabit(habit: HabitDataDao)
 
-    suspend fun getHabits(): List<HabitDbDao>
+    suspend fun getHabits(): List<HabitDataDao>
 
-    suspend fun putHabit(habit: HabitDbDao): LinkedTreeMap<String, String>
+    suspend fun putHabit(habit: HabitDataDao): LinkedTreeMap<String, String>
 
-    suspend fun postHabit(habit: HabitDbDao)
+    suspend fun postHabit(habit: HabitDataDao)
 }

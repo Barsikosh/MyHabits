@@ -20,6 +20,7 @@ data class Habit(
 
 
     fun postDate(currentData: Int): Int{
+        if (period == 0) return 0
         val lastUpdateDay = currentData - currentData.rem(this.period)
         return this.doneDates.filter { it >= lastUpdateDay }.size
     }
