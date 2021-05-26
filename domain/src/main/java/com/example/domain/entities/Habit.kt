@@ -11,15 +11,15 @@ data class Habit(
     val time: Int,
     val period: Int,
     var color: Int
-): Serializable  {
+) : Serializable {
 
-    var date:Int = 0
+    var date: Int = 0
     var uid: String? = null
 
     var doneDates = mutableListOf<Int>()
 
 
-    fun postDate(currentData: Int): Int{
+    fun postDate(currentData: Int): Int {
         if (period == 0) return 0
         val lastUpdateDay = currentData - currentData.rem(this.period)
         return this.doneDates.filter { it >= lastUpdateDay }.size
@@ -52,9 +52,9 @@ data class Habit(
 
         override fun toString(): String {
             return when (this) {
-                HIGH -> /*MainActivity.CONTEXT.getString(R.string.high)*/ "Высокий"
-                MEDIUM -> /*MainActivity.CONTEXT.getString(R.string.medium)*/ "Средний"
-                LOW -> /*MainActivity.CONTEXT.getString(R.string.low)*/ "Низкий"
+                HIGH -> "Высокий"
+                MEDIUM -> "Средний"
+                LOW -> "Низкий"
             }
         }
     }
