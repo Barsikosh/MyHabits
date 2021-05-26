@@ -16,6 +16,13 @@ class HabitRepositoryImpl(
     private val retrofitService: ApiRepository
 ) : HabitRepository {
 
+    companion object{
+
+        const val HTTP_EXCEPTION_LOG = "HttpException"
+
+        const val CONNECT_EXCEPTION_LOG = "ConnectException"
+    }
+
     private var remoteHabits: List<HabitDataDao>? = null
 
     private val dbHabits = dataBase.HabitDao().getAll()
@@ -65,10 +72,10 @@ class HabitRepositoryImpl(
         try {
             retrofitService.postHabit(habit)
         } catch (e: retrofit2.HttpException) {
-            Log.e("HttpRequest", "did`nt post")
+            Log.e(HTTP_EXCEPTION_LOG, "did`nt post")
         }
         catch (e: UnknownHostException){
-            Log.e("connection","UnknownHostException")
+            Log.e(CONNECT_EXCEPTION_LOG,"UnknownHostException")
         }
     }
 
@@ -79,10 +86,10 @@ class HabitRepositoryImpl(
             remoteHabits = response
             insertInDbRemoteHabits(remoteHabits)
         } catch (e: retrofit2.HttpException) {
-            Log.e("Http", "cant get remote data")
+            Log.e(HTTP_EXCEPTION_LOG, "cant get remote data")
         }
         catch (e: UnknownHostException){
-            Log.e("connection","UnknownHostException")
+            Log.e(CONNECT_EXCEPTION_LOG,"UnknownHostException")
         }
     }
 
@@ -93,10 +100,10 @@ class HabitRepositoryImpl(
             habit.uid = response
             dataBase.HabitDao().update(habit)
         } catch (e: retrofit2.HttpException) {
-            Log.e("HttpRequest", "did`nt put")
+            Log.e(HTTP_EXCEPTION_LOG, "did`nt put")
         }
         catch (e: UnknownHostException){
-            Log.e("connection","UnknownHostException")
+            Log.e(CONNECT_EXCEPTION_LOG,"UnknownHostException")
         }
     }
 
@@ -106,10 +113,10 @@ class HabitRepositoryImpl(
                 this.retrofitService.deleteHabit(habit)
             }
         } catch (e: retrofit2.HttpException) {
-            Log.e("HttpRequest", "did`nt delete")
+            Log.e(HTTP_EXCEPTION_LOG, "did`nt delete")
         }
         catch (e: UnknownHostException){
-            Log.e("connection","UnknownHostException")
+            Log.e(CONNECT_EXCEPTION_LOG,"UnknownHostException")
         }
     }
 
