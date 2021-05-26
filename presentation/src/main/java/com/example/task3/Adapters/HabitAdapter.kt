@@ -13,6 +13,7 @@ import com.example.domain.entities.Habit
 import com.example.task3.Fragments.HabitList.HabitListViewModel
 import com.example.task3.MainActivity
 import com.example.task3.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.list_item.*
 import kotlinx.android.synthetic.main.list_item.view.*
@@ -61,7 +62,7 @@ class HabitAdapter(
             containerView.setOnClickListener {
                 onItemClick.invoke(habits[adapterPosition])
             }
-            containerView.findViewById<Button>(R.id.accept_button).setOnClickListener {
+            containerView.findViewById<FloatingActionButton>(R.id.accept_button).setOnClickListener {
                 habitExecution.invoke(habits[adapterPosition])
             }
         }

@@ -102,7 +102,7 @@ class HabitListFragment : Fragment(), LifecycleOwner {
 
     private fun doneHabit(habit: Habit) {
         viewModel.postHabit(habit)
-        val countsLeft = habit.time - habit.postDate(Calendar.getInstance().get(Calendar.DAY_OF_YEAR) - 1)
+        val countsLeft = habit.time - habit.postDate(Calendar.getInstance().get(Calendar.DAY_OF_YEAR)) - 1
         val text: String = if (habit.type == Habit.HabitType.GOOD) {
             if (countsLeft > 0) {
                 "${getString(R.string.good_toast1)} ${

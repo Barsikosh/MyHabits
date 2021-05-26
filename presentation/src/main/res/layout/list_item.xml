@@ -75,18 +75,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/accept_button"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
         android:layout_gravity="end"
         android:layout_marginStart="300dp"
         android:layout_marginLeft="300dp"
         android:layout_marginTop="35dp"
+        android:background="@drawable/image_selector_button"
+        android:foreground="@drawable/ic_save_fab_foreground"
         android:textStyle="bold"
         app:layout_anchor="@id/habit_priority"
-        app:layout_anchorGravity="right"
-        android:background="@drawable/image_selector_button"
-        />
+        app:layout_anchorGravity="right" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
