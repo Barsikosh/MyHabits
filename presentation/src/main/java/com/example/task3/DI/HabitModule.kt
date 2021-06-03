@@ -57,7 +57,7 @@ class HabitsModule {
     }
 
     @Provides
-    fun provideSearchRepository(api: HabitService): ApiRepository {
+    fun provideApiRepository(api: HabitService): ApiRepository {
         return ApiRepository(api)
     }
 

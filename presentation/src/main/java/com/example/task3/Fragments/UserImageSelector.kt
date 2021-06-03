@@ -1,23 +1,16 @@
 package com.example.task3.Fragments
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import com.bumptech.glide.request.RequestOptions
 import com.example.task3.MainActivity
 import com.example.task3.R
 import com.google.android.material.navigation.NavigationView
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.image_selector.*
-import kotlinx.android.synthetic.main.nav_header.*
 
 class UserImageSelector : DialogFragment() {
 
@@ -37,7 +30,7 @@ class UserImageSelector : DialogFragment() {
         setup_image.setOnClickListener {
             val str = image_reference.text.toString()
             Glide
-                .with(MainActivity.CONTEXT)
+                .with(MainActivity.context)
                 .load(str)
                 .circleCrop()
                 .placeholder(R.mipmap.ic_launcher_round)

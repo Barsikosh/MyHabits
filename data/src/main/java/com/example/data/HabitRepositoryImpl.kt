@@ -36,7 +36,7 @@ class HabitRepositoryImpl(
     override suspend fun addItem(habit: Habit) {
         val dbHabit = HabitDataDao.toDbDao(habit)
         dataBase.HabitDao().insert(dbHabit)
-        putHabit(dbHabit)
+        //putHabit(dbHabit)
     }
 
     override fun getLocalData(): Flow<List<Habit>> {
@@ -48,7 +48,7 @@ class HabitRepositoryImpl(
     override suspend fun updateItem(newHabit: Habit) {
         val dbHabit = HabitDataDao.toDbDao(newHabit)
         dataBase.HabitDao().update(dbHabit)
-        putHabit(dbHabit)
+        //putHabit(dbHabit)
     }
 
     override suspend fun removeItem(habit: Habit) {
@@ -120,7 +120,7 @@ class HabitRepositoryImpl(
         }
     }
 
-    private fun insertInDbRemoteHabits(habits: List<HabitDataDao>?) {
+    private suspend fun insertInDbRemoteHabits(habits: List<HabitDataDao>?) {
         habits?.forEach {
             this.dataBase.HabitDao().insert(it)
         }

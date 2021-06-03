@@ -17,7 +17,7 @@ class RedactorHabitViewModel(private val addHabitUseCase: AddHabitUseCase,
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job + CoroutineExceptionHandler { _, e -> throw  e }
 
-    var color: Int = MainActivity.CONTEXT.resources.getColor(R.color.design_default_color_primary)
+    var color: Int = MainActivity.context.resources.getColor(R.color.design_default_color_primary)
 
     fun addHabit(habit: Habit) = launch {
         addHabitUseCase.addHabit(habit)

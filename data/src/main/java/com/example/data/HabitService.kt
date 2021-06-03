@@ -12,7 +12,7 @@ interface HabitService {
     @PUT("api/habit")
     suspend fun putHabit(
         @Body habit: HabitDataDao
-    ): LinkedTreeMap<String, String>
+    ):  LinkedTreeMap<String, String>
 
     @HTTP(method = "DELETE", path = "api/habit", hasBody = true)
     suspend fun deleteHabit(

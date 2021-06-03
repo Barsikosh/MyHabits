@@ -5,7 +5,7 @@ import java.io.Serializable
 
 data class Habit(
     val name: String,
-    val description: String,
+    var description: String,
     val type: HabitType,
     val priority: HabitPriority,
     val time: Int,

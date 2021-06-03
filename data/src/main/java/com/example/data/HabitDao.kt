@@ -14,17 +14,17 @@ interface HabitDao {
     fun getAll(): Flow<List<HabitDataDao>>
 
     @Query("SELECT  * FROM HabitDataDao WHERE uid LIKE :uid")
-    fun getById(uid: String?): HabitDataDao?
+    suspend fun getById(uid: String?): HabitDataDao?
 
     @Query("SELECT  * FROM HabitDataDao WHERE name LIKE :name")
-    fun getByName(name: String): HabitDataDao?
+    suspend fun getByName(name: String): HabitDataDao?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(habit: HabitDataDao?)
+    suspend fun insert(habit: HabitDataDao?)
 
     @Update
-    fun update(habit: HabitDataDao?)
+    suspend fun update(habit: HabitDataDao?)
 
     @Delete
-    fun delete(habit: HabitDataDao?)
+    suspend fun delete(habit: HabitDataDao?)
 }

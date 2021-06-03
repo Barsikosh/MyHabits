@@ -6,7 +6,6 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.entities.Habit
@@ -15,7 +14,6 @@ import com.example.task3.MainActivity
 import com.example.task3.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.list_item.*
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class HabitAdapter(
@@ -90,7 +88,7 @@ class HabitAdapter(
                 )
             }"
                 .also { containerView.habit_period.text = it }
-            "${MainActivity.CONTEXT.getString(R.string.priority_text)}: ${habit.priority}".also {
+            "${MainActivity.context.getString(R.string.priority_text)}: ${habit.priority}".also {
                 containerView.habit_priority.text = it
             }
             val stateList = ColorStateList.valueOf(habit.color)
